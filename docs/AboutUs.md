@@ -49,7 +49,7 @@ In charge of defining, assigning, and tracking project tasks
 [[portfolio](team/bryanleng.md)]
 
 * Role: Documentation + Git expert
-* Responsibilities: 
+* Responsibilities:
 
 ### Ryan Toh
 
