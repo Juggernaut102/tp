@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# EduDex Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -303,40 +303,137 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `EduDex` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+## Use Case 1: Add a New Student
 
-**MSS**
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- User has the student's information ready
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+**Main Success Scenario:**
+1. User enters the `add` command with all required parameters
+2. EduDex validates the parameters
+3. EduDex adds the student to the contact list
+4. EduDex shows a success message with the added student's details
 
-    Use case ends.
+**Extensions:**
+- **2a. Invalid phone number format**
+    - 2a1. EduDex shows error: *"Phone number must contain only numbers!"*
+    - 2a2. Use case resumes at step 1
 
-**Extensions**
+- **2b. Invalid time format**
+    - 2b1. EduDex shows error: *"Enter the time as HHMM (24-hour format)"*
+    - 2b2. Use case resumes at step 1
 
-* 2a. The list is empty.
+- **2c. Invalid day of week**
+    - 2c1. EduDex shows error: *"Please enter a valid day of the week"*
+    - 2c2. Use case resumes at step 1
 
-  Use case ends.
+- **2d. Missing required parameters**
+    - 2d1. EduDex shows error with correct command format
+    - 2d2. Use case resumes at step 1
 
-* 3a. The given index is invalid.
+---
 
-    * 3a1. AddressBook shows an error message.
+## Use Case 2: List All Students
 
-      Use case resumes at step 2.
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
 
-*{More to be added}*
+**Main Success Scenario:**
+1. User enters the `list` command
+2. EduDex retrieves all student contacts
+3. EduDex displays all students in a formatted list
+
+**Extensions:**
+- **3a. No students in the system**
+    - 3a1. EduDex shows message: *"No students found. Use 'add' to add your first student."*
+    - 3a2. Use case ends
+
+---
+
+## Use Case 3: Delete a Student
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- There is at least one student in the system
+
+**Main Success Scenario:**
+1. User enters `list` to view current students and their indices
+2. User enters `delete INDEX` (where `INDEX` is a valid number)
+3. EduDex removes the student at the specified index
+4. EduDex shows a confirmation message
+
+**Extensions:**
+- **2a. Invalid index format (non-number)**
+    - 2a1. EduDex shows error: *"INDEX must be a positive integer"*
+    - 2a2. Use case resumes at step 1
+
+- **2b. Index out of bounds**
+    - 2b1. EduDex shows error: *"The student index provided is invalid"*
+    - 2b2. Use case resumes at step 1
+
+- **2c. User enters delete without viewing list first**
+    - 2c1. EduDex shows error: *"Please use 'list' to view students first"*
+    - 2c2. Use case resumes at step 1
+
+---
+
+## Use Case 4: Exit the Application
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+
+**Main Success Scenario:**
+1. User enters the `exit` command
+2. EduDex displays a goodbye message
+3. EduDex closes the application
+
+**Extensions:**
+- **2a. User has unsaved changes (for future versions)**
+    - 2a1. EduDex prompts to confirm exit
+    - 2a2. User confirms or cancels
+
+---
+
+## Use Case 5: Handle Invalid Command
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+
+**Main Success Scenario:**
+1. User enters an unrecognized command
+2. EduDex shows error: *"Invalid command. Try again"*
+3. EduDex shows available command formats as hints
+
+**Extensions:**
+- **2a. Command is partially correct**
+    - 2a1. EduDex provides specific error about the incorrect parameter
+    - 2a2. Use case resumes at step 1
+
+- **2b. Command has typo**
+    - 2b1. EduDex suggests possible correct commands
+    - 2b2. Use case resumes at step 1
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2. Should respond to any command within 2 seconds when managing up to 1000 student records.
+3. A user with above average typing speed of >= 50 words per minute for regular English text should be able to accomplish most tasks faster using commands than using the mouse.
+4. A user should be able to successfully add, view, and delete a student record within 30 minutes of first use.
+5. Should not crash during normal usage (e.g., invalid user input should be handled gracefully and should display appropriate error messages to allow continued operation).
+6. Application should start up within 3 seconds on a typical computer with 8GB RAM and SSD storage.
+7. All student data should be automatically saved locally in a human editable text file and persist between application sessions
+8. Application should be able to operate without an internet connection. 
+9. All similar operations should follow the same command patterns and provide similar output formats
+10. Product developed in a breadth-first incremental manner, with each increment being a usable product that satisfies all the requirements identified up to that point.
 
-*{More to be added}*
 
 ### Glossary
 
