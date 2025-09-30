@@ -287,18 +287,18 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                              | So that I can…​                                                           |
-|----------|--------------------------------------------|-------------------------------------------|---------------------------------------------------------------------------|
-| `* * *`  | 2nd time user                              | add a student entry into the dataset       | fully transition to start using the system with real data                 |
-| `* * *`  | tutor                                      | view my students' contacts                 | see my students' contact information                                      |
-| `* * *`  | tutor                                      | exit the program                           | close the program when I’m done                                            |
-| `* * *`  | tutor who has a student who is quitting    | delete the student's contact               | ensure PDPA compliance and clean up my address book                       |
-| `* *`    | new user                                   | view a help page for the usage of the app  | understand how to navigate EduDex                                         |
-| `* *`    | new user                                   | set my profile with subjects and hourly rate | customise the app to my preference                                        |
-| `* *`    | 2nd time user                              | get help for specific commands I enter     | see what fields I have entered incorrectly                                |
-| `* *`    | tutor                                      | search for my students' names              | find their contact information                                            |
-| `*`      | tutor who wants to charge students         | assign rates for subjects I’m teaching     | better keep track of my earnings                                          |
-| `*`      | tutor who has changed tuition fees         | check how much I earn per week             | plan my own finances better                                               |
+| Priority | As a …​                                 | I want to …​                                 | So that I can…​                                           |
+|----------|-----------------------------------------|----------------------------------------------|-----------------------------------------------------------|
+| `* * *`  | tutor                                   | add a student entry into the dataset         | start keeping track of that student's contact information |
+| `* * *`  | tutor                                   | view my students' contacts                   | see my students' contact information all at once          |
+| `* * *`  | tutor                                   | exit the program                             | close the program when I’m done                           |
+| `* * *`  | tutor who has a student who is quitting | delete the student's contact                 | ensure PDPA compliance and clean up my address book       |
+| `* *`    | new user                                | view a help page for the usage of the app    | understand how to navigate EduDex                         |
+| `* *`    | new user                                | set my profile with subjects and hourly rate | customise the app to my preference                        |
+| `* *`    | tutor                                   | get help for specific commands I enter       | see what fields I have entered incorrectly                |
+| `* *`    | tutor                                   | search for my students' names                | find their contact information                            |
+| `*`      | tutor who wants to charge students      | assign rates for subjects I’m teaching       | better keep track of my earnings                          |
+| `*`      | tutor who has changed tuition fees      | check how much I earn per week               | track money earned from tuition lessons                   |
 
 *{More to be added}*
 
