@@ -4,7 +4,7 @@
 
 # EduDex
 
-EduDex is a desktop app for tutors to manage student contacts and classes, 
+EduDex is a desktop app for tutors to manage student contacts and classes,
 optimized for freelance tutors who prefer using **Command Line Interface (CLI)**.
 
 ---
@@ -26,7 +26,7 @@ optimized for freelance tutors who prefer using **Command Line Interface (CLI)**
 
 1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, 
+1. Open a command terminal, `cd` into the folder you put the jar file in,
    and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](docs/images/Ui.png)
@@ -84,28 +84,27 @@ Adds a student’s contact to the address book <br>
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
 
 Example:
-`add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday 
-start/1500 end/1600`
+`add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday start/1500 end/1600`
 
 **Parameters**:
 - NAME:
   - Acceptable values: any string will be accepted, input will not be modified or cleaned 
-  - Error message: no error message, all inputs are accepted 
+  - Error message: no error message, all inputs are accepted
 
 - PHONE_NUMBER:
-  - Acceptable values: digits from 0-9, any length 
+  - Acceptable values: digits from 0-9, any length
   - Error message: “Phone number must contain only numbers!”
 
 - EMAIL:
-  - Acceptable values: any string will be accepted 
+  - Acceptable values: any string will be accepted
   - Error message: no error message
 
 - ADDRESS:
-  - Acceptable values: any string will be accepted 
+  - Acceptable values: any string will be accepted
   - Error message: no error message
 
 - DAY:
-  - Acceptable values: { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday} 
+  - Acceptable values: { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
   - Error message: “For DAY field, please input a day of the week ”
 
 - TIME_START:
@@ -124,7 +123,7 @@ start/1500 end/1600`
 Invalid command format!
 add: Adds a student to the address book.
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
-Example: add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday 
+Example: add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday
 start/1500 end/1600
 ```
 
@@ -140,10 +139,10 @@ Example Commands:
 - `delete 23`
 
 **Parameter**:
-- INDEX 
-  - Acceptable values: positive integers that have a valid student contact 
-  - Error messages: 
-    1. If INDEX is not an integer <br> 
+- INDEX
+  - Acceptable values: positive integers that have a valid student contact
+  - Error messages:
+    1. If INDEX is not an integer <br>
        e.g.: `delete chicken` <br>
        Output: `INDEX must be a positive integer.`
     2. If INDEX is a negative number <br>
@@ -194,8 +193,8 @@ Outputs:
 
 
 1. **How do I install Java 17 on my computer?** <br>
-Refer to the [official Oracle download page](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) 
-or follow the [installation guide for your OS](https://se-education.org/guides/tutorials/javaInstallation.html). 
+Refer to the [official Oracle download page](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+or follow the [installation guide for your OS](https://se-education.org/guides/tutorials/javaInstallation.html).
 Mac users should install the exact JDK version specified [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 
