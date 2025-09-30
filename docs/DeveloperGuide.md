@@ -420,11 +420,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2. Should respond to any command within 2 seconds when managing up to 1000 student records.
+3. A user with above average typing speed of >= 50 words per minute for regular English text should be able to accomplish most tasks faster using commands than using the mouse.
+4. A user should be able to successfully add, view, and delete a student record within 30 minutes of first use.
+5. Should not crash during normal usage (e.g., invalid user input should be handled gracefully and should display appropriate error messages to allow continued operation).
+6. Application should start up within 3 seconds on a typical computer with 8GB RAM and SSD storage.
+7. All student data should be automatically saved locally in a human editable text file and persist between application sessions
+8. Application should be able to operate without an internet connection. 
+9. All similar operations should follow the same command patterns and provide similar output formats
+10. Product developed in a breadth-first incremental manner, with each increment being a usable product that satisfies all the requirements identified up to that point.
 
-*{More to be added}*
 
 ### Glossary
 
