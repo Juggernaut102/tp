@@ -338,7 +338,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **CLI**: Short for Command Line Interface, the area where you can input your commands
+* **Java**: The programming language this application is written in
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Parameters**: Inputs for a particular command, and be 0 or more
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
