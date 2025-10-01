@@ -97,7 +97,7 @@ Example:
   - Error message: no error message
 
 - DAY:
-  - Acceptable values: { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
+  - Acceptable values: { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
   - Error message: “For DAY field, please input a day of the week”
 
 - TIME_START:
@@ -196,7 +196,7 @@ Mac users should install the exact JDK version specified [here](https://se-educa
 
 2. **Why is EduDex not launching when I run `java -jar edudex.jar`?** <br>
 Ensure that:
-   1. You have installed Java 17 or later.
+   1. You have installed Java 17.
    2. You are in the correct directory containing the `.jar` file.
    3. You typed the command correctly: `java -jar edudex.jar`.
 
