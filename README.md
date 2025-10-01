@@ -11,7 +11,7 @@ optimized for freelance tutors who prefer using **Command Line Interface (CLI)**
 
 ## UI Overview
 
-![EduDex Interface](docs/images/Ui.png)
+![EduDex Interface](docs/images/features_list_output.png)
 <br>
 *Figure 1: Main interface of EduDex*
 
@@ -22,25 +22,24 @@ optimized for freelance tutors who prefer using **Command Line Interface (CLI)**
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T12-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your EduDex.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in,
-   and use the `java -jar addressbook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](docs/images/Ui.png)
+   and use the `java -jar edudex.jar` command to run the application.<br>
+   Note that the app contains some sample data.<br>
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
     * `list` : Lists all contacts.
 
-    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday 
+      start/1500 end/1600`: <br> 
+      Adds a student named `John Doe` to EduDex.
 
-    * `delete 3` : Deletes the 3rd contact shown in the current list.
-
-    * `clear` : Deletes all contacts.
+    * `delete 3` : Deletes the 3rd student shown in the current list from EduDex.
 
     * `exit` : Exits the app.
 
@@ -61,17 +60,11 @@ optimized for freelance tutors who prefer using **Command Line Interface (CLI)**
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take parameters (such as `list` and `exit`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+  e.g. if the command specifies `exit 123`, it will be interpreted as `exit`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span
   multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -105,7 +98,7 @@ Example:
 
 - DAY:
   - Acceptable values: { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
-  - Error message: “For DAY field, please input a day of the week ”
+  - Error message: “For DAY field, please input a day of the week”
 
 - TIME_START:
   - Acceptable values: a 4 digit integer (can be prefixed with 0s) whereby the first 2 digits are from 00 to 23 (inclusive); and the last 2 digits are from 00 to 59 (inclusive)
@@ -116,8 +109,11 @@ Example:
   - Error message: “Enter the end time as: HHMM”
 
 **Outputs**:
-- Succeed: `New student added: <NAME>; Phone: <NUMBER>; Email: <EMAIL>; Address: <ADDRESS>`
-
+- Succeed: 
+```
+New student added: 
+<NAME>; Phone: <NUMBER>; Email: <EMAIL>; Address: <ADDRESS>; Day: <DAY>; TIME: <TIME_START> - <TIME_END>
+```
 - Fail:
 ```
 Invalid command format!
@@ -153,7 +149,7 @@ Example Commands:
        Output: `The contact index provided is invalid.`
 
 **Outputs**:
-- Succeed: `Student contact is successfully removed from EduDex.`
+- Succeed: `Student contact <NAME> is successfully removed from EduDex.`
 - Fail: No change in EduDex
 
 <br>
@@ -183,7 +179,7 @@ The command `exit` takes in no parameters.
 
 Outputs:
 - Succeed: Goodbye message is shown and the system stops. \
-  `Exitting EduDex... Bye!`
+  `Exiting EduDex... Bye!`
 - Fail: no Goodbye message is shown and application will still be running.
 
 <br>
@@ -198,11 +194,11 @@ or follow the [installation guide for your OS](https://se-education.org/guides/t
 Mac users should install the exact JDK version specified [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 
-2. **Why is EduDex not launching when I run `java -jar addressbook.jar`?** <br>
+2. **Why is EduDex not launching when I run `java -jar edudex.jar`?** <br>
 Ensure that:
    1. You have installed Java 17 or later.
    2. You are in the correct directory containing the `.jar` file.
-   3. You typed the command correctly: `java -jar addressbook.jar`.
+   3. You typed the command correctly: `java -jar edudex.jar`.
 
 
 3. **Can I import my existing student data from another program?** <br>
