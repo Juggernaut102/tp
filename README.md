@@ -11,7 +11,7 @@ optimized for freelance tutors who prefer using **Command Line Interface (CLI)**
 
 ## UI Overview
 
-![EduDex Interface](docs/images/features_list_output.png)
+![EduDex Interface](docs/images/Ui.png)
 <br>
 *Figure 1: Main interface of EduDex*
 
