@@ -52,7 +52,7 @@ public class Person {
      * New overloaded constructor to include additional fields for Day, startTime, and endTime.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String Day,
-             String startTime, String endTime) {
+             LocalTime startTime, LocalTime endTime) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -60,8 +60,8 @@ public class Person {
         this.address = address;
         this.tags.addAll(tags);
         this.Day = Day;
-        this.startTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
-        this.endTime = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Name getName() {
