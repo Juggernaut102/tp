@@ -2,7 +2,10 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -25,6 +28,11 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
+    // Tuition time fields
+    private final String Day;
+    private final LocalTime startTime;
+    private final LocalTime endTime;
+
     /**
      * Every field must be present and not null.
      */
@@ -35,6 +43,25 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.Day = null;
+        this.startTime = null;
+        this.endTime = null;
+    }
+
+    /**
+     * New overloaded constructor to include additional fields for Day, startTime, and endTime.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String Day,
+             String startTime, String endTime) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
+        this.Day = Day;
+        this.startTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
+        this.endTime = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     public Name getName() {
@@ -51,6 +78,18 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public String getDay() {
+        return Day;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
     /**
@@ -111,6 +150,9 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("Day", Day)
+                .add("startTime", startTime)
+                .add("endTime", endTime)
                 .toString();
     }
 
