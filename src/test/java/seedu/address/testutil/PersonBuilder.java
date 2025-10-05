@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +27,9 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private String day;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -36,6 +40,9 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        day = null;
+        startTime = null;
+        endTime = null;
     }
 
     /**
@@ -47,6 +54,9 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        day = personToCopy.getDay();
+        startTime = personToCopy.getStartTime();
+        endTime = personToCopy.getEndTime();
     }
 
     /**
@@ -89,8 +99,32 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code day} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDay(String day) {
+        this.day = day;
+        return this;
+    }
+
+    /**
+     * Sets the {@code startTime} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    /**
+     * Sets the {@code endTime} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, tags, day, startTime, endTime);
     }
 
 }
