@@ -3,9 +3,7 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -29,7 +27,7 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
 
     // Tuition time fields
-    private final String Day;
+    private final String day;
     private final LocalTime startTime;
     private final LocalTime endTime;
 
@@ -43,7 +41,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.Day = null;
+        this.day = null;
         this.startTime = null;
         this.endTime = null;
     }
@@ -51,7 +49,7 @@ public class Person {
     /**
      * New overloaded constructor to include additional fields for Day, startTime, and endTime.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String Day,
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String day,
              LocalTime startTime, LocalTime endTime) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
@@ -59,7 +57,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.Day = Day;
+        this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -81,7 +79,7 @@ public class Person {
     }
 
     public String getDay() {
-        return Day;
+        return day;
     }
 
     public LocalTime getStartTime() {
@@ -150,7 +148,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
-                .add("Day", Day)
+                .add("day", day)
                 .add("startTime", startTime)
                 .add("endTime", endTime)
                 .toString();
