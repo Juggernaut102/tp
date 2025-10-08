@@ -50,12 +50,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         // Parse optional new fields
-        String day = argMultimap.getValue(PREFIX_DAY).orElse(null);
+        String day = argMultimap.getValue(PREFIX_DAY).isPresent()
+                ? ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get())
+                : null;
         LocalTime startTime = argMultimap.getValue(PREFIX_START).isPresent()
-                ? LocalTime.parse(argMultimap.getValue(PREFIX_START).get())
+                ? ParserUtil.parseTime(argMultimap.getValue(PREFIX_START).get())
                 : null;
         LocalTime endTime = argMultimap.getValue(PREFIX_END).isPresent()
-                ? LocalTime.parse(argMultimap.getValue(PREFIX_END).get())
+                ? ParserUtil.parseTime(argMultimap.getValue(PREFIX_END).get())
                 : null;
 
         Person person = new Person(name, phone, email, address, tagList, day, startTime, endTime);
