@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,9 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String day;
+    private final String startTime;
+    private final String endTime;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -36,7 +40,8 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("day") String day,
+            @JsonProperty("startTime") String startTime, @JsonProperty("endTime") String endTime) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,6 +49,9 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     /**
@@ -57,6 +65,9 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        day = source.getDay();
+        startTime = source.getStartTime() != null ? source.getStartTime().toString() : null;
+        endTime = source.getEndTime() != null ? source.getEndTime().toString() : null;
     }
 
     /**
@@ -103,7 +114,11 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+
+        final LocalTime modelStartTime = (startTime != null) ? LocalTime.parse(startTime) : null;
+        final LocalTime modelEndTime = (endTime != null) ? LocalTime.parse(endTime) : null;
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags,
+                day, modelStartTime, modelEndTime);
     }
 
 }
