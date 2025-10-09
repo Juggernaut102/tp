@@ -135,7 +135,7 @@ public class EditCommandParserTest {
         //        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
         //                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
         //                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withDay(VALID_DAY_AMY)
-        //                .withStartTime(VALID_STARTTIMEOBJ_AMY).withEndTime(VALID_ENDTIMEOBJ_AMY);
+        //                .withStartTime(VALID_STARTTIMEOBJ_AMY).withEndTime(VALID_ENDTIMEOBJ_AMY).build();
         //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         //        assertParseSuccess(parser, userInput, expectedCommand);
     }

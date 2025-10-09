@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.time.LocalTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,6 +38,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+        descriptor.setDay(person.getDay());
+        descriptor.setStartTime(person.getStartTime());
+        descriptor.setEndTime(person.getEndTime());
     }
 
     /**
@@ -83,5 +87,29 @@ public class EditPersonDescriptorBuilder {
 
     public EditPersonDescriptor build() {
         return descriptor;
+    }
+
+    /**
+     * Sets the {@code day} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDay(String day) {
+        descriptor.setDay(day);
+        return this;
+    }
+
+    /**
+     * Sets the {@code startTime} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withStartTime(LocalTime startTime) {
+        descriptor.setStartTime(startTime);
+        return this;
+    }
+
+    /**
+     * Sets the {@code endTime} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withEndTime(LocalTime endTime) {
+        descriptor.setEndTime(endTime);
+        return this;
     }
 }
