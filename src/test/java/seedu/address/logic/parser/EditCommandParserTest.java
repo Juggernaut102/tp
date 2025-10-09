@@ -21,17 +21,17 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_DAY_AMY;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_DAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_AMY;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIMEOBJ_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_BOB;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIMEOBJ_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_AMY;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_AMY;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIMEOBJ_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_BOB;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIMEOBJ_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_AMY;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -184,6 +184,14 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
+
+        // time
+        //        userInput = targetIndex.getOneBased() + TIME_DESC_AMY;
+        //        descriptor = new EditPersonDescriptorBuilder().withDay(VALID_DAY_AMY)
+        //                .withStartTime(VALID_STARTTIMEOBJ_AMY)
+        //                .withEndTime(VALID_ENDTIMEOBJ_AMY);
+        //        expectedCommand = new EditCommand(targetIndex, descriptor);
+        //        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
