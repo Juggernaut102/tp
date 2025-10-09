@@ -453,6 +453,10 @@ Use case ends.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Parameters**: Inputs for a particular command. It can be 0 or more, depending on the command
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **RAM**: Random Access Memory. 
+* **SSD**: Solid State Drive.
+* **Student**: A student is someone the user is teaching
+* **User**: A freelance tutor using the application
 
 --------------------------------------------------------------------------------------------------------------------
 
