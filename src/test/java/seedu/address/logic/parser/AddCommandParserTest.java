@@ -33,6 +33,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.time.LocalTime;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
@@ -63,6 +65,17 @@ public class AddCommandParserTest {
         assertParseSuccess(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTags));
+
+        // optional fields present
+        Person expectedPersonWithOptionalFields = new PersonBuilder(AMY).withDay("Wednesday")
+                .withStartTime(LocalTime.of(10, 0)).withEndTime(LocalTime.of(12, 0))
+                .build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                        + TAG_DESC_FRIEND
+                        + " " + CliSyntax.PREFIX_DAY + "Wednesday"
+                        + " " + CliSyntax.PREFIX_START + "10:00"
+                        + " " + CliSyntax.PREFIX_END + "12:00",
+                new AddCommand(expectedPersonWithOptionalFields));
     }
 
     @Test
