@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,9 +44,12 @@ public class CommandTestUtil {
     public static final String VALID_DAY_BOB = "Tuesday";
     public static final String VALID_STARTTIME_AMY = "14:00";
     public static final String VALID_STARTTIME_BOB = "10:00";
+    public static final LocalTime VALID_STARTTIMEOBJ_AMY = LocalTime.of(14, 0);
+    public static final LocalTime VALID_STARTTIMEOBJ_BOB = LocalTime.of(10, 0);
     public static final String VALID_ENDTIME_AMY = "16:00";
     public static final String VALID_ENDTIME_BOB = "12:00";
-
+    public static final LocalTime VALID_ENDTIMEOBJ_AMY = LocalTime.of(16, 0);
+    public static final LocalTime VALID_ENDTIMEOBJ_BOB = LocalTime.of(12, 0);
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
