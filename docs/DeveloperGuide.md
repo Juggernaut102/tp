@@ -448,15 +448,15 @@ Use case ends.
 
 ### Glossary
 
-* **CLI**: Short for Command Line Interface, where commands are mainly given by typing in a given area
-* **Java**: The programming language this application is written in
+* **CLI**: Command Line Interface. A text-based interface where users interact with a program by typing commands.
+* **Java**: The programming language used to implement this application.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Parameters**: Inputs for a particular command. It can be 0 or more, depending on the command
+* **Parameters**: Inputs provided to a command. A command may have zero or more parameters depending on its functionality.
+* **PDPA**: Personal Data Protection Act. A Singapore law that governs the collection, use, and disclosure of individuals’ personal data.
 * **Private contact detail**: A contact detail that is not meant to be shared with others
-* **RAM**: Random Access Memory. 
-* **SSD**: Solid State Drive.
-* **Student**: A student is someone the user is teaching
-* **User**: A freelance tutor using the application
+* **RAM**: Random Access Memory. Main memory of the computer, used for temporary storage of data and instructions.
+* **SSD**: Solid State Drive. A high speed storage device that stores data permanently.
+* **Student**: Refers to a learner or individual being taught by the user of this application.g
 
 --------------------------------------------------------------------------------------------------------------------
 
