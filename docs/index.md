@@ -11,11 +11,11 @@
 ![Ui](images/Ui.png) <br>
 _Main interface of EduDex_
 
-**EduDex** is a desktop app for tutors to manage student contacts and classes,
+**EduDex is a desktop app for tutors to manage student contacts and classes**,
 optimized for freelance tutors who prefer using **Command Line Interface (CLI)**.
 
-* If you are interested in using AddressBook, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
-* If you are interested about developing AddressBook, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
+* If you are interested in using EduDex, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
+* If you are interested about developing EduDex, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
 
 
 **Acknowledgements**
