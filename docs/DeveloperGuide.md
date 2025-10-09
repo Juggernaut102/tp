@@ -320,24 +320,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User enters the `add` command with all required parameters
 2. EduDex validates the parameters
 3. EduDex adds the student to the contact list
-4. EduDex shows a success message with the added student's details
+4. EduDex shows a success message with the added student's details  
+Use case ends.
 
 **Extensions:**
 - **2a. Invalid phone number format**
-    - 2a1. EduDex shows error: *"Phone number must contain only numbers!"*
-    - 2a2. Use case resumes at step 1
+    - 2a1. EduDex shows error: *"Phone number must contain only numbers!"*  
+      Use case ends.
 
 - **2b. Invalid time format**
-    - 2b1. EduDex shows error: *"Enter the time as HHMM (24-hour format)"*
-    - 2b2. Use case resumes at step 1
+    - 2b1. EduDex shows error: *"Enter the time as HHMM (24-hour format)"*  
+      Use case ends.
 
 - **2c. Invalid day of week**
-    - 2c1. EduDex shows error: *"Please enter a valid day of the week"*
-    - 2c2. Use case resumes at step 1
+    - 2c1. EduDex shows error: *"Please enter a valid day of the week"*  
+      Use case ends.
 
 - **2d. Missing required parameters**
-    - 2d1. EduDex shows error with correct command format
-    - 2d2. Use case resumes at step 1
+    - 2d1. EduDex shows error with correct command format  
+      Use case ends.
 
 ---
 
@@ -350,12 +351,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Main Success Scenario:**
 1. User enters the `list` command
 2. EduDex retrieves all student contacts
-3. EduDex displays all students in a formatted list
+3. EduDex displays all students in a formatted list  
+Use case ends.
 
 **Extensions:**
 - **3a. No students in the system**
-    - 3a1. EduDex shows message: *"No students found. Use 'add' to add your first student."*
-    - 3a2. Use case ends
+    - 3a1. EduDex shows message: *"No students found. Use 'add' to add your first student."*  
+     Use case ends
 
 ---
 
@@ -370,20 +372,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User enters `list` to view current students and their indices
 2. User enters `delete INDEX` (where `INDEX` is a valid number)
 3. EduDex removes the student at the specified index
-4. EduDex shows a confirmation message
+4. EduDex shows a confirmation message  
+Use case ends.
 
 **Extensions:**
 - **2a. Invalid index format (non-number)**
-    - 2a1. EduDex shows error: *"INDEX must be a positive integer"*
-    - 2a2. Use case resumes at step 1
+    - 2a1. EduDex shows error: *"INDEX must be a positive integer"*  
+      Use case ends.
 
 - **2b. Index out of bounds**
-    - 2b1. EduDex shows error: *"The student index provided is invalid"*
-    - 2b2. Use case resumes at step 1
+    - 2b1. EduDex shows error: *"The student index provided is invalid"*  
+      Use case ends.
 
 - **2c. User enters delete without viewing list first**
-    - 2c1. EduDex shows error: *"Please use 'list' to view students first"*
-    - 2c2. Use case resumes at step 1
+    - 2c1. EduDex shows error: *"Please use 'list' to view students first"*  
+      Use case ends.
 
 ---
 
@@ -396,12 +399,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Main Success Scenario:**
 1. User enters the `exit` command
 2. EduDex displays a goodbye message
-3. EduDex closes the application
+3. EduDex closes the application  
+Use case ends.
 
 **Extensions:**
 - **2a. User has unsaved changes (for future versions)**
-    - 2a1. EduDex prompts to confirm exit
-    - 2a2. User confirms or cancels
+    - 2a1. EduDex displays warning message
+    - 2a2. EduDex asks for confirmation
+    - 2a3. User confirms
+    - Use case resumes from step 3.
 
 ---
 
@@ -414,16 +420,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Main Success Scenario:**
 1. User enters an unrecognized command
 2. EduDex shows error: *"Invalid command. Try again"*
-3. EduDex shows available command formats as hints
+3. EduDex shows available command formats as hints  
+Use case ends.
 
 **Extensions:**
 - **2a. Command is partially correct**
-    - 2a1. EduDex provides specific error about the incorrect parameter
-    - 2a2. Use case resumes at step 1
+    - 2a1. EduDex provides specific error about the incorrect parameter  
+      Use case ends.
 
 - **2b. Command has typo**
-    - 2b1. EduDex suggests possible correct commands
-    - 2b2. Use case resumes at step 1
+    - 2b1. EduDex suggests possible correct commands  
+      Use case ends.
 
 ### Non-Functional Requirements
 
@@ -441,10 +448,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **CLI**: Short for Command Line Interface, the area where you can input your commands
+* **CLI**: Short for Command Line Interface, where commands are mainly given by typing in a given area
 * **Java**: The programming language this application is written in
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Parameters**: Inputs for a particular command, and be 0 or more
+* **Parameters**: Inputs for a particular command. It can be 0 or more, depending on the command
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
