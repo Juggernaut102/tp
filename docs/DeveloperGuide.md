@@ -456,7 +456,7 @@ Use case ends.
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **RAM**: Random Access Memory. Main memory of the computer, used for temporary storage of data and instructions.
 * **SSD**: Solid State Drive. A high speed storage device that stores data permanently.
-* **Student**: Refers to a learner or individual being taught by the user of this application.g
+* **Student**: Refers to a learner or individual being taught by the user of this application.
 
 --------------------------------------------------------------------------------------------------------------------
 
