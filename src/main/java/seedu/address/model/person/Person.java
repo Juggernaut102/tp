@@ -26,10 +26,8 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
-    // Tuition time fields
-    private final String day;
-    private final LocalTime startTime;
-    private final LocalTime endTime;
+    // Subject field
+    private final Subject subject;
 
     /**
      * Every field must be present and not null.
@@ -41,25 +39,20 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.day = null;
-        this.startTime = null;
-        this.endTime = null;
+        this.subject = null; // Default to null if not provided
     }
 
     /**
      * New overloaded constructor to include additional fields for Day, startTime, and endTime.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String day,
-             LocalTime startTime, LocalTime endTime) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Subject subject) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.day = day;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.subject = subject;
     }
 
     public Name getName() {
@@ -76,18 +69,6 @@ public class Person {
 
     public Address getAddress() {
         return address;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
     }
 
     /**
@@ -148,9 +129,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
-                .add("day", day)
-                .add("startTime", startTime)
-                .add("endTime", endTime)
+                .add("subject", subject)
                 .toString();
     }
 

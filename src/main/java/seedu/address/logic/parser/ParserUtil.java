@@ -11,9 +11,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -127,11 +129,14 @@ public class ParserUtil {
      * Parses a {@code String day} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static String parseDay(String day) {
+    public static Day parseDay(String day) throws ParseException {
         // no validation for day as of now
         requireNonNull(day);
         String trimmedDay = day.trim();
-        return trimmedDay;
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+        }
+        return new Day(trimmedDay);
     }
 
     /**
@@ -140,14 +145,13 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code time} is invalid.
      */
-    public static LocalTime parseTime(String time) throws ParseException {
+    public static Time parseTime(String time) throws ParseException {
         requireNonNull(time);
         String trimmedTime = time.trim();
-        try {
-            return LocalTime.parse(trimmedTime);
-        } catch (Exception e) {
-            throw new ParseException("Time should be in the format HH:MM");
+        if (!Time.isValidTime(trimmedTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
         }
+        return new Time(trimmedTime);
     }
 
 }
