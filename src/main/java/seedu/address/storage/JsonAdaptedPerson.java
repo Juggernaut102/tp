@@ -12,10 +12,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Subject;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -65,9 +68,9 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        day = source.getDay();
-        startTime = source.getStartTime() != null ? source.getStartTime().toString() : null;
-        endTime = source.getEndTime() != null ? source.getEndTime().toString() : null;
+        day = source.getSubject().getDay().toString();
+        startTime = source.getSubject().getStartTime().toString();
+        endTime = source.getSubject().getEndTime().toString();
     }
 
     /**
@@ -115,10 +118,32 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        final LocalTime modelStartTime = (startTime != null) ? LocalTime.parse(startTime) : null;
-        final LocalTime modelEndTime = (endTime != null) ? LocalTime.parse(endTime) : null;
+        if (day == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Day"));
+        }
+        if (!Day.isValidDay(day)) {
+            throw new IllegalValueException(Day.MESSAGE_CONSTRAINTS);
+        }
+        final Day modelDay = new Day(day);
+
+        if (startTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Start Time"));
+        }
+        if (!Time.isValidTime(startTime)) {
+            throw new IllegalValueException(Time.MESSAGE_CONSTRAINTS);
+        }
+        final Time modelStartTime = new Time(startTime);
+
+        if (endTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "End Time"));
+        }
+        if (!Time.isValidTime(endTime)) {
+            throw new IllegalValueException(Time.MESSAGE_CONSTRAINTS);
+        }
+        final Time modelEndTime = new Time(endTime);
+
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags,
-                day, modelStartTime, modelEndTime);
+                new Subject(modelDay, modelStartTime, modelEndTime));
     }
 
 }

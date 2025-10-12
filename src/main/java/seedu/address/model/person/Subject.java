@@ -27,9 +27,22 @@ public class Subject {
         return subjectName;
     }
 
+    public Day getDay() {
+        return day;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
     @Override
     public String toString() {
-        return subjectName;
+        return String.format(subjectName + " on " + day.toString() + " from "
+                + startTime.toString() + " to " + endTime.toString());
     }
 
     @Override

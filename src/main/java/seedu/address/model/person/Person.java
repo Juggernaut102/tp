@@ -71,6 +71,10 @@ public class Person {
         return address;
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

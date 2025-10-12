@@ -5,7 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.time.LocalTime;
 
 public class Time {
-    private LocalTime time;
+    private final LocalTime time;
 
     public static final String MESSAGE_CONSTRAINTS =
             "Time should be in the format HH:MM (24-hour format) and should be a valid time.";
