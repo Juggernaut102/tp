@@ -15,6 +15,7 @@ import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Subject;
 import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
@@ -152,6 +153,18 @@ public class ParserUtil {
             throw new ParseException(Time.MESSAGE_CONSTRAINTS);
         }
         return new Time(trimmedTime);
+    }
+
+    /**
+     * Parses a {@code Day day}, {@code Time startTime}, and {@code Time endTime}
+     * into a {@code Subject}.
+     * @throws ParseException if the given {@code day}, {@code startTime}, or {@code endTime} is invalid.
+     */
+    public static Subject parseSubject(Day day, Time startTime, Time endTime) throws ParseException {
+        if (!Subject.isValidStartEndTime(startTime, endTime)) {
+            throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
+        }
+        return new Subject(day, startTime, endTime);
     }
 
 }

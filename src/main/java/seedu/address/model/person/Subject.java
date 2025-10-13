@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.time.LocalTime;
 
 public class Subject {
@@ -7,6 +9,8 @@ public class Subject {
     private final Day day;
     private final Time startTime;
     private final Time endTime;
+    public static final String MESSAGE_CONSTRAINTS =
+            "Start time should be before end time.";
 
     private final String DEFAULT_SUBJECT_NAME = "Science";
     /**
@@ -19,6 +23,7 @@ public class Subject {
     public Subject(Day day, Time startTime, Time endTime) {
         this.subjectName = DEFAULT_SUBJECT_NAME;
         this.day = day;
+        checkArgument(isValidStartEndTime(startTime, endTime), MESSAGE_CONSTRAINTS);
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -37,6 +42,13 @@ public class Subject {
 
     public Time getEndTime() {
         return endTime;
+    }
+
+    /**
+     * Returns true if startTime is before endTime.
+     */
+    public static boolean isValidStartEndTime(Time startTime, Time endTime) {
+        return startTime.getTime().isBefore(endTime.getTime());
     }
 
     @Override

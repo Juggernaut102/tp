@@ -58,8 +58,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get());
         Time startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START).get());
         Time endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END).get());
+        Subject subject = ParserUtil.parseSubject(day, startTime, endTime);
 
-        Person person = new Person(name, phone, email, address, tagList, new Subject(day, startTime, endTime));
+        Person person = new Person(name, phone, email, address, tagList, subject);
 
         return new AddCommand(person);
     }
