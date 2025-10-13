@@ -39,11 +39,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label day;
-    @FXML
-    private Label startTime;
-    @FXML
-    private Label endTime;
+    private Label subject;
     @FXML
     private FlowPane tags;
 
@@ -61,8 +57,6 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        day.setText(person.getDay() == null ? "" : "Day: " + person.getDay());
-        startTime.setText(person.getStartTime() == null ? "" : "Start time: " + person.getStartTime().toString());
-        endTime.setText(person.getEndTime() == null ? "" : "End time: " + person.getEndTime().toString());
+        subject.setText(person.getSubject().toString());
     }
 }
