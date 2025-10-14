@@ -23,10 +23,12 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -139,9 +141,9 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
-        private String day;
-        private LocalTime startTime;
-        private LocalTime endTime;
+        private Day day;
+        private Time startTime;
+        private Time endTime;
 
         public EditPersonDescriptor() {}
 
@@ -216,27 +218,27 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
-        public void setDay(String day) {
+        public void setDay(Day day) {
             this.day = day;
         }
 
-        public Optional<String> getDay() {
+        public Optional<Day> getDay() {
             return Optional.ofNullable(day);
         }
 
-        public void setStartTime(LocalTime startTime) {
+        public void setStartTime(Time startTime) {
             this.startTime = startTime;
         }
 
-        public Optional<LocalTime> getStartTime() {
+        public Optional<Time> getStartTime() {
             return Optional.ofNullable(startTime);
         }
 
-        public void setEndTime(LocalTime endTime) {
+        public void setEndTime(Time endTime) {
             this.endTime = endTime;
         }
 
-        public Optional<LocalTime> getEndTime() {
+        public Optional<Time> getEndTime() {
             return Optional.ofNullable(endTime);
         }
 

@@ -31,9 +31,9 @@ public class JsonAdaptedPersonTest {
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
-    private static final String VALID_DAY = BENSON.getDay().toString();
-    private static final String VALID_START_TIME = BENSON.getStartTime().toString();
-    private static final String VALID_END_TIME = BENSON.getEndTime().toString();
+    private static final String VALID_DAY = BENSON.getSubject().getDay().toString();
+    private static final String VALID_START_TIME = BENSON.getSubject().getStartTime().toString();
+    private static final String VALID_END_TIME = BENSON.getSubject().getEndTime().toString();
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {

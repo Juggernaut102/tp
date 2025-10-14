@@ -5,10 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Subject;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -27,9 +30,9 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
-    private String day;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private Day day;
+    private Time startTime;
+    private Time endTime;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -40,9 +43,9 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        day = null;
-        startTime = null;
-        endTime = null;
+        day = new Day("Monday");
+        startTime = new Time("10:00");
+        endTime = new Time("12:00");
     }
 
     /**
@@ -54,9 +57,9 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        day = personToCopy.getDay();
-        startTime = personToCopy.getStartTime();
-        endTime = personToCopy.getEndTime();
+        day = personToCopy.getSubject().getDay();
+        startTime = personToCopy.getSubject().getStartTime();
+        endTime = personToCopy.getSubject().getEndTime();
     }
 
     /**
@@ -103,28 +106,28 @@ public class PersonBuilder {
      * Sets the {@code day} of the {@code Person} that we are building.
      */
     public PersonBuilder withDay(String day) {
-        this.day = day;
+        this.day = new Day(day);
         return this;
     }
 
     /**
      * Sets the {@code startTime} of the {@code Person} that we are building.
      */
-    public PersonBuilder withStartTime(LocalTime startTime) {
-        this.startTime = startTime;
+    public PersonBuilder withStartTime(String startTime) {
+        this.startTime = new Time(startTime);
         return this;
     }
 
     /**
      * Sets the {@code endTime} of the {@code Person} that we are building.
      */
-    public PersonBuilder withEndTime(LocalTime endTime) {
-        this.endTime = endTime;
+    public PersonBuilder withEndTime(String endTime) {
+        this.endTime = new Time(endTime);
         return this;
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, day, startTime, endTime);
+        return new Person(name, phone, email, address, tags, new Subject(day, startTime, endTime));
     }
 
 }
