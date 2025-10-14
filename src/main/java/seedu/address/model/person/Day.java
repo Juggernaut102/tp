@@ -2,13 +2,17 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Day in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDay(String)}
+ */
 public class Day {
-    private final String day;
     public static final String MESSAGE_CONSTRAINTS =
             "Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday";
-    public static final String[] VALID_DAYS = {
-            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    public static final String[] VALID_DAYS =
+        {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
     };
+    private final String day;
 
     /**
      * Constructs a {@code Day}.

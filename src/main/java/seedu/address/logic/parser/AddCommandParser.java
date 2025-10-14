@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.time.LocalTime;
 import java.util.Set;
 import java.util.stream.Stream;
 

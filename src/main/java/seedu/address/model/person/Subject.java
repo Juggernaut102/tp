@@ -2,17 +2,20 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.time.LocalTime;
-
+/**
+ * Represents a Subject in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidStartEndTime(Time, Time)}
+ */
 public class Subject {
+    public static final String MESSAGE_CONSTRAINTS =
+            "Start time should be before end time.";
+    public static final String DEFAULT_SUBJECT_NAME = "Science";
     private final String subjectName;
     private final Day day;
     private final Time startTime;
     private final Time endTime;
-    public static final String MESSAGE_CONSTRAINTS =
-            "Start time should be before end time.";
 
-    private final String DEFAULT_SUBJECT_NAME = "Science";
+
     /**
      * Constructs a {@code Subject}.
      *

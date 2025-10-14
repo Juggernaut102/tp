@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 

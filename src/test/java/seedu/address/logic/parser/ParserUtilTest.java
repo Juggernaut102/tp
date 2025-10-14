@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import java.time.LocalTime;
+//import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -196,15 +196,15 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 
-//    @Test
-//    public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
-//        String expectedDay = VALID_DAY;
-//        assertEquals(expectedDay, ParserUtil.parseDay(VALID_DAY));
-//    }
-//
-//    @Test
-//    public void parseTime_validValueWithoutWhitespace_returnsTime() throws Exception {
-//        LocalTime expectedTime = LocalTime.of(9, 0);
-//        assertEquals(expectedTime, ParserUtil.parseTime("09:00"));
-//    }
+    //    @Test
+    //    public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
+    //        String expectedDay = VALID_DAY;
+    //        assertEquals(expectedDay, ParserUtil.parseDay(VALID_DAY));
+    //    }
+    //
+    //    @Test
+    //    public void parseTime_validValueWithoutWhitespace_returnsTime() throws Exception {
+    //        LocalTime expectedTime = LocalTime.of(9, 0);
+    //        assertEquals(expectedTime, ParserUtil.parseTime("09:00"));
+    //    }
 }

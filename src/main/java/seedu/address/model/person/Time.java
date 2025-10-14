@@ -4,11 +4,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalTime;
 
+/**
+ * Represents a Time in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
+ */
 public class Time {
-    private final LocalTime time;
-
     public static final String MESSAGE_CONSTRAINTS =
             "Time should be in the format HH:MM (24-hour format) and should be a valid time.";
+    private final LocalTime time;
 
     /**
      * Constructs a {@code Time}.
@@ -20,6 +23,9 @@ public class Time {
         this.time = LocalTime.parse(time);
     }
 
+    /**
+     * Returns true if a given string is a valid time.
+     */
     public static boolean isValidTime(String time) {
         try {
             LocalTime.parse(time);
