@@ -10,17 +10,19 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.time.LocalTime;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Subject;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,7 +40,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
                         PREFIX_DAY, PREFIX_START, PREFIX_END);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_DAY, PREFIX_START, PREFIX_END)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -49,18 +52,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        // Parse optional new fields
-        String day = argMultimap.getValue(PREFIX_DAY).isPresent()
-                ? ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get())
-                : null;
-        LocalTime startTime = argMultimap.getValue(PREFIX_START).isPresent()
-                ? ParserUtil.parseTime(argMultimap.getValue(PREFIX_START).get())
-                : null;
-        LocalTime endTime = argMultimap.getValue(PREFIX_END).isPresent()
-                ? ParserUtil.parseTime(argMultimap.getValue(PREFIX_END).get())
-                : null;
 
-        Person person = new Person(name, phone, email, address, tagList, day, startTime, endTime);
+        // Parse additional fields for Day, startTime, and endTime
+        Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get());
+        Time startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START).get());
+        Time endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END).get());
+        Subject subject = ParserUtil.parseSubject(day, startTime, endTime);
+
+        Person person = new Person(name, phone, email, address, tagList, subject);
 
         return new AddCommand(person);
     }
