@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
@@ -80,7 +79,7 @@ public class FindCommandTest {
     // ----------------------------------------------
 
     @Test
-    public void execute_namePredicate_zeroKeywords_noPersonFound() {
+    public void executeByName_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate predicate = prepareNamePredicate(" ");
         FindCommand command = new FindCommand(predicate);
@@ -90,7 +89,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_namePredicate_singleKeyword_singlePersonFound() {
+    public void executeByName_singleKeyword_singlePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         NameContainsKeywordsPredicate predicate = prepareNamePredicate("Carl");
         FindCommand command = new FindCommand(predicate);
@@ -100,7 +99,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_namePredicate_multipleKeywords_multiplePersonsFound() {
+    public void executeByName_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = prepareNamePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
@@ -110,7 +109,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_caseInsensitiveKeywords_personsFound() {
+    public void executeByName_caseInsensitiveKeywords_personsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         NameContainsKeywordsPredicate predicate = prepareNamePredicate("cArL");
         FindCommand command = new FindCommand(predicate);
@@ -120,7 +119,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_partialMatchKeyword_noPersonFound() {
+    public void executeByName_partialMatchKeyword_noPersonFound() {
         // Ensures that names are matched by an entire word (separated by whitespace)
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate predicate = prepareNamePredicate("Car");
@@ -146,7 +145,7 @@ public class FindCommandTest {
     //    }
 
     @Test
-    public void execute_dayNotFound_noPersonsFound() {
+    public void executeByDay_dayNotFound_noPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         DayMatchesPredicate predicate = prepareDayPredicate("Sunday");
         FindCommand command = new FindCommand(predicate);
@@ -156,7 +155,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_invalidDayFormat_throwsIllegalArgumentException() {
+    public void executeByDay_invalidDayFormat_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> prepareDayPredicate("mondayy"));
     }
 
@@ -164,7 +163,7 @@ public class FindCommandTest {
      * Case-insensitive user input for day should still work.
      */
     @Test
-    public void execute_dayCaseInsensitive_personsFound() {
+    public void executeByDay_dayCaseInsensitive_personsFound() {
         DayMatchesPredicate predicate = prepareDayPredicate("mOnDaY");
         FindCommand command = new FindCommand(predicate);
 
