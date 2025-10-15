@@ -14,12 +14,12 @@ public class DayMatchesPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        if (person.getDay() == null) {
+        if (person.getSubject() == null) {
             return false;
         }
         // Match day, ignoring case
-        return person.getDay() != null
-                && person.getDay().getDay().equalsIgnoreCase(day.getDay());
+        return person.getSubject().getDay() != null
+                && person.getSubject().getDay().toString().equalsIgnoreCase(day.getDay());
     }
 
     @Override
