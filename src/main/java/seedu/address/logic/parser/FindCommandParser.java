@@ -36,10 +36,12 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
+            // ensures that user did not use find with no keywords
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
+        // If d/ prefix is not provided, the default is to treat the arguments as name keywords
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
