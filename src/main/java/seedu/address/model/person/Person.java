@@ -31,19 +31,6 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.tags.addAll(tags);
-        this.subject = null; // Default to null if not provided
-    }
-
-    /**
-     * New overloaded constructor to include additional fields for Day, startTime, and endTime.
-     */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Subject subject) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
@@ -132,8 +119,9 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
-                .add("subject", subject)
+                .add("day", subject.getDay())
+                .add("startTime", subject.getStartTime())
+                .add("endTime", subject.getEndTime())
                 .toString();
     }
-
 }
