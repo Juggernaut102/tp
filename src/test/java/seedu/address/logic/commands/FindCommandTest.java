@@ -177,6 +177,9 @@ public class FindCommandTest {
         assertEquals(expectedModel.getFilteredPersonList(), model.getFilteredPersonList());
     }
 
+    // ----------------------------------------------
+    // Utility / Misc. Tests
+    // ----------------------------------------------
     @Test
     public void toStringMethod() {
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
@@ -184,8 +187,6 @@ public class FindCommandTest {
         String expected = FindCommand.class.getCanonicalName() + "{findByDay=false, predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
     }
-
-
 
     /**
      * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
