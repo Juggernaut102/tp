@@ -110,7 +110,7 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Day updatedDay = editPersonDescriptor.getDay().orElse(personToEdit.getDay());
+        Day updatedDay = editPersonDescriptor.getDay().orElse(personToEdit.getSubject().getDay());
         Time updatedStart = editPersonDescriptor.getStartTime().orElse(personToEdit.getStartTime());
         Time updatedEnd = editPersonDescriptor.getEndTime().orElse(personToEdit.getEndTime());
         Subject updatedSubject = new Subject(updatedDay, updatedStart, updatedEnd);
@@ -177,7 +177,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, day, startTime, endTime);
         }
 
         public void setName(Name name) {
