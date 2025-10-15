@@ -52,11 +52,6 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
-        // Parse additional fields for Day, startTime, and endTime
-        Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get());
-        Time startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START).get());
-        Time endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END).get());
         Subject subject = ParserUtil.parseSubject(argMultimap.getValue(PREFIX_DAY).get(),
                 argMultimap.getValue(PREFIX_START).get(), argMultimap.getValue(PREFIX_END).get());
 

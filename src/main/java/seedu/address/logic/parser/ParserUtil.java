@@ -126,35 +126,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String day} into a {@code String}.
-     * Leading and trailing whitespaces will be trimmed.
-     */
-    public static Day parseDay(String day) throws ParseException {
-        // no validation for day as of now
-        requireNonNull(day);
-        String trimmedDay = day.trim();
-        if (!Day.isValidDay(trimmedDay)) {
-            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
-        }
-        return new Day(trimmedDay);
-    }
-
-    /**
-     * Parses a {@code String time} into a {@code LocalTime}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code time} is invalid.
-     */
-    public static Time parseTime(String time) throws ParseException {
-        requireNonNull(time);
-        String trimmedTime = time.trim();
-        if (!Time.isValidTime(trimmedTime)) {
-            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
-        }
-        return new Time(trimmedTime);
-    }
-
-    /**
      * Parses a {@code Day day}, {@code Time startTime}, and {@code Time endTime}
      * into a {@code Subject}.
      * @throws ParseException if the given {@code day}, {@code startTime}, or {@code endTime} is invalid.
