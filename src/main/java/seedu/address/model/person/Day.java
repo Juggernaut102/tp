@@ -65,7 +65,6 @@ public class Day {
     }
 
     /**
-     *
      * @param input case-insensitive string representing a day of the week
      * @return formatted string representing a day of the week
      */
