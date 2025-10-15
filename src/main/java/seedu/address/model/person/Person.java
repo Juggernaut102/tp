@@ -131,9 +131,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
-                .add("day", subject.getDay())
-                .add("startTime", subject.getStartTime())
-                .add("endTime", subject.getEndTime())
+                .add("subject", subject)
                 .toString();
     }
 }

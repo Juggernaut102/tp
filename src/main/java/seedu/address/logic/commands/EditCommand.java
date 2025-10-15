@@ -23,6 +23,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Day;
@@ -49,13 +50,13 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_DAY + "DAY ]"
-            + "[" + PREFIX_START + "START ]"
-            + "[" + PREFIX_END + "END ]"
+            + "[" + PREFIX_DAY + "DAY] "
+            + "[" + PREFIX_START + "START] "
+            + "[" + PREFIX_END + "END] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com"
+            + PREFIX_EMAIL + "johndoe@example.com "
             + PREFIX_DAY + "Wednesday";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
@@ -87,8 +88,13 @@ public class EditCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-
+        Person editedPerson;
+        try {
+            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        } catch (IllegalArgumentException e) {
+            // Catch start time before end time error
+            throw new CommandException(e.getMessage());
+        }
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -155,6 +161,7 @@ public class EditCommand extends Command {
         private Day day;
         private Time startTime;
         private Time endTime;
+        private Subject subject;
 
         public EditPersonDescriptor() {}
 
@@ -171,6 +178,7 @@ public class EditCommand extends Command {
             setDay(toCopy.day);
             setStartTime(toCopy.startTime);
             setEndTime(toCopy.endTime);
+            setSubject(toCopy.subject);
         }
 
         /**
@@ -251,6 +259,14 @@ public class EditCommand extends Command {
 
         public Optional<Time> getEndTime() {
             return Optional.ofNullable(endTime);
+        }
+
+        public void setSubject(Subject subject) {
+            this.subject = subject;
+        }
+
+        public Optional<Subject> getSubject() {
+            return Optional.ofNullable(subject);
         }
 
         @Override
