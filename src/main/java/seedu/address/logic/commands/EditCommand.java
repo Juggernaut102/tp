@@ -2,9 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -22,12 +25,11 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Time;
+import seedu.address.model.person.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -45,6 +47,9 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_DAY + "DAY ]"
+            + "[" + PREFIX_START + "START ]"
+            + "[" + PREFIX_END + "END ]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -102,8 +107,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Subject updatedSubject = editPersonDescriptor.getSubject().orElse(personToEdit.getSubject());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedSubject);
     }
 
     @Override
@@ -140,9 +146,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
-        private Day day;
-        private Time startTime;
-        private Time endTime;
+        private Subject subject;
 
         public EditPersonDescriptor() {}
 
@@ -156,16 +160,14 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
-            setDay(toCopy.day);
-            setStartTime(toCopy.startTime);
-            setEndTime(toCopy.endTime);
+            setSubject(toCopy.subject);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, subject);
         }
 
         public void setName(Name name) {
@@ -200,6 +202,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setSubject(Subject subject) {
+            this.subject = subject;
+        }
+
+        public Optional<Subject> getSubject() {
+            return Optional.ofNullable(subject);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -217,29 +227,7 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
-        public void setDay(Day day) {
-            this.day = day;
-        }
 
-        public Optional<Day> getDay() {
-            return Optional.ofNullable(day);
-        }
-
-        public void setStartTime(Time startTime) {
-            this.startTime = startTime;
-        }
-
-        public Optional<Time> getStartTime() {
-            return Optional.ofNullable(startTime);
-        }
-
-        public void setEndTime(Time endTime) {
-            this.endTime = endTime;
-        }
-
-        public Optional<Time> getEndTime() {
-            return Optional.ofNullable(endTime);
-        }
 
         @Override
         public boolean equals(Object other) {
@@ -258,9 +246,7 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(day, otherEditPersonDescriptor.day)
-                    && Objects.equals(startTime, otherEditPersonDescriptor.startTime)
-                    && Objects.equals(endTime, otherEditPersonDescriptor.endTime);
+                    && Objects.equals(subject, otherEditPersonDescriptor.subject);
         }
 
         @Override
@@ -271,9 +257,7 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("tags", tags)
-                    .add("day", day)
-                    .add("startTime", startTime)
-                    .add("endTime", endTime)
+                    .add("subject", subject)
                     .toString();
         }
     }

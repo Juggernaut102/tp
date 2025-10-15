@@ -126,44 +126,39 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String day} into a {@code String}.
-     * Leading and trailing whitespaces will be trimmed.
-     */
-    public static Day parseDay(String day) throws ParseException {
-        // no validation for day as of now
-        requireNonNull(day);
-        String trimmedDay = day.trim();
-        if (!Day.isValidDay(trimmedDay)) {
-            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
-        }
-        return new Day(trimmedDay);
-    }
-
-    /**
-     * Parses a {@code String time} into a {@code LocalTime}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code time} is invalid.
-     */
-    public static Time parseTime(String time) throws ParseException {
-        requireNonNull(time);
-        String trimmedTime = time.trim();
-        if (!Time.isValidTime(trimmedTime)) {
-            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
-        }
-        return new Time(trimmedTime);
-    }
-
-    /**
      * Parses a {@code Day day}, {@code Time startTime}, and {@code Time endTime}
      * into a {@code Subject}.
      * @throws ParseException if the given {@code day}, {@code startTime}, or {@code endTime} is invalid.
      */
-    public static Subject parseSubject(Day day, Time startTime, Time endTime) throws ParseException {
-        if (!Subject.isValidStartEndTime(startTime, endTime)) {
+    public static Subject parseSubject(String day, String startTime, String endTime) throws ParseException {
+        requireNonNull(day);
+        requireNonNull(startTime);
+        requireNonNull(endTime);
+
+        String trimmedDay = day.trim();
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+        }
+
+        String trimmedStartTime = startTime.trim();
+        if (!Time.isValidTime(trimmedStartTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        String trimmedEndTime = endTime.trim();
+        if (!Time.isValidTime(trimmedEndTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        Day dayObj = new Day(trimmedDay);
+        Time startTimeObj = new Time(trimmedStartTime);
+        Time endTimeObj = new Time(trimmedEndTime);
+
+        if (!Subject.isValidStartEndTime(startTimeObj, endTimeObj)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
         }
-        return new Subject(day, startTime, endTime);
+
+        return new Subject(dayObj, startTimeObj, endTimeObj);
     }
 
 }
