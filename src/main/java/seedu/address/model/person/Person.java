@@ -74,6 +74,14 @@ public class Person {
         return subject;
     }
 
+    public Time getStartTime() {
+        return subject != null ? subject.getStartTime() : null;
+    }
+
+    public Time getEndTime() {
+        return subject != null ? subject.getEndTime() : null;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
