@@ -40,7 +40,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
-        descriptor.setSubject(person.getSubject());
+        descriptor.setDay(person.getDay());
+        descriptor.setStartTime(person.getStartTime());
+        descriptor.setEndTime(person.getEndTime());
     }
 
     /**
@@ -82,6 +84,30 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Day} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDay(String day) {
+        descriptor.setDay(new Day(day));
+        return this;
+    }
+
+    /**
+     * Sets the {@code StartTime} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withStartTime(String startTime) {
+        descriptor.setStartTime(new Time(startTime));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withEndTime(String endTime) {
+        descriptor.setEndTime(new Time(endTime));
         return this;
     }
 
