@@ -8,7 +8,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Subject {
     public static final String MESSAGE_CONSTRAINTS =
-            "Start time should be before end time.";
+            "Start time should be before end time!";
     public static final String DEFAULT_SUBJECT_NAME = "Science";
     public final String value;
     private final String subjectName;
