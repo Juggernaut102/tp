@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-// import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -147,11 +148,33 @@ public class FindCommandTest {
     @Test
     public void execute_dayNotFound_noPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        DayMatchesPredicate predicate = new DayMatchesPredicate(new Day("Sunday"));
+        DayMatchesPredicate predicate = prepareDayPredicate("Sunday");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_invalidDayFormat_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> prepareDayPredicate("mondayy"));
+    }
+
+    /**
+     * Case-insensitive user input for day should still work.
+     */
+    @Test
+    public void execute_dayCaseInsensitive_personsFound() {
+        DayMatchesPredicate predicate = prepareDayPredicate("mOnDaY");
+        FindCommand command = new FindCommand(predicate);
+
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model,
+                String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size()),
+                expectedModel);
+
+        // Compare filtered lists
+        assertEquals(expectedModel.getFilteredPersonList(), model.getFilteredPersonList());
     }
 
     @Test
