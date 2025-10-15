@@ -135,9 +135,24 @@ public class ParserUtil {
         requireNonNull(startTime);
         requireNonNull(endTime);
 
-        Day dayObj = new Day(day);
-        Time startTimeObj = new Time(startTime);
-        Time endTimeObj = new Time(endTime);
+        String trimmedDay = day.trim();
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+        }
+
+        String trimmedStartTime = startTime.trim();
+        if (!Time.isValidTime(trimmedStartTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        String trimmedEndTime = endTime.trim();
+        if (!Time.isValidTime(trimmedEndTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        Day dayObj = new Day(trimmedDay);
+        Time startTimeObj = new Time(trimmedStartTime);
+        Time endTimeObj = new Time(trimmedEndTime);
 
         if (!Subject.isValidStartEndTime(startTimeObj, endTimeObj)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
