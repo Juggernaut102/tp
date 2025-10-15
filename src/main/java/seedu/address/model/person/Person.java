@@ -74,6 +74,10 @@ public class Person {
         return subject;
     }
 
+    public Day getDay() {
+        return subject != null ? subject.getDay() : null;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -121,7 +125,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, subject);
     }
 
     @Override
