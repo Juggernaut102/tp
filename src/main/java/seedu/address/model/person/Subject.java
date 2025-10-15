@@ -10,11 +10,11 @@ public class Subject {
     public static final String MESSAGE_CONSTRAINTS =
             "Start time should be before end time.";
     public static final String DEFAULT_SUBJECT_NAME = "Science";
+    public final String value;
     private final String subjectName;
     private final Day day;
     private final Time startTime;
     private final Time endTime;
-
 
     /**
      * Constructs a {@code Subject}.
@@ -29,6 +29,8 @@ public class Subject {
         checkArgument(isValidStartEndTime(startTime, endTime), MESSAGE_CONSTRAINTS);
         this.startTime = startTime;
         this.endTime = endTime;
+
+        value = this.toString();
     }
 
     public String getSubjectName() {

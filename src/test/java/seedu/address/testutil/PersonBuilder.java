@@ -23,6 +23,9 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_DAY = "Monday";
+    public static final String DEFAULT_STARTTIME = "10:00";
+    public static final String DEFAULT_ENDTIME = "12:00";
 
     private Name name;
     private Phone phone;
@@ -42,9 +45,9 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        day = new Day("Monday");
-        startTime = new Time("10:00");
-        endTime = new Time("12:00");
+        day = new Day(DEFAULT_DAY);
+        startTime = new Time(DEFAULT_STARTTIME);
+        endTime = new Time(DEFAULT_ENDTIME);
     }
 
     /**

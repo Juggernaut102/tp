@@ -159,11 +159,35 @@ public class ParserUtil {
      * into a {@code Subject}.
      * @throws ParseException if the given {@code day}, {@code startTime}, or {@code endTime} is invalid.
      */
-    public static Subject parseSubject(Day day, Time startTime, Time endTime) throws ParseException {
-        if (!Subject.isValidStartEndTime(startTime, endTime)) {
+    public static Subject parseSubject(String day, String startTime, String endTime) throws ParseException {
+        requireNonNull(day);
+        requireNonNull(startTime);
+        requireNonNull(endTime);
+
+        String trimmedDay = day.trim();
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+        }
+
+        String trimmedStartTime = startTime.trim();
+        if (!Time.isValidTime(trimmedStartTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        String trimmedEndTime = endTime.trim();
+        if (!Time.isValidTime(trimmedEndTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        Day dayObj = new Day(trimmedDay);
+        Time startTimeObj = new Time(trimmedStartTime);
+        Time endTimeObj = new Time(trimmedEndTime);
+
+        if (!Subject.isValidStartEndTime(startTimeObj, endTimeObj)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
         }
-        return new Subject(day, startTime, endTime);
+
+        return new Subject(dayObj, startTimeObj, endTimeObj);
     }
 
 }
