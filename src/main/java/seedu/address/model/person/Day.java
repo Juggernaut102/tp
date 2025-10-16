@@ -21,7 +21,7 @@ public class Day {
      */
     public Day(String day) {
         checkArgument(isValidDay(day), MESSAGE_CONSTRAINTS);
-        this.day = day;
+        this.day = normalizeDayString(day);
     }
 
     /**
@@ -55,5 +55,20 @@ public class Day {
     @Override
     public int hashCode() {
         return day.hashCode();
+    }
+
+    /**
+     * Given an input string, capitalizes the first letter
+     */
+    private static String capitalize(String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+    }
+
+    /**
+     * @param input case-insensitive string representing a day of the week
+     * @return formatted string representing a day of the week
+     */
+    private static String normalizeDayString(String input) {
+        return capitalize(input.toLowerCase());
     }
 }

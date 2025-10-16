@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-// import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -30,6 +30,9 @@ public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    // ----------------------------------------------
+    // Equality tests
+    // ----------------------------------------------
     @Test
     public void equals() {
         NameContainsKeywordsPredicate firstPredicate =
@@ -71,10 +74,14 @@ public class FindCommandTest {
         assertFalse(findByDayFirst.equals(findByDaySecond));
     }
 
+    // ----------------------------------------------
+    // Name-based Find tests
+    // ----------------------------------------------
+
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
+    public void executeByName_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        NameContainsKeywordsPredicate predicate = preparePredicate(" ");
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -82,14 +89,48 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void executeByName_singleKeyword_singlePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Carl");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(CARL), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void executeByName_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
     }
+
+    @Test
+    public void executeByName_caseInsensitiveKeywords_personsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("cArL");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(CARL), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void executeByName_partialMatchKeyword_noPersonFound() {
+        // Ensures that names are matched by an entire word (separated by whitespace)
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Car");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+    // ----------------------------------------------
+    // Day-Based Find tests
+    // ----------------------------------------------
 
     //    @Test
     //    public void execute_validDay_personsFound() {
@@ -104,15 +145,40 @@ public class FindCommandTest {
     //    }
 
     @Test
-    public void execute_dayNotFound_noPersonsFound() {
+    public void executeByDay_dayNotFound_noPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        DayMatchesPredicate predicate = new DayMatchesPredicate(new Day("Sunday"));
+        DayMatchesPredicate predicate = prepareDayPredicate("Sunday");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
+    @Test
+    public void executeByDay_invalidDayFormat_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> prepareDayPredicate("mondayy"));
+    }
+
+    /**
+     * Case-insensitive user input for day should still work.
+     */
+    @Test
+    public void executeByDay_dayCaseInsensitive_personsFound() {
+        DayMatchesPredicate predicate = prepareDayPredicate("mOnDaY");
+        FindCommand command = new FindCommand(predicate);
+
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model,
+                String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size()),
+                expectedModel);
+
+        // Compare filtered lists
+        assertEquals(expectedModel.getFilteredPersonList(), model.getFilteredPersonList());
+    }
+
+    // ----------------------------------------------
+    // Utility / Misc. Tests
+    // ----------------------------------------------
     @Test
     public void toStringMethod() {
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
@@ -124,7 +190,14 @@ public class FindCommandTest {
     /**
      * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
      */
-    private NameContainsKeywordsPredicate preparePredicate(String userInput) {
+    private NameContainsKeywordsPredicate prepareNamePredicate(String userInput) {
         return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code DayMatchesPredicate}.
+     */
+    private DayMatchesPredicate prepareDayPredicate(String userInput) {
+        return new DayMatchesPredicate(new Day(userInput));
     }
 }
