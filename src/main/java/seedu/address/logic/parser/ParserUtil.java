@@ -126,6 +126,34 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code String day} into a {@code Day}.
+     * @throws ParseException if the given {@code Day} is invalid.
+     */
+    public static Day parseDay(String day) throws ParseException {
+        requireNonNull(day);
+        String trimmedDay = day.trim();
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Day(trimmedDay);
+    }
+
+    /**
+     * Parses {@code String time} into a {@code Time}.
+     * @throws ParseException if the given {@code Time} is invalid.
+     */
+    public static Time parseTime(String time) throws ParseException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        if (!Time.isValidTime(trimmedTime)) {
+            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Time(time);
+    }
+
+    /**
      * Parses a {@code Day day}, {@code Time startTime}, and {@code Time endTime}
      * into a {@code Subject}.
      * @throws ParseException if the given {@code day}, {@code startTime}, or {@code endTime} is invalid.

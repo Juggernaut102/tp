@@ -25,11 +25,13 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Subject;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -107,7 +109,27 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Subject updatedSubject = editPersonDescriptor.getSubject().orElse(personToEdit.getSubject());
+
+        // Temporary before support for multiple subjects are added
+        Subject updatedSubject;
+
+        if (editPersonDescriptor.getSubject().isPresent()) {
+            // editSubjectDescriptor will handle this in the future
+            updatedSubject = editPersonDescriptor.getSubject().get();
+        } else if (editPersonDescriptor.getDay().isPresent()
+                || editPersonDescriptor.getStartTime().isPresent()
+                || editPersonDescriptor.getEndTime().isPresent()) {
+            // Partial updates to subject fields (temporary before support for multiple subjects are added)
+            Day updatedDay = editPersonDescriptor.getDay().orElse(personToEdit.getDay());
+            Time updatedStartTime = editPersonDescriptor.getStartTime()
+                    .orElse(personToEdit.getSubject().getStartTime());
+            Time updatedEndTime = editPersonDescriptor.getEndTime()
+                    .orElse(personToEdit.getSubject().getEndTime());
+            updatedSubject = new Subject(updatedDay, updatedStartTime, updatedEndTime);
+        } else {
+            // ".orElse()"
+            updatedSubject = personToEdit.getSubject();
+        }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedSubject);
     }
@@ -148,6 +170,11 @@ public class EditCommand extends Command {
         private Set<Tag> tags;
         private Subject subject;
 
+        // Temporary before support for multiple subjects are added
+        private Day day;
+        private Time startTime;
+        private Time endTime;
+
         public EditPersonDescriptor() {}
 
         /**
@@ -161,13 +188,18 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setSubject(toCopy.subject);
+
+            // Temporary before support for multiple subjects are added
+            setDay(toCopy.day);
+            setStartTime(toCopy.startTime);
+            setEndTime(toCopy.endTime);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, subject);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, subject, day, startTime, endTime);
         }
 
         public void setName(Name name) {
@@ -209,6 +241,38 @@ public class EditCommand extends Command {
         public Optional<Subject> getSubject() {
             return Optional.ofNullable(subject);
         }
+
+        // Temporary before support for multiple subjects are added
+        public Optional<Day> getDay() {
+            return Optional.ofNullable(day);
+        }
+
+        // Temporary before support for multiple subjects are added
+        public void setDay(Day day) {
+            this.day = day;
+        }
+
+        // Temporary before support for multiple subjects are added
+        public Optional<Time> getStartTime() {
+            return Optional.ofNullable(startTime);
+        }
+
+        // Temporary before support for multiple subjects are added
+        public void setStartTime(Time time) {
+            this.startTime = time;
+        }
+
+        // Temporary before support for multiple subjects are added
+        public Optional<Time> getEndTime() {
+            return Optional.ofNullable(endTime);
+        }
+
+        // Temporary before support for multiple subjects are added
+        public void setEndTime(Time time) {
+            this.endTime = time;
+        }
+
+
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

@@ -62,6 +62,23 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
+
+        // Temporary before support for multiple subjects are added
+        if (argMultimap.getValue(PREFIX_DAY).isPresent()) {
+            editPersonDescriptor.setDay(ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get()));
+        }
+
+        // Temporary before support for multiple subjects are added
+        if (argMultimap.getValue(PREFIX_START).isPresent()) {
+            editPersonDescriptor.setStartTime(ParserUtil.parseTime(argMultimap.getValue(PREFIX_START).get()));
+        }
+
+        // Temporary before support for multiple subjects are added
+        if (argMultimap.getValue(PREFIX_END).isPresent()) {
+            editPersonDescriptor.setEndTime(ParserUtil.parseTime(argMultimap.getValue(PREFIX_END).get()));
+        }
+
+        // Edit the entire subject
         if (argMultimap.getValue(PREFIX_DAY).isPresent()
                 && argMultimap.getValue(PREFIX_START).isPresent()
                 && argMultimap.getValue(PREFIX_END).isPresent()) {
