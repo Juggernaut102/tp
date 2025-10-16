@@ -25,8 +25,8 @@ public class FindCommand extends Command {
             + "KEYWORD [MORE_KEYWORDS]...\n"
             + PREFIX_DAY + "DAY (to search by tuition day)\n"
             + "Example:\n"
-            + "  " + COMMAND_WORD + " alice bob\n"
-            + "  " + COMMAND_WORD + " " + PREFIX_DAY + "Monday";
+            + COMMAND_WORD + " alice bob\n"
+            + COMMAND_WORD + " " + PREFIX_DAY + "Monday";
 
 
     private final NameContainsKeywordsPredicate namePredicate;
