@@ -28,8 +28,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         if (argMultimap.getValue(PREFIX_DAY).isPresent()) {
             String dayValue = argMultimap.getValue(PREFIX_DAY).get().trim();
             if (dayValue.isEmpty() || !Day.isValidDay(dayValue)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        FindCommand.MESSAGE_USAGE + "\n\n" + Day.MESSAGE_CONSTRAINTS));
+                throw new ParseException(String.format(Day.MESSAGE_CONSTRAINTS));
             }
             return new FindCommand(new DayMatchesPredicate(new Day(dayValue)));
         }
