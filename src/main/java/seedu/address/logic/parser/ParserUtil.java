@@ -128,6 +128,8 @@ public class ParserUtil {
     /**
      * Parses a {@code String day} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code day} is invalid.
      */
     public static Day parseDay(String day) throws ParseException {
         // no validation for day as of now
