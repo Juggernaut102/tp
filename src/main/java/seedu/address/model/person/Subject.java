@@ -58,10 +58,10 @@ public class Subject {
 
     @Override
     public String toString() {
-        return String.format("Subject: " + subjectName + "\n"
-                + "Day: " + day.toString() + "\n"
-                + "startTime: " + startTime.toString() + "\n"
-                + "endTime: " + endTime.toString());
+        return String.format("[Name: " + subjectName
+                + ", Day: " + day.toString()
+                + ", startTime: " + startTime.toString()
+                + ", endTime: " + endTime.toString()) + "]";
     }
 
     @Override
