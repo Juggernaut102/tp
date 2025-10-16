@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-//import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,9 +15,11 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Day;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -35,6 +36,7 @@ public class ParserUtilTest {
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
     private static final String VALID_DAY = "Monday";
+    private static final String VALID_TIME = "09:00";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -196,15 +198,15 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 
-    //    @Test
-    //    public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
-    //        String expectedDay = VALID_DAY;
-    //        assertEquals(expectedDay, ParserUtil.parseDay(VALID_DAY));
-    //    }
-    //
-    //    @Test
-    //    public void parseTime_validValueWithoutWhitespace_returnsTime() throws Exception {
-    //        LocalTime expectedTime = LocalTime.of(9, 0);
-    //        assertEquals(expectedTime, ParserUtil.parseTime("09:00"));
-    //    }
+    @Test
+    public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
+        Day expectedDay = new Day(VALID_DAY);
+        assertEquals(expectedDay, ParserUtil.parseDay(VALID_DAY));
+    }
+
+    @Test
+    public void parseTime_validValueWithoutWhitespace_returnsTime() throws Exception {
+        Time expectedTime = new Time(VALID_TIME);
+        assertEquals(expectedTime, ParserUtil.parseTime(VALID_TIME));
+    }
 }

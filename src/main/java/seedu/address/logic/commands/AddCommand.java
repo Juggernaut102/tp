@@ -38,8 +38,8 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "weak in XX topic "
-            + PREFIX_TAG + "strong in XX topic "
+            + PREFIX_TAG + "weakInXXTopic "
+            + PREFIX_TAG + "strongInXXTopic "
             + PREFIX_DAY + "Monday "
             + PREFIX_START + "09:00 "
             + PREFIX_END + "11:00";
