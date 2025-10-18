@@ -24,6 +24,13 @@ public class FindCommandParser implements Parser<FindCommand> {
     public FindCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DAY);
 
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            // ensures that user did not use find with no keywords
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
         // find by day (e.g. "find d/Monday")
         if (argMultimap.getValue(PREFIX_DAY).isPresent()) {
             String dayValue = argMultimap.getValue(PREFIX_DAY).get().trim();
@@ -33,12 +40,6 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new DayMatchesPredicate(new Day(dayValue)));
         }
 
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            // ensures that user did not use find with no keywords
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
 
         // If d/ prefix is not provided, the default is to treat the arguments as name keywords
         String[] nameKeywords = trimmedArgs.split("\\s+");
