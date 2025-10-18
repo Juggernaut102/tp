@@ -2,12 +2,9 @@ package seedu.edudex.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.edudex.commons.util.ToStringBuilder;

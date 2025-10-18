@@ -27,10 +27,10 @@ import seedu.edudex.model.Model;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 
@@ -125,19 +125,20 @@ public class EditCommand extends Command {
         } else if (editPersonDescriptor.getDay().isPresent()
                 || editPersonDescriptor.getStartTime().isPresent()
                 || editPersonDescriptor.getEndTime().isPresent()) {
-//            // Partial updates to subject fields (temporary before support for multiple subjects are added)
-//            Day updatedDay = editPersonDescriptor.getDay().orElse(personToEdit.getDay());
-//            Time updatedStartTime = editPersonDescriptor.getStartTime()
-//                    .orElse(personToEdit.getSubject().getStartTime());
-//            Time updatedEndTime = editPersonDescriptor.getEndTime()
-//                    .orElse(personToEdit.getSubject().getEndTime());
-//            updatedSubject = new Lesson(updatedDay, updatedStartTime, updatedEndTime);
+            // Partial updates to subject fields (temporary before support for multiple subjects are added)
+        //            Day updatedDay = editPersonDescriptor.getDay().orElse(personToEdit.getDay());
+        //            Time updatedStartTime = editPersonDescriptor.getStartTime()
+        //                    .orElse(personToEdit.getSubject().getStartTime());
+        //            Time updatedEndTime = editPersonDescriptor.getEndTime()
+        //                    .orElse(personToEdit.getSubject().getEndTime());
+        //            updatedSubject = new Lesson(updatedDay, updatedStartTime, updatedEndTime);
         } else {
             // ".orElse()"
-//            updatedSubject = personToEdit.getSubject();
+        //            updatedSubject = personToEdit.getSubject();
         }
 
-//        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedSubject);
+        //        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+        //        updatedTags, updatedSubject);
         return null; // Temporary before support for multiple subjects are added
     }
 

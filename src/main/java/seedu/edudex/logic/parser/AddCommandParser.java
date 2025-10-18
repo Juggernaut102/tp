@@ -2,12 +2,9 @@ package seedu.edudex.logic.parser;
 
 import static seedu.edudex.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
@@ -20,7 +17,6 @@ import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.tag.Tag;
 
 /**

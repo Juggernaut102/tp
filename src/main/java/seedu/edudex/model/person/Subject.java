@@ -9,10 +9,14 @@ import static seedu.edudex.commons.util.AppUtil.checkArgument;
 //import seedu.edudex.model.ReadOnlyEduDex;
 //import seedu.edudex.storage.JsonEduDexStorage;
 
+/**
+ * Represents a Subject in EduDex.
+ * Guarantees: immutable; is valid as declared in {@link #isValidSubject(String)}
+ */
 public class Subject {
-    private final String name;
     public static final String MESSAGE_CONSTRAINTS =
             "Subject should only be from the predefined list of subjects.";
+    private final String name;
 
     /**
      * Constructs a {@code Subject}.
@@ -25,6 +29,9 @@ public class Subject {
         this.name = name;
     }
 
+    /**
+     * Returns true if a given string is a valid subject from the list of tutor subjects.
+     */
     public static boolean isValidSubject(String name) {
         // Implement validation logic based on predefined list of subjects in Subject.json
         // Read the Subject.json file and check if the name exists

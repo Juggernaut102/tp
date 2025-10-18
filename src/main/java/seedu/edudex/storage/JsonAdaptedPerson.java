@@ -11,13 +11,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.person.Address;
-import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Lesson;
-import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 
 /**

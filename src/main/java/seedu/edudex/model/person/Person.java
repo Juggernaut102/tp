@@ -27,8 +27,7 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
-    // List of lessons
-    List<Lesson> lessons;
+    private List<Lesson> lessons;
 
     /**
      * Every field must be present and not null.

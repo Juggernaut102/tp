@@ -9,11 +9,11 @@ import static seedu.edudex.commons.util.AppUtil.checkArgument;
 public class Lesson {
     public static final String MESSAGE_CONSTRAINTS =
             "Start time should be before end time.";
-    public final Subject subject;
+    private final Subject subject;
     private final Day day;
     private final Time startTime;
     private final Time endTime;
-    public final String value;
+    private final String value;
 
     /**
      * Constructs a {@code Subject}.

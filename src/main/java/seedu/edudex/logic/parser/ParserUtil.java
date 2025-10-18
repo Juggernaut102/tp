@@ -12,9 +12,9 @@ import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
@@ -157,6 +157,12 @@ public class ParserUtil {
         return new Time(trimmedTime);
     }
 
+    /**
+     * Parses a {@code String name} into a {@code Subject}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
     public static Subject parseSubjectName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
@@ -171,7 +177,8 @@ public class ParserUtil {
      * into a {@code Subject}.
      * @throws ParseException if the given {@code day}, {@code startTime}, or {@code endTime} is invalid.
      */
-    public static Lesson parseLesson(String subject, String day, String startTime, String endTime) throws ParseException {
+    public static Lesson parseLesson(String subject, String day,
+                                     String startTime, String endTime) throws ParseException {
         requireNonNull(subject);
         requireNonNull(day);
         requireNonNull(startTime);

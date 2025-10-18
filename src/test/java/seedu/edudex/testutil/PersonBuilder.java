@@ -59,9 +59,9 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        day = personToCopy.getSubject().getDay();
-        startTime = personToCopy.getSubject().getStartTime();
-        endTime = personToCopy.getSubject().getEndTime();
+        // day = personToCopy.getSubject().getDay();
+        // startTime = personToCopy.getSubject().getStartTime();
+        // endTime = personToCopy.getSubject().getEndTime();
     }
 
     /**
@@ -129,7 +129,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, new Lesson(day, startTime, endTime));
+        return new Person(name, phone, email, address, tags);
     }
 
 }

@@ -10,12 +10,11 @@ import seedu.edudex.model.person.Time;
  * Jackson-friendly version of {@link Lesson}.
  */
 public class JsonAdaptedLesson {
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
     private final String subject;
     private final String day;
     private final String startTime;
     private final String endTime;
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
-
     /**
      * Constructs a {@code JsonAdaptedLesson} with the given lesson details.
      */
@@ -30,7 +29,7 @@ public class JsonAdaptedLesson {
      * Converts a given {@code Lesson} into this class for Jackson use.
      */
     public JsonAdaptedLesson(Lesson source) {
-        subject = source.subject.toString();
+        subject = source.getSubject().toString();
         day = source.getDay().toString();
         startTime = source.getStartTime().toString();
         endTime = source.getEndTime().toString();

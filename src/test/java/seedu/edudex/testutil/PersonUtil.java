@@ -39,9 +39,6 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        sb.append(PREFIX_DAY + person.getSubject().getDay().toString() + " ");
-        sb.append(PREFIX_START + person.getSubject().getStartTime().toString() + " ");
-        sb.append(PREFIX_END + person.getSubject().getEndTime().toString() + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
@@ -59,9 +56,6 @@ public class PersonUtil {
         descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
 
         Optional<Lesson> subject = descriptor.getSubject();
-        subject.ifPresent(sub -> sb.append(PREFIX_DAY).append(sub.getDay().toString()).append(" "));
-        subject.ifPresent(sub -> sb.append(PREFIX_START).append(sub.getStartTime().toString()).append(" "));
-        subject.ifPresent(sub -> sb.append(PREFIX_END).append(sub.getEndTime().toString()).append(" "));
 
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();

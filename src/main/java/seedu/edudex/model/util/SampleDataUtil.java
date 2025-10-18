@@ -7,13 +7,10 @@ import java.util.stream.Collectors;
 import seedu.edudex.model.EduDex;
 import seedu.edudex.model.ReadOnlyEduDex;
 import seedu.edudex.model.person.Address;
-import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Lesson;
-import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 
 /**
