@@ -9,7 +9,7 @@ import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Subject;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 import seedu.edudex.model.util.SampleDataUtil;
@@ -129,7 +129,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, new Subject(day, startTime, endTime));
+        return new Person(name, phone, email, address, tags, new Lesson(day, startTime, endTime));
     }
 
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 import seedu.edudex.logic.commands.AddCommand;
 import seedu.edudex.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.edudex.model.person.Person;
-import seedu.edudex.model.person.Subject;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.tag.Tag;
 
 /**
@@ -58,7 +58,7 @@ public class PersonUtil {
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
 
-        Optional<Subject> subject = descriptor.getSubject();
+        Optional<Lesson> subject = descriptor.getSubject();
         subject.ifPresent(sub -> sb.append(PREFIX_DAY).append(sub.getDay().toString()).append(" "));
         subject.ifPresent(sub -> sb.append(PREFIX_START).append(sub.getStartTime().toString()).append(" "));
         subject.ifPresent(sub -> sb.append(PREFIX_END).append(sub.getEndTime().toString()).append(" "));
