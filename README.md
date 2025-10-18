@@ -72,7 +72,7 @@ optimized for freelance tutors who prefer using **Command Line Interface (CLI)**
 <br>
 
 ### Add student
-Adds a student’s contact to the address book <br>
+Adds a student’s contact to EduDex <br>
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
 
@@ -117,7 +117,7 @@ New student added:
 - Fail:
 ```
 Invalid command format!
-add: Adds a student to the address book.
+add: Adds a student to EduDex.
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
 Example: add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday
 start/1500 end/1600
@@ -126,7 +126,7 @@ start/1500 end/1600
 <br>
 
 ### Delete student
-Delete a student's contact from the address book. <br>
+Delete a student's contact from EduDex. <br>
 
 Format: `delete INDEX`
 
@@ -207,7 +207,7 @@ Currently, EduDex only supports data stored in its own save file format. Future 
 
 4. **Where is my data saved?** <br>
 All data is saved automatically in a file located in the same folder as the EduDex `.jar` file. <br>
-If you move or delete this file, EduDex will start with a fresh, empty address book.
+If you move or delete this file, EduDex will start with a fresh, empty EduDex.
 
 
 5. **What happens if I type a wrong command?** <br>
