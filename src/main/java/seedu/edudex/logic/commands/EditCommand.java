@@ -137,8 +137,7 @@ public class EditCommand extends Command {
         //            updatedSubject = personToEdit.getSubject();
         }
 
-                return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 
     @Override
