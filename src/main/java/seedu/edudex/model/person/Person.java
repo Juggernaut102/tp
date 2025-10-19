@@ -62,7 +62,7 @@ public class Person {
         this.lessons = lessons;
     }
 
-    public List<Lesson> getAllLessons() {
+    public List<Lesson> getLessons() {
         return lessons;
     }
 

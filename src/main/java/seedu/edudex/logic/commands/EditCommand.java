@@ -137,9 +137,8 @@ public class EditCommand extends Command {
         //            updatedSubject = personToEdit.getSubject();
         }
 
-        //        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-        //        updatedTags, updatedSubject);
-        return null; // Temporary before support for multiple subjects are added
+                return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedTags);
     }
 
     @Override

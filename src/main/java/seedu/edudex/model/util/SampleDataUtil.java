@@ -1,6 +1,7 @@
 package seedu.edudex.model.util;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import seedu.edudex.model.EduDex;
 import seedu.edudex.model.ReadOnlyEduDex;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;

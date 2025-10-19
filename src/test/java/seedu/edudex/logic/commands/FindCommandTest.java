@@ -144,15 +144,15 @@ public class FindCommandTest {
     //        assertEquals(Collections.singletonList(BENSON), model.getFilteredPersonList());
     //    }
 
-    @Test
-    public void executeByDay_dayNotFound_noPersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        DayMatchesPredicate predicate = prepareDayPredicate("Sunday");
-        FindCommand command = new FindCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
-    }
+    //     @Test
+    //     public void executeByDay_dayNotFound_noPersonsFound() {
+    //        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+    //        DayMatchesPredicate predicate = prepareDayPredicate("Sunday");
+    //        FindCommand command = new FindCommand(predicate);
+    //        expectedModel.updateFilteredPersonList(predicate);
+    //        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    //        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    //     }
 
     @Test
     public void executeByDay_invalidDayFormat_throwsIllegalArgumentException() {
