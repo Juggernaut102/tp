@@ -1,8 +1,8 @@
 package seedu.edudex.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.edudex.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;

@@ -212,7 +212,7 @@ public class ParserUtilTest {
     public void parseLesson_validValuesWithoutWhitespace_returnsSubject() throws Exception {
         Lesson expectedLesson = new Lesson(new Subject(VALID_SUBJECT),
                 new Day(VALID_DAY), new Time(VALID_STARTTIME), new Time(VALID_ENDTIME));
-            assertEquals(expectedLesson, ParserUtil.parseLesson(VALID_SUBJECT, VALID_DAY, VALID_STARTTIME,
+        assertEquals(expectedLesson, ParserUtil.parseLesson(VALID_SUBJECT, VALID_DAY, VALID_STARTTIME,
                     VALID_ENDTIME));
     }
 

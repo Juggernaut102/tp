@@ -95,11 +95,17 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code lessons} of the {@code Person} that we are building.
+     */
     public PersonBuilder withLessons(List<Lesson> lessons) {
         this.lessons = lessons;
         return this;
     }
 
+    /**
+     * Builds the Person object.
+     */
     public Person build() {
         Person student = new Person(name, phone, email, address, tags);
         student.setLessons(lessons);
