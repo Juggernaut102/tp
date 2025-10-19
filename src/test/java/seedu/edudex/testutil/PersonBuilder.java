@@ -95,8 +95,15 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        Person student = new Person(name, phone, email, address, tags);
+        student.setLessons(lessons);
+        return student;
     }
 
 }

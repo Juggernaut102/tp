@@ -56,4 +56,23 @@ public class Subject {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Subject)) {
+            return false;
+        }
+
+        Subject otherSubject = (Subject) other;
+        return otherSubject.name.equals(this.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

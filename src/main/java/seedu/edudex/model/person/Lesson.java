@@ -65,9 +65,18 @@ public class Lesson {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Lesson // instanceof handles nulls
-                && this.equals(((Lesson) other))); // state check
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof Lesson)) {
+            return false;
+        }
+
+        Lesson otherLesson = (Lesson) other;
+        return subject.equals(otherLesson.subject)
+                && day.equals(otherLesson.day)
+                && startTime.equals(otherLesson.startTime)
+                && endTime.equals(otherLesson.endTime);
     }
 
     @Override

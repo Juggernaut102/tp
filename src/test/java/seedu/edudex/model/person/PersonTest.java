@@ -1,6 +1,6 @@
 package seedu.edudex.model.person;
 
-//import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -12,11 +12,67 @@ import static seedu.edudex.testutil.Assert.assertThrows;
 import static seedu.edudex.testutil.TypicalPersons.ALICE;
 import static seedu.edudex.testutil.TypicalPersons.BOB;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.edudex.testutil.PersonBuilder;
 
 public class PersonTest {
+    // Reusable lesson data for tests
+    private final Lesson lessonMathMonday = new Lesson(new Subject("Math"), new Day("Monday"),
+            new Time("09:00"), new Time("10:00"));
+    private final Lesson lessonScienceTuesday = new Lesson(new Subject("Science"), new Day("Tuesday"),
+            new Time("10:00"), new Time("11:00"));
+    private final Lesson lessonMathWednesday = new Lesson(new Subject("Math"), new Day("Wednesday"),
+            new Time("11:00"), new Time("12:00"));
+
+    @Test
+    public void addLesson() {
+        Person person = new PersonBuilder().build(); // build person with empty lesson list
+        person.addLesson(lessonMathMonday);
+        assertTrue(person.getLessons().contains(lessonMathMonday));
+        assertEquals(1, person.getLessons().size());
+    }
+
+    @Test
+    public void getLessonsAsString() {
+        // No lessons
+        Person person = new PersonBuilder().build();
+        assertEquals("No lessons scheduled.", person.getLessonsAsString());
+
+        // One lesson
+        person.addLesson(lessonMathMonday);
+        assertEquals(lessonMathMonday.toString(), person.getLessonsAsString());
+
+        // Multiple lessons
+        person.addLesson(lessonScienceTuesday);
+        String expected = lessonMathMonday.toString() + "\n" + lessonScienceTuesday.toString();
+        assertEquals(expected, person.getLessonsAsString());
+    }
+
+    @Test
+    public void getAllSubjects() {
+        Person person = new PersonBuilder().build();
+
+        // No lessons -> empty list
+        assertTrue(person.getAllSubjects().isEmpty());
+
+        // One lesson
+        person.addLesson(lessonMathMonday);
+        assertEquals(List.of(new Subject("Math")), person.getAllSubjects());
+
+        // Multiple lessons, one unique subject
+        person.addLesson(lessonMathWednesday);
+        assertEquals(List.of(new Subject("Math")), person.getAllSubjects());
+
+        // Multiple lessons, multiple unique subjects
+        person.addLesson(lessonScienceTuesday);
+        List<Subject> expectedSubjects = List.of(new Subject("Math"), new Subject("Science"));
+        // Using containsAll and checking size to avoid order dependency in the test
+        assertTrue(person.getAllSubjects().containsAll(expectedSubjects));
+        assertEquals(2, person.getAllSubjects().size());
+    }
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -88,15 +144,25 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different lessons -> returns false
+        editedAlice = new PersonBuilder(ALICE).withLessons(List.of(lessonScienceTuesday)).build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
-    //    @Test
-    //    public void toStringMethod() {
-    //        String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone="
-    //                + ALICE.getPhone() + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
-    //                + ", tags=" + ALICE.getTags()
-    //                + ", day=" + ALICE.getSubject().getDay() + ", startTime=" + ALICE.getSubject().getStartTime()
-    //                + ", endTime=" + ALICE.getSubject().getEndTime() + "}";
-    //        assertEquals(expected, ALICE.toString());
-    //    }
+    @Test
+    public void hashCode_consistency() {
+        // Two persons that are equal must have the same hash code
+        Person aliceCopy = new PersonBuilder(ALICE).build();
+        assertEquals(ALICE.hashCode(), aliceCopy.hashCode());
+    }
+
+    @Test
+    public void toStringMethod() {
+        String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone="
+                + ALICE.getPhone() + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
+                + ", tags=" + ALICE.getTags()
+                + ", lessons=" + ALICE.getLessons() + "}";
+        assertEquals(expected, ALICE.toString());
+    }
 }
