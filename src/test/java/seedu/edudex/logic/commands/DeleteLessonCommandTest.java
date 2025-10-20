@@ -42,7 +42,8 @@ public class DeleteLessonCommandTest {
     @Test
     public void execute_validLessonIndex_success() {
         // Create a copy of a typical student
-        Person student = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())).build();
+        Person student = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).build();
 
         // Add a few lessons
         Lesson mathLesson = new Lesson(new Subject("Math"), new Day("Monday"),
@@ -73,7 +74,8 @@ public class DeleteLessonCommandTest {
 
     @Test
     public void execute_invalidLessonIndex_throwsCommandException() {
-        Person student = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())).build();
+        Person student = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).build();
 
         Lesson mathLesson = new Lesson(new Subject("Math"), new Day("Monday"),
                 new Time("10:00"), new Time("11:00"));
@@ -98,9 +100,12 @@ public class DeleteLessonCommandTest {
 
     @Test
     public void equals() {
-        DeleteLessonCommand deleteFirstLesson = new DeleteLessonCommand(INDEX_FIRST_PERSON, Index.fromOneBased(1));
-        DeleteLessonCommand deleteSecondLesson = new DeleteLessonCommand(INDEX_FIRST_PERSON, Index.fromOneBased(2));
-        DeleteLessonCommand deleteDifferentStudent = new DeleteLessonCommand(INDEX_SECOND_PERSON, Index.fromOneBased(1));
+        DeleteLessonCommand deleteFirstLesson = new DeleteLessonCommand(INDEX_FIRST_PERSON,
+                Index.fromOneBased(1));
+        DeleteLessonCommand deleteSecondLesson = new DeleteLessonCommand(INDEX_FIRST_PERSON,
+                Index.fromOneBased(2));
+        DeleteLessonCommand deleteDifferentStudent = new DeleteLessonCommand(INDEX_SECOND_PERSON,
+                Index.fromOneBased(1));
 
         // same object -> true
         assertTrue(deleteFirstLesson.equals(deleteFirstLesson));
