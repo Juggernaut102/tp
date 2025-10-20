@@ -12,6 +12,7 @@ import seedu.edudex.logic.commands.AddCommand;
 import seedu.edudex.logic.commands.ClearCommand;
 import seedu.edudex.logic.commands.Command;
 import seedu.edudex.logic.commands.DeleteCommand;
+import seedu.edudex.logic.commands.DeleteLessonCommand;
 import seedu.edudex.logic.commands.EditCommand;
 import seedu.edudex.logic.commands.ExitCommand;
 import seedu.edudex.logic.commands.FindCommand;
@@ -76,6 +77,9 @@ public class EduDexParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case DeleteLessonCommand.COMMAND_WORD:
+            return new DeleteLessonCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

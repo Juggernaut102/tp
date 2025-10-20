@@ -20,7 +20,13 @@ public class DayMatchesPredicate implements Predicate<Person> {
         //        // Match day, ignoring case
         //        return person.getSubject().getDay() != null
         //                && person.getSubject().getDay().equals(day);
-        return true; // Placeholder implementation
+        //        return true; Placeholder implementation
+        if (person.getLessons() == null || person.getLessons().isEmpty()) {
+            return false;
+        }
+
+        return person.getLessons().stream()
+                .anyMatch(lesson -> lesson.getDay().toString().equalsIgnoreCase(day.toString()));
     }
 
     @Override
