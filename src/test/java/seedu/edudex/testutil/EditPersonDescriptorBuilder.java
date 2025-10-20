@@ -8,6 +8,7 @@ import seedu.edudex.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
@@ -40,7 +41,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
-        descriptor.setSubject(person.getSubject());
+        // descriptor.setSubject(person.getSubject());
     }
 
     /**
@@ -89,7 +90,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Subject} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withSubject(String day, String startTime, String endTime) {
-        descriptor.setSubject(new Subject(new Day(day), new Time(startTime), new Time(endTime)));
+        descriptor.setSubject(new Lesson(new Subject("Math"), new Day(day), new Time(startTime), new Time(endTime)));
         return this;
     }
 

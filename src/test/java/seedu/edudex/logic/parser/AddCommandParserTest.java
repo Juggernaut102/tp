@@ -16,17 +16,13 @@ import static seedu.edudex.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.edudex.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.edudex.logic.commands.CommandTestUtil.SUBJECT_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.SUBJECT_DESC_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.edudex.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_DAY_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ENDTIME_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_STARTTIME_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -43,12 +39,10 @@ import org.junit.jupiter.api.Test;
 import seedu.edudex.logic.Messages;
 import seedu.edudex.logic.commands.AddCommand;
 import seedu.edudex.model.person.Address;
-//import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-//import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 import seedu.edudex.testutil.PersonBuilder;
 
@@ -57,12 +51,11 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).withDay(VALID_DAY_BOB)
-                .withStartTime(VALID_STARTTIME_BOB).withEndTime(VALID_ENDTIME_BOB).build();
+        Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + SUBJECT_DESC_BOB , new AddCommand(expectedPerson));
+                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
 
         // multiple tags - all accepted
@@ -70,7 +63,7 @@ public class AddCommandParserTest {
                 .build();
         assertParseSuccess(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND
-                        + TAG_DESC_FRIEND + SUBJECT_DESC_BOB,
+                        + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTags));
     }
 
@@ -143,7 +136,7 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                        + ADDRESS_DESC_AMY + SUBJECT_DESC_AMY, new AddCommand(expectedPerson));
+                        + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
     }
 
     @Test

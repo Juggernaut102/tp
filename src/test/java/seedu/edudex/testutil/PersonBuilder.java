@@ -1,16 +1,16 @@
 package seedu.edudex.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.edudex.model.person.Address;
-import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Subject;
-import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 import seedu.edudex.model.util.SampleDataUtil;
 
@@ -23,18 +23,13 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_DAY = "Monday";
-    public static final String DEFAULT_STARTTIME = "10:00";
-    public static final String DEFAULT_ENDTIME = "12:00";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Set<Tag> tags;
-    private Day day;
-    private Time startTime;
-    private Time endTime;
+    private List<Lesson> lessons;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -45,9 +40,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        day = new Day(DEFAULT_DAY);
-        startTime = new Time(DEFAULT_STARTTIME);
-        endTime = new Time(DEFAULT_ENDTIME);
+        lessons = new ArrayList<>();
     }
 
     /**
@@ -59,9 +52,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        day = personToCopy.getSubject().getDay();
-        startTime = personToCopy.getSubject().getStartTime();
-        endTime = personToCopy.getSubject().getEndTime();
+        lessons = new ArrayList<>(personToCopy.getLessons());
     }
 
     /**
@@ -105,31 +96,20 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code day} of the {@code Person} that we are building.
+     * Sets the {@code lessons} of the {@code Person} that we are building.
      */
-    public PersonBuilder withDay(String day) {
-        this.day = new Day(day);
+    public PersonBuilder withLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
         return this;
     }
 
     /**
-     * Sets the {@code startTime} of the {@code Person} that we are building.
+     * Builds the Person object.
      */
-    public PersonBuilder withStartTime(String startTime) {
-        this.startTime = new Time(startTime);
-        return this;
-    }
-
-    /**
-     * Sets the {@code endTime} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withEndTime(String endTime) {
-        this.endTime = new Time(endTime);
-        return this;
-    }
-
     public Person build() {
-        return new Person(name, phone, email, address, tags, new Subject(day, startTime, endTime));
+        Person student = new Person(name, phone, email, address, tags);
+        student.setLessons(lessons);
+        return student;
     }
 
 }

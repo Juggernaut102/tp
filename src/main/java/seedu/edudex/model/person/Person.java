@@ -2,8 +2,10 @@ package seedu.edudex.model.person;
 
 import static seedu.edudex.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,20 +27,19 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
-    // Subject field
-    private final Subject subject;
+    private List<Lesson> lessons;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Subject subject) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.subject = subject;
+        this.lessons = new ArrayList<>(); // Initialize with an empty list of lessons
     }
 
     public Name getName() {
@@ -57,13 +58,45 @@ public class Person {
         return address;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
-    public Day getDay() {
-        return subject != null ? subject.getDay() : null;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
+
+    /**
+     * Returns a string representation of all lessons.
+     */
+    public String getLessonsAsString() {
+        if (lessons.isEmpty()) {
+            return "No lessons scheduled.";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Lesson lesson : lessons) {
+            sb.append(lesson.toString()).append("\n");
+        }
+        return sb.toString().trim();
+    }
+
+    /**
+     * Returns a list of all unique subjects from the person's lessons.
+     */
+    public List<Subject> getAllSubjects() {
+        return lessons.stream()
+                .map(Lesson::getSubject)
+                .distinct()
+                .toList();
+    }
+
+    /**
+     * Adds a lesson to the person's list of lessons.
+     */
+    public void addLesson(Lesson lesson) {
+        this.lessons.add(lesson);
+    }
+
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -106,13 +139,14 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && lessons.equals(otherPerson.lessons);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, subject);
+        return Objects.hash(name, phone, email, address, tags);
     }
 
     @Override
@@ -123,9 +157,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
-                .add("day", subject.getDay())
-                .add("startTime", subject.getStartTime())
-                .add("endTime", subject.getEndTime())
+                .add("lessons", lessons)
                 .toString();
     }
 }

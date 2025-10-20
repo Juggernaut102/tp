@@ -79,12 +79,12 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         // Edit the entire subject
-        if (argMultimap.getValue(PREFIX_DAY).isPresent()
-                && argMultimap.getValue(PREFIX_START).isPresent()
-                && argMultimap.getValue(PREFIX_END).isPresent()) {
-            editPersonDescriptor.setSubject(ParserUtil.parseSubject(argMultimap.getValue(PREFIX_DAY).get(),
-                    argMultimap.getValue(PREFIX_START).get(), argMultimap.getValue(PREFIX_END).get()));
-        }
+        //        if (argMultimap.getValue(PREFIX_DAY).isPresent()
+        //                && argMultimap.getValue(PREFIX_START).isPresent()
+        //                && argMultimap.getValue(PREFIX_END).isPresent()) {
+        //            editPersonDescriptor.setSubject(ParserUtil.parseLesson(argMultimap.getValue(PREFIX_DAY).get(),
+        //                    argMultimap.getValue(PREFIX_START).get(), argMultimap.getValue(PREFIX_END).get()));
+        //        }
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 

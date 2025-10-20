@@ -17,8 +17,10 @@ import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Phone;
+import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 
@@ -35,8 +37,10 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_SUBJECT = "Science";
     private static final String VALID_DAY = "Monday";
-    private static final String VALID_TIME = "09:00";
+    private static final String VALID_STARTTIME = "09:00";
+    private static final String VALID_ENDTIME = "11:00";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -199,6 +203,20 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseSubject_validValueWithoutWhitespace_returnsSubject() throws Exception {
+        Subject expectedSubject = new Subject(VALID_SUBJECT);
+        assertEquals(expectedSubject, ParserUtil.parseSubjectName(VALID_SUBJECT));
+    }
+
+    @Test
+    public void parseLesson_validValuesWithoutWhitespace_returnsSubject() throws Exception {
+        Lesson expectedLesson = new Lesson(new Subject(VALID_SUBJECT),
+                new Day(VALID_DAY), new Time(VALID_STARTTIME), new Time(VALID_ENDTIME));
+        assertEquals(expectedLesson, ParserUtil.parseLesson(VALID_SUBJECT, VALID_DAY, VALID_STARTTIME,
+                    VALID_ENDTIME));
+    }
+
+    @Test
     public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
         Day expectedDay = new Day(VALID_DAY);
         assertEquals(expectedDay, ParserUtil.parseDay(VALID_DAY));
@@ -206,7 +224,8 @@ public class ParserUtilTest {
 
     @Test
     public void parseTime_validValueWithoutWhitespace_returnsTime() throws Exception {
-        Time expectedTime = new Time(VALID_TIME);
-        assertEquals(expectedTime, ParserUtil.parseTime(VALID_TIME));
+        Time expectedTime = new Time(VALID_STARTTIME);
+        assertEquals(expectedTime, ParserUtil.parseTime(VALID_STARTTIME));
     }
+
 }

@@ -2,77 +2,77 @@ package seedu.edudex.model.person;
 
 import static seedu.edudex.commons.util.AppUtil.checkArgument;
 
+//import java.nio.file.Path;
+//import java.util.Optional;
+
+//import seedu.edudex.commons.exceptions.DataLoadingException;
+//import seedu.edudex.model.ReadOnlyEduDex;
+//import seedu.edudex.storage.JsonEduDexStorage;
+
 /**
  * Represents a Subject in EduDex.
- * Guarantees: immutable; is valid as declared in {@link #isValidStartEndTime(Time, Time)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidSubject(String)}
  */
 public class Subject {
     public static final String MESSAGE_CONSTRAINTS =
-            "Start time should be before end time.";
-    public static final String DEFAULT_SUBJECT_NAME = "Science";
-    public final String value;
-    private final String subjectName;
-    private final Day day;
-    private final Time startTime;
-    private final Time endTime;
+            "Subject should only be from the predefined list of subjects.";
+    private final String name;
 
     /**
      * Constructs a {@code Subject}.
      *
-     * @param day A valid day of the week.
-     * @param startTime A valid start time.
-     * @param endTime A valid end time.
+     * @param name A valid subject.
      */
-    public Subject(Day day, Time startTime, Time endTime) {
-        this.subjectName = DEFAULT_SUBJECT_NAME;
-        this.day = day;
-        checkArgument(isValidStartEndTime(startTime, endTime), MESSAGE_CONSTRAINTS);
-        this.startTime = startTime;
-        this.endTime = endTime;
-
-        value = this.toString();
-    }
-
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public Day getDay() {
-        return day;
-    }
-
-    public Time getStartTime() {
-        return startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
+    public Subject(String name) {
+        // check validity from Subject.json file for allowed subjects
+        checkArgument(isValidSubject(name), MESSAGE_CONSTRAINTS);
+        this.name = name;
     }
 
     /**
-     * Returns true if startTime is before endTime.
+     * Returns true if a given string is a valid subject from the list of tutor subjects.
      */
-    public static boolean isValidStartEndTime(Time startTime, Time endTime) {
-        return startTime.getTime().isBefore(endTime.getTime());
+    public static boolean isValidSubject(String name) {
+        // Implement validation logic based on predefined list of subjects in Subject.json
+        // Read the Subject.json file and check if the name exists
+        /*
+        Path filePath = Path.of("Subject.json"); // temp path to be replaced with actual path
+        try {
+            ReadOnlyEduDex subjectListJson = new JsonEduDexStorage(filePath).readEduDex().get();
+            for (Subject subject : subjectListJson.getSubjectList()) {
+                if (subject.name.equalsIgnoreCase(name)) {
+                    return true;
+                }
+            }
+        } catch (DataLoadingException e) {
+            System.out.println("Error loading subject list: " + e.getMessage());
+            return false;
+        }
+        */
+        return true; // Placeholder
     }
 
     @Override
     public String toString() {
-        return String.format("[Name: " + subjectName
-                + ", Day: " + day.toString()
-                + ", startTime: " + startTime.toString()
-                + ", endTime: " + endTime.toString()) + "]";
+        return name;
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Subject // instanceof handles nulls
-                && subjectName.equals(((Subject) other).subjectName)); // state check
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Subject)) {
+            return false;
+        }
+
+        Subject otherSubject = (Subject) other;
+        return otherSubject.name.equals(this.name);
     }
 
     @Override
     public int hashCode() {
-        return subjectName.hashCode();
+        return name.hashCode();
     }
 }

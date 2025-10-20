@@ -12,6 +12,7 @@ import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Email;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Phone;
 import seedu.edudex.model.person.Subject;
@@ -157,14 +158,36 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String name} into a {@code Subject}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static Subject parseSubjectName(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!Subject.isValidSubject(trimmedName)) {
+            throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
+        }
+        return new Subject(trimmedName);
+    }
+
+    /**
      * Parses a {@code Day day}, {@code Time startTime}, and {@code Time endTime}
      * into a {@code Subject}.
      * @throws ParseException if the given {@code day}, {@code startTime}, or {@code endTime} is invalid.
      */
-    public static Subject parseSubject(String day, String startTime, String endTime) throws ParseException {
+    public static Lesson parseLesson(String subject, String day,
+                                     String startTime, String endTime) throws ParseException {
+        requireNonNull(subject);
         requireNonNull(day);
         requireNonNull(startTime);
         requireNonNull(endTime);
+
+        Subject trimmedSubject = parseSubjectName(subject);
+        if (!Subject.isValidSubject(subject)) {
+            throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
+        }
 
         String trimmedDay = day.trim();
         if (!Day.isValidDay(trimmedDay)) {
@@ -181,15 +204,16 @@ public class ParserUtil {
             throw new ParseException(Time.MESSAGE_CONSTRAINTS);
         }
 
+        Subject subjectObj = new Subject(subject);
         Day dayObj = new Day(trimmedDay);
         Time startTimeObj = new Time(trimmedStartTime);
         Time endTimeObj = new Time(trimmedEndTime);
 
-        if (!Subject.isValidStartEndTime(startTimeObj, endTimeObj)) {
-            throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
+        if (!Lesson.isValidStartEndTime(startTimeObj, endTimeObj)) {
+            throw new ParseException(Lesson.MESSAGE_CONSTRAINTS);
         }
 
-        return new Subject(dayObj, startTimeObj, endTimeObj);
+        return new Lesson(subjectObj, dayObj, startTimeObj, endTimeObj);
     }
 
 }

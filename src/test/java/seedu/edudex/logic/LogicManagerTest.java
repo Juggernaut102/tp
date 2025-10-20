@@ -7,7 +7,6 @@ import static seedu.edudex.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.edudex.logic.commands.CommandTestUtil.SUBJECT_DESC_AMY;
 import static seedu.edudex.testutil.Assert.assertThrows;
 import static seedu.edudex.testutil.TypicalPersons.AMY;
 
@@ -167,7 +166,7 @@ public class LogicManagerTest {
 
         // Triggers the saveEduDex method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + SUBJECT_DESC_AMY;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);

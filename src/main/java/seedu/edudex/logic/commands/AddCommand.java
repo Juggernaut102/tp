@@ -2,12 +2,9 @@ package seedu.edudex.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.edudex.commons.util.ToStringBuilder;
@@ -29,20 +26,14 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_TAG + "TAG]... "
-            + PREFIX_DAY + "DAY "
-            + PREFIX_START + "START "
-            + PREFIX_END + "END\n"
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TAG + "weakInXXTopic "
-            + PREFIX_TAG + "strongInXXTopic "
-            + PREFIX_DAY + "Monday "
-            + PREFIX_START + "09:00 "
-            + PREFIX_END + "11:00";
+            + PREFIX_TAG + "strongInXXTopic ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in EduDex";
