@@ -36,6 +36,22 @@ public class Day {
         return false;
     }
 
+    /**
+     * Returns numeric value of a valid day for comparison
+     */
+    public int getNumericValue() {
+        switch (day.toLowerCase()) {
+        case "monday": return 1;
+        case "tuesday": return 2;
+        case "wednesday": return 3;
+        case "thursday": return 4;
+        case "friday": return 5;
+        case "saturday": return 6;
+        case "sunday": return 7;
+        default: return 8; // for invalid or unrecognized values
+        }
+    }
+
     public String getDay() {
         return day;
     }

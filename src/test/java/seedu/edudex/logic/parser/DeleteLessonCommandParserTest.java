@@ -14,7 +14,7 @@ public class DeleteLessonCommandParserTest {
     private final DeleteLessonCommandParser parser = new DeleteLessonCommandParser();
 
     @Test
-    public void parse_validArgs_returnsDeleteLessonCommand() {
+    public void parseValidArgsReturnsDeleteLessonCommand() {
         DeleteLessonCommand expectedCommand =
                 new DeleteLessonCommand(Index.fromOneBased(1), Index.fromOneBased(2));
 
@@ -22,19 +22,19 @@ public class DeleteLessonCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgs_notEnoughArguments_throwsParseException() {
+    public void parseInvalidArgsNotEnoughArgumentsThrowsParseException() {
         assertParseFailure(parser, "1",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteLessonCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_invalidArgs_tooManyArguments_throwsParseException() {
+    public void parseInvalidArgsTooManyArgumentsThrowsParseException() {
         assertParseFailure(parser, "1 2 3",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteLessonCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_invalidArgs_nonNumeric_throwsParseException() {
+    public void parseInvalidArgsNonNumericThrowsParseException() {
         assertParseFailure(parser, "a b",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteLessonCommand.MESSAGE_USAGE));
     }

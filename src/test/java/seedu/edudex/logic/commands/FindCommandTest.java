@@ -11,8 +11,10 @@ import static seedu.edudex.testutil.TypicalPersons.ELLE;
 import static seedu.edudex.testutil.TypicalPersons.FIONA;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +23,13 @@ import seedu.edudex.model.ModelManager;
 import seedu.edudex.model.UserPrefs;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.DayMatchesPredicate;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.NameContainsKeywordsPredicate;
+import seedu.edudex.model.person.Person;
+import seedu.edudex.model.person.Subject;
+import seedu.edudex.model.person.SubjectMatchesPredicate;
+import seedu.edudex.model.person.Time;
+import seedu.edudex.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -177,13 +185,65 @@ public class FindCommandTest {
     }
 
     // ----------------------------------------------
+    // Subject-Based Find tests
+    // ----------------------------------------------
+
+    @Test
+    public void executeBySubject_subjectMatch_success() {
+        // Create student with lessons
+        Person student = new PersonBuilder().withName("Student A").build();
+        Lesson mathLesson = new Lesson(new Subject("Math"), new Day("Monday"),
+                new Time("10:00"), new Time("11:00"));
+        Lesson scienceLesson = new Lesson(new Subject("Science"), new Day("Tuesday"),
+                new Time("13:00"), new Time("14:00"));
+        List<Lesson> lessons = new ArrayList<>();
+        lessons.add(scienceLesson);
+        lessons.add(mathLesson);
+        student.setLessons(lessons);
+        model.addPerson(student);
+        expectedModel.addPerson(student);
+
+        SubjectMatchesPredicate predicate = new SubjectMatchesPredicate("Math");
+        FindCommand command = new FindCommand(predicate);
+
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model,
+                String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size()),
+                expectedModel);
+
+        // Verify sorting (Monday should come before Tuesday)
+        List<Lesson> sorted = expectedModel.getFilteredPersonList().get(0).getLessons();
+        assertEquals("Monday", sorted.get(0).getDay().toString());
+    }
+
+    @Test
+    public void executeBySubject_subjectNotFound_noPersonsFound() {
+        SubjectMatchesPredicate predicate = new SubjectMatchesPredicate("Art");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model,
+                String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0), expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+
+    // ----------------------------------------------
     // Utility / Misc. Tests
     // ----------------------------------------------
+    //    @Test
+    //    public void toStringMethod() {
+    //        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
+    //        FindCommand findCommand = new FindCommand(predicate);
+    //        String expected = FindCommand.class.getCanonicalName() + "{findByDay=false, predicate=" + predicate + "}";
+    //        assertEquals(expected, findCommand.toString());
+    //    }
     @Test
     public void toStringMethod() {
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
+        NameContainsKeywordsPredicate predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
         FindCommand findCommand = new FindCommand(predicate);
-        String expected = FindCommand.class.getCanonicalName() + "{findByDay=false, predicate=" + predicate + "}";
+        String expected = FindCommand.class.getCanonicalName()
+                + "{searchType=NAME, predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 
