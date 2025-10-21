@@ -12,8 +12,8 @@ import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.tag.Tag;
 
 /**

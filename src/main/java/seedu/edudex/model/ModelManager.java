@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.commons.core.LogsCenter;
 import seedu.edudex.model.person.Person;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * Represents the in-memory model of EduDex data.
@@ -22,6 +23,7 @@ public class ModelManager implements Model {
     private final EduDex eduDex;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Subject> subjects;
 
     /**
      * Initializes a ModelManager with the given eduDex and userPrefs.
@@ -34,6 +36,7 @@ public class ModelManager implements Model {
         this.eduDex = new EduDex(eduDex);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.eduDex.getPersonList());
+        subjects = new FilteredList<>(this.eduDex.getSubjectList());
     }
 
     public ModelManager() {
@@ -109,6 +112,41 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         eduDex.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public boolean hasSubject(Subject subject) {
+        requireNonNull(subject);
+        return eduDex.hasSubject(subject);
+    }
+
+    @Override
+    public void deleteSubject(Subject target) {
+        eduDex.removeSubject(target);
+    }
+
+    @Override
+    public void addSubject(Subject subject) {
+        eduDex.addSubject(subject);
+        updateSubjectList(PREDICATE_SHOW_ALL_SUBJECTS);
+    }
+
+    @Override
+    public void setSubject(Subject target, Subject editedSubject) {
+        requireAllNonNull(target, editedSubject);
+        eduDex.setSubject(target, editedSubject);
+    }
+
+    //=========== Subject List Accessors =============================================================
+    @Override
+    public ObservableList<Subject> getSubjectList() {
+        return subjects;
+    }
+
+    @Override
+    public void updateSubjectList(Predicate<Subject> predicate) {
+        requireNonNull(predicate);
+        subjects.setPredicate(predicate);
     }
 
     //=========== Filtered Person List Accessors =============================================================

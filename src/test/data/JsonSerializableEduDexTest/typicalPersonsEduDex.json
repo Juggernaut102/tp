@@ -1,5 +1,6 @@
 {
   "_comment": "EduDex save file which contains the same Person values as in TypicalPersons#getTypicalEduDex()",
+  "subjects": [],
   "persons" : [ {
     "name" : "Alice Pauline",
     "phone" : "94351253",

@@ -9,6 +9,7 @@ import static seedu.edudex.testutil.Assert.assertThrows;
 import static seedu.edudex.testutil.TypicalPersons.ALICE;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.exceptions.DuplicatePersonException;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.PersonBuilder;
 
 public class EduDexTest {
@@ -49,7 +51,7 @@ public class EduDexTest {
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
-        EduDexStub newData = new EduDexStub(newPersons);
+        EduDexStub newData = new EduDexStub(newPersons, new ArrayList<>());
 
         assertThrows(DuplicatePersonException.class, () -> eduDex.resetData(newData));
     }
@@ -94,15 +96,21 @@ public class EduDexTest {
      */
     private static class EduDexStub implements ReadOnlyEduDex {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
-        EduDexStub(Collection<Person> persons) {
+        EduDexStub(Collection<Person> persons, Collection<Subject> subjects) {
             this.persons.setAll(persons);
+            this.subjects.setAll(subjects);
         }
 
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
         }
-    }
 
+        @Override
+        public ObservableList<Subject> getSubjectList() {
+            return subjects;
+        }
+    }
 }
