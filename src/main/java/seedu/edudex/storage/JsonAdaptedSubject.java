@@ -1,7 +1,6 @@
 package seedu.edudex.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.subject.Subject;
@@ -25,11 +24,6 @@ class JsonAdaptedSubject {
      */
     public JsonAdaptedSubject(Subject source) {
         subjectName = source.subjectName;
-    }
-
-    @JsonValue
-    public String getSubjectName() {
-        return subjectName;
     }
 
     /**
