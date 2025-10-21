@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.edudex.logic.parser.Prefix;
 import seedu.edudex.model.person.Person;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * Container for user visible messages.
@@ -50,4 +51,10 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code subject} for display to the user.
+     */
+    public static String format(Subject subject) {
+        return subject.toString();
+    }
 }
