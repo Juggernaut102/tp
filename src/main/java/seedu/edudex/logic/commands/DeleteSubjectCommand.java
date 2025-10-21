@@ -2,6 +2,8 @@ package seedu.edudex.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
+
 import seedu.edudex.commons.core.index.Index;
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.logic.Messages;
@@ -9,7 +11,6 @@ import seedu.edudex.logic.commands.exceptions.CommandException;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.subject.Subject;
 
-import java.util.List;
 
 /**
  * Deletes a subject from the list of allowed subjects.
@@ -65,5 +66,4 @@ public class DeleteSubjectCommand extends Command {
                 .add("targetIndex", targetIndex)
                 .toString();
     }
-
 }

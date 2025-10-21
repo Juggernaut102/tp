@@ -1,11 +1,11 @@
 package seedu.edudex.testutil;
 
-import seedu.edudex.model.EduDex;
-import seedu.edudex.model.subject.Subject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import seedu.edudex.model.EduDex;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * A utility class containing a list of {@code Subject} objects to be used in tests.
