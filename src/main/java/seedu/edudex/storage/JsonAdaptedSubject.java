@@ -6,8 +6,6 @@ import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.subject.Subject;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Jackson-friendly version of {@link Subject}.
  */
