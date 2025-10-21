@@ -2,9 +2,7 @@ package seedu.edudex.logic.parser;
 
 import static seedu.edudex.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.edudex.commons.core.index.Index;
 import seedu.edudex.logic.commands.AddSubjectCommand;
-import seedu.edudex.logic.commands.DeleteCommand;
 import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.subject.Subject;
 

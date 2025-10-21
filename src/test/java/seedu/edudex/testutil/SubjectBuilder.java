@@ -1,6 +1,5 @@
 package seedu.edudex.testutil;
 
-import seedu.edudex.model.person.Name;
 import seedu.edudex.model.subject.Subject;
 
 /**

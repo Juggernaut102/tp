@@ -51,7 +51,8 @@ public class AddSubjectCommandTest {
         AddSubjectCommand addSubjectCommand = new AddSubjectCommand(validSubject);
         ModelStub modelStub = new ModelStubWithSubject(validSubject);
 
-        assertThrows(CommandException.class, AddSubjectCommand.MESSAGE_DUPLICATE_SUBJECT, () -> addSubjectCommand.execute(modelStub));
+        assertThrows(CommandException.class,
+                AddSubjectCommand.MESSAGE_DUPLICATE_SUBJECT, () -> addSubjectCommand.execute(modelStub));
     }
 
     @Test

@@ -44,7 +44,7 @@ public class Subject {
         // Such checks should be done when executing the command itself
         // (in AddSubjectCommand or other equivalent command)
         requireNonNull(name);
-        return name.matches(VALIDATION_REGEX);   // use this if matching alphanumeric (similar to name validation)
+        return name.matches(VALIDATION_REGEX); // use this if matching alphanumeric (similar to name validation)
         // return true;
     }
 
