@@ -3,8 +3,8 @@ package seedu.edudex.storage;
 import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
-import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * Jackson-friendly version of {@link Lesson}.
@@ -15,6 +15,7 @@ public class JsonAdaptedLesson {
     private final String day;
     private final String startTime;
     private final String endTime;
+
     /**
      * Constructs a {@code JsonAdaptedLesson} with the given lesson details.
      */
@@ -44,7 +45,7 @@ public class JsonAdaptedLesson {
         if (subject == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Subject"));
         }
-        if (!Subject.isValidSubject(subject)) {
+        if (!Subject.isValidSubjectName(subject)) {
             throw new IllegalValueException(Subject.MESSAGE_CONSTRAINTS);
         }
 

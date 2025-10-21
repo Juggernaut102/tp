@@ -9,6 +9,7 @@ import seedu.edudex.logic.commands.exceptions.CommandException;
 import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.ReadOnlyEduDex;
 import seedu.edudex.model.person.Person;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * API of the Logic component
@@ -32,6 +33,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of subjects */
+    ObservableList<Subject> getSubjectList();
 
     /**
      * Returns the user prefs' EduDex file path.
