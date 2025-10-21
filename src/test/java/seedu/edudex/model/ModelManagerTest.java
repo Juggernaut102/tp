@@ -7,6 +7,7 @@ import static seedu.edudex.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.edudex.testutil.Assert.assertThrows;
 import static seedu.edudex.testutil.TypicalPersons.ALICE;
 import static seedu.edudex.testutil.TypicalPersons.BENSON;
+import static seedu.edudex.testutil.TypicalSubjects.MATH;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -86,6 +87,22 @@ public class ModelManagerTest {
     public void hasPerson_personInEduDex_returnsTrue() {
         modelManager.addPerson(ALICE);
         assertTrue(modelManager.hasPerson(ALICE));
+    }
+
+    @Test
+    public void hasSubject_nullSubject_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasSubject(null));
+    }
+
+    @Test
+    public void hasSubject_subjectNotInEduDex_returnsFalse() {
+        assertFalse(modelManager.hasSubject(MATH));
+    }
+
+    @Test
+    public void hasSubject_subjectInEduDex_returnsTrue() {
+        modelManager.addSubject(MATH);
+        assertTrue(modelManager.hasSubject(MATH));
     }
 
     @Test
