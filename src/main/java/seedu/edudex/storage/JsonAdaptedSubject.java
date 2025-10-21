@@ -3,12 +3,18 @@ package seedu.edudex.storage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import seedu.edudex.commons.exceptions.IllegalValueException;
+import seedu.edudex.model.person.Name;
 import seedu.edudex.model.subject.Subject;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Jackson-friendly version of {@link Subject}.
  */
 class JsonAdaptedSubject {
+
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Subject's %s field is missing!";
+
     private final String subjectName;
 
     /**
@@ -32,6 +38,10 @@ class JsonAdaptedSubject {
      * @throws IllegalValueException if there were any data constraints violated in the adapted tag.
      */
     public Subject toModelType() throws IllegalValueException {
+        if (subjectName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        }
+
         if (!Subject.isValidSubjectName(subjectName)) {
             throw new IllegalValueException(Subject.MESSAGE_CONSTRAINTS);
         }

@@ -8,6 +8,7 @@ import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.edudex.testutil.Assert.assertThrows;
 import static seedu.edudex.testutil.TypicalPersons.ALICE;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
+import static seedu.edudex.testutil.TypicalSubjects.MATH;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +79,34 @@ public class EduDexTest {
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(eduDex.hasPerson(editedAlice));
+    }
+
+    @Test
+    public void hasSubject_nullSubject_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> eduDex.hasSubject(null));
+    }
+
+    @Test
+    public void hasSubject_subjectNotInEduDex_returnsFalse() {
+        assertFalse(eduDex.hasSubject(MATH));
+    }
+
+    @Test
+    public void hasSubject_subjectInEduDex_returnsTrue() {
+        eduDex.addSubject(MATH);
+        assertTrue(eduDex.hasSubject(MATH));
+    }
+
+    @Test
+    public void hasSubject_subjectWithSameNameInEduDex_returnsTrue() {
+        eduDex.addSubject(MATH);
+        Subject editedMath = new Subject("Math");
+        assertTrue(eduDex.hasSubject(editedMath));
+    }
+
+    @Test
+    public void getSubjectList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> eduDex.getSubjectList().remove(0));
     }
 
     @Test
