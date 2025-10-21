@@ -28,9 +28,12 @@ public class Subject {
      * Returns true if a given string is a valid subject from the list of tutor subjects.
      */
     public static boolean isValidSubjectName(String name) {
-        // Ryan: to clarify: this method is intended just to ensure the string is valid
+        // to clarify: this method is intended just to ensure the string is valid
         // NOT to check if the input by the user is valid (i.e. entered a subject that matches
         // a subject in the subject list)
+
+        // Such checks should be done when executing the command itself
+        // (in AddSubjectCommand or other equivalent command)
         return true;
     }
 
