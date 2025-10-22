@@ -31,16 +31,25 @@ public class Person {
     private List<Lesson> lessons;
 
     /**
+     * Constructor for initialising a new Person with no lessons.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        this(name, phone, email, address, tags, new ArrayList<>());
+    }
+
+    /**
+     * A more general Constructor, used explicitly if lessons is not an empty list.
+     */
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, List<Lesson> lessons) {
+        requireAllNonNull(name, phone, email, address, tags, lessons);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.lessons = new ArrayList<>(); // Initialize with an empty list of lessons
+        this.lessons = new ArrayList<>(lessons);    // defensive copy
     }
 
     public Name getName() {
@@ -160,5 +169,11 @@ public class Person {
                 .add("tags", tags)
                 .add("lessons", lessons)
                 .toString();
+    }
+
+    public Person makeCopyOfPerson() {
+        return new Person(name, phone, email, address,
+                new HashSet<>(tags), new ArrayList<>(lessons));
+        // defensive copying
     }
 }

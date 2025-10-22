@@ -65,12 +65,15 @@ public class AddLessonCommand extends Command {
 
         // if conflicting timings, throw exception
 
-        Person student = lastShownList.get(studentIndex.getZeroBased());
-        student.addLesson(lessonToAdd);
+        Person originalStudent = lastShownList.get(studentIndex.getZeroBased());
+        Person updatedStudent = originalStudent.makeCopyOfPerson();
+        updatedStudent.addLesson(lessonToAdd);
+        model.setPerson(originalStudent, updatedStudent);
+
         return new CommandResult(String.format(
                 MESSAGE_ADD_LESSON_SUCCESS,
                 lessonToAdd,
-                student.getName()));
+                updatedStudent.getName()));
     }
 
     @Override
