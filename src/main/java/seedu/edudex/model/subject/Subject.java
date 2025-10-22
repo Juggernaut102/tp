@@ -1,7 +1,5 @@
 package seedu.edudex.model.subject;
 
-import java.util.Locale;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.edudex.commons.util.AppUtil.checkArgument;
 
