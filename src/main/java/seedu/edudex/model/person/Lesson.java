@@ -2,6 +2,8 @@ package seedu.edudex.model.person;
 
 import static seedu.edudex.commons.util.AppUtil.checkArgument;
 
+import java.util.Objects;
+
 import seedu.edudex.model.subject.Subject;
 
 /**
@@ -83,6 +85,6 @@ public class Lesson {
 
     @Override
     public int hashCode() {
-        return subject.hashCode();
+        return Objects.hash(subject, day, startTime, endTime);
     }
 }

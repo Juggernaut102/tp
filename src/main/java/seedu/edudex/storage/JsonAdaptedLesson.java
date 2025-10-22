@@ -1,5 +1,8 @@
 package seedu.edudex.storage;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
@@ -19,7 +22,12 @@ public class JsonAdaptedLesson {
     /**
      * Constructs a {@code JsonAdaptedLesson} with the given lesson details.
      */
-    public JsonAdaptedLesson(String subject, String day, String startTime, String endTime) {
+    @JsonCreator
+    public JsonAdaptedLesson(
+            @JsonProperty("subject") String subject,
+            @JsonProperty("day") String day,
+            @JsonProperty("startTime") String startTime,
+            @JsonProperty("endTime") String endTime) {
         this.subject = subject;
         this.day = day;
         this.startTime = startTime;
