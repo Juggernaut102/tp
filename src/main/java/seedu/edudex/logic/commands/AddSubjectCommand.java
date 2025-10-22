@@ -13,7 +13,7 @@ import seedu.edudex.model.subject.Subject;
  */
 public class AddSubjectCommand extends Command {
 
-    public static final String COMMAND_WORD = "addSubject";
+    public static final String COMMAND_WORD = "addsub";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subject to the list of allowed subjects.\n"
             + "Parameters: SUBJECT\n"
