@@ -52,7 +52,7 @@ public class EduDex implements ReadOnlyEduDex {
     }
 
     /**
-     * Replaces the contents of the person list with {@code subjects}.
+     * Replaces the contents of the subject list with {@code subjects}.
      * {@code subjects} must not contain duplicate subjects.
      */
     public void setSubjects(List<seedu.edudex.model.subject.Subject> subjects) {

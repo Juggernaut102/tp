@@ -9,7 +9,16 @@ import static seedu.edudex.commons.util.AppUtil.checkArgument;
  */
 public class Subject {
     public static final String MESSAGE_CONSTRAINTS =
+            "Subject should only contain alphanumeric characters and spaces, and it should not be blank";
+    public static final String MESSAGE_SUBJECT_NOT_FOUND =
             "Subject should only be from the list of subjects previously indicated.";
+
+    /*
+     * The first character of the subject must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
     public final String subjectName;
 
     /**
@@ -34,7 +43,9 @@ public class Subject {
 
         // Such checks should be done when executing the command itself
         // (in AddSubjectCommand or other equivalent command)
-        return true;
+        requireNonNull(name);
+        return name.matches(VALIDATION_REGEX); // use this if matching alphanumeric (similar to name validation)
+        // return true;
     }
 
     @Override
