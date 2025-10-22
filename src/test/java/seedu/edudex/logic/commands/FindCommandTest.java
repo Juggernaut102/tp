@@ -26,10 +26,10 @@ import seedu.edudex.model.person.DayMatchesPredicate;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.NameContainsKeywordsPredicate;
 import seedu.edudex.model.person.Person;
-import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.SubjectComparator;
 import seedu.edudex.model.person.SubjectMatchesPredicate;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.PersonBuilder;
 
 /**

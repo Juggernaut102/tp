@@ -40,14 +40,7 @@ public class DeleteLessonCommandTest {
     }
 
     @Test
-<<<<<<< HEAD
-    public void executeValidLessonIndexSuccess() {
-        // Create a copy of a typical student
-        Person student = new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).build();
-=======
     public void execute_validLessonIndex_success() {
->>>>>>> a6dc94b2fb6539edcf2e0e565df9facf0b811b76
 
         // Add a few lessons
         Lesson mathLesson = new Lesson(new Subject("Math"), new Day("Monday"),
@@ -77,11 +70,7 @@ public class DeleteLessonCommandTest {
     }
 
     @Test
-<<<<<<< HEAD
-    public void executeInvalidLessonIndexThrowsCommandException() {
-=======
     public void execute_invalidLessonIndex_throwsCommandException() {
->>>>>>> a6dc94b2fb6539edcf2e0e565df9facf0b811b76
         Person student = new PersonBuilder(model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased())).build();
 
@@ -99,7 +88,7 @@ public class DeleteLessonCommandTest {
     }
 
     @Test
-    public void executeInvalidPersonIndexThrowsCommandException() {
+    public void execute_invalidPersonIndex_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeleteLessonCommand deleteLessonCommand = new DeleteLessonCommand(outOfBoundIndex, Index.fromOneBased(1));
 

@@ -118,7 +118,6 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-<<<<<<< HEAD
      * Sorts the currently filtered person list according to the given {@link Comparator}.
      * This allows commands to customize the display order of persons dynamically.
      *
@@ -139,4 +138,3 @@ public interface Model {
 
     void updateSubjectList(Predicate<Subject> predicate);
 }
-
