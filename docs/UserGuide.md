@@ -163,9 +163,13 @@ Format: `exit`
 
 EduDex data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+### Editing the JSON data file
 
 EduDex data are saved automatically as a JSON file `[JAR file location]/data/edudex.json`. Advanced users are welcome to update data directly by editing that data file.
+
+
+The `edudex.json` file defines the **data model** for managing tutees in the EduDex application.
+This is intended for power users who wish to edit `edudex.json` without using the GUI.
 
 <box type="warning" seamless>
 
@@ -174,9 +178,145 @@ If your changes to the data file makes its format invalid, EduDex will discard a
 Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-### Archiving data files `[coming in v2.0]`
+#### JSON: Top-Level Overview
 
-_Details coming soon ..._
+```json
+{
+  "persons": [ ... ], // required
+  "subjects": [ ... ] // required
+}
+```
+
+**Person**
+```json
+{
+  "name": "Full Name", // required, 
+  "phone": "8-digit Singapore number", // required
+  "school": "string", // required
+  "address": "Full address string", // required
+  "tags": [ "string", ... ], // optional
+  "lessons": [ // optional
+    {
+    "name": "string",
+    "day": "string",
+    "startTime": "HH:MM",
+    "endTime": "HH:MM"
+    }
+  ] 
+}
+
+```
+
+**Rules**
+
+| Field              | Type              | Constraint                                                                                |
+|--------------------|-------------------|-------------------------------------------------------------------------------------------|
+| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                                    |
+| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `address`          | string            | Any value, must not be blank                                                              |
+| `tags`             | string[]          | Alphanumeric, optional                                                                    |
+| `lessons`          | Lesson[]          | See fields below.                                                                         |
+| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `lesson:day`       | string            | Only one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday |
+| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime.                              |
+| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime.                             |
+
+
+
+**Example**
+```json
+{
+  "name": "Alex Yeoh",
+  "phone": "87438808",
+  "school": "Clementi Village Primary School",
+  "address": "Blk 30 Geylang Street 29, #06-40",
+  "tags": [
+    "prefersMorningLessons",
+    "A-levelCandidate"
+  ],
+  "lessons": [
+    {
+    "subject": "Science",
+    "day": "Monday",
+    "startTime": "10:00",
+    "endTime": "12:00"
+    },
+    {
+      "name": "Math",
+      "day": "Tuesday",
+      "startTime": "14:00",
+      "endTime": "16:00"
+    }
+  ]
+}
+```
+
+#### JSON: Subject
+
+Each entry in `subjects` defines a distinct academic subject.
+
+**Structure**
+```json
+{
+  "subjectName": "Subject Title"
+}
+```
+
+**Rules**
+- Each subject **must** have a unique `subjectName`.
+- Subject names are **case-insensitive**.
+- No duplicate entries allowed.
+
+**Example**
+```json
+{
+  "subjects": [
+    { "subjectName": "Chemistry" },
+    { "subjectName": "Physics" },
+    { "subjectName": "Biology" }
+  ]
+}
+```
+
+**JSON Example**
+```json
+{
+  "persons": {
+    "name" : "Bernice Yu",
+    "phone" : "99272758",
+    "school": "Clementi West Secondary School",
+    "address" : "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
+    "tags" : [ ],
+    "lessons" : [
+      {
+        "subject": "Science",
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:00"
+      }
+    ]
+  },
+  "subjects": [
+    { "subjectName": "Science" }
+  ]
+}
+
+```
+<box type="tip" seamless>
+
+**JSON Tips:**
+1. **Formatting**
+- Use **UTF-8 encoding**.
+- Always maintain **valid JSON syntax**:
+    - Double quotes for all keys and strings.
+    - No trailing commas.
+- Validate the file with a JSON linter before saving.
+
+2. **Adding Entries**
+- To add a new person, append a new object to the `persons` array.
+- To add a new subject, append a new object to `subjects`.
+  </box>
 
 --------------------------------------------------------------------------------------------------------------------
 
