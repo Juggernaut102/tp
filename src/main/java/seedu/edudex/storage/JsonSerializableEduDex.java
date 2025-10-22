@@ -12,6 +12,7 @@ import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.EduDex;
 import seedu.edudex.model.ReadOnlyEduDex;
 import seedu.edudex.model.person.Person;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * An Immutable EduDex that is serializable to JSON format.
@@ -20,15 +21,19 @@ import seedu.edudex.model.person.Person;
 class JsonSerializableEduDex {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_SUBJECT = "Subjects list contains duplicate subject(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedSubject> subjects = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableEduDex} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableEduDex(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
+    public JsonSerializableEduDex(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                                  @JsonProperty("subjects") List<JsonAdaptedSubject> subjects) {
         this.persons.addAll(persons);
+        this.subjects.addAll(subjects);
     }
 
     /**
@@ -38,6 +43,7 @@ class JsonSerializableEduDex {
      */
     public JsonSerializableEduDex(ReadOnlyEduDex source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        subjects.addAll(source.getSubjectList().stream().map(JsonAdaptedSubject::new).collect(Collectors.toList()));
     }
 
     /**
@@ -47,6 +53,14 @@ class JsonSerializableEduDex {
      */
     public EduDex toModelType() throws IllegalValueException {
         EduDex eduDex = new EduDex();
+        for (JsonAdaptedSubject jsonAdaptedSubject : subjects) {
+            Subject subject = jsonAdaptedSubject.toModelType();
+            if (eduDex.hasSubject(subject)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_SUBJECT);
+            }
+            eduDex.addSubject(subject);
+        }
+
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
             Person person = jsonAdaptedPerson.toModelType();
             if (eduDex.hasPerson(person)) {

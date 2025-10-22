@@ -7,6 +7,8 @@ import static seedu.edudex.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.edudex.model.subject.Subject;
+
 public class LessonTest {
     // Reusable test data
     private final Subject subjectMath = new Subject("Math");

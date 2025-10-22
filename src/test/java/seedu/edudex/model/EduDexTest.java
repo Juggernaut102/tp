@@ -8,7 +8,9 @@ import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.edudex.testutil.Assert.assertThrows;
 import static seedu.edudex.testutil.TypicalPersons.ALICE;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
+import static seedu.edudex.testutil.TypicalSubjects.MATH;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,6 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.exceptions.DuplicatePersonException;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.PersonBuilder;
 
 public class EduDexTest {
@@ -49,7 +52,7 @@ public class EduDexTest {
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
-        EduDexStub newData = new EduDexStub(newPersons);
+        EduDexStub newData = new EduDexStub(newPersons, new ArrayList<>());
 
         assertThrows(DuplicatePersonException.class, () -> eduDex.resetData(newData));
     }
@@ -79,6 +82,34 @@ public class EduDexTest {
     }
 
     @Test
+    public void hasSubject_nullSubject_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> eduDex.hasSubject(null));
+    }
+
+    @Test
+    public void hasSubject_subjectNotInEduDex_returnsFalse() {
+        assertFalse(eduDex.hasSubject(MATH));
+    }
+
+    @Test
+    public void hasSubject_subjectInEduDex_returnsTrue() {
+        eduDex.addSubject(MATH);
+        assertTrue(eduDex.hasSubject(MATH));
+    }
+
+    @Test
+    public void hasSubject_subjectWithSameNameInEduDex_returnsTrue() {
+        eduDex.addSubject(MATH);
+        Subject editedMath = new Subject("Math");
+        assertTrue(eduDex.hasSubject(editedMath));
+    }
+
+    @Test
+    public void getSubjectList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> eduDex.getSubjectList().remove(0));
+    }
+
+    @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> eduDex.getPersonList().remove(0));
     }
@@ -94,15 +125,21 @@ public class EduDexTest {
      */
     private static class EduDexStub implements ReadOnlyEduDex {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
-        EduDexStub(Collection<Person> persons) {
+        EduDexStub(Collection<Person> persons, Collection<Subject> subjects) {
             this.persons.setAll(persons);
+            this.subjects.setAll(subjects);
         }
 
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
         }
-    }
 
+        @Override
+        public ObservableList<Subject> getSubjectList() {
+            return subjects;
+        }
+    }
 }

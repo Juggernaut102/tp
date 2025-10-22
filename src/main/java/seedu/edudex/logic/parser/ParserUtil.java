@@ -15,8 +15,8 @@ import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.tag.Tag;
 
 /**
@@ -166,7 +166,7 @@ public class ParserUtil {
     public static Subject parseSubjectName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!Subject.isValidSubject(trimmedName)) {
+        if (!Subject.isValidSubjectName(trimmedName)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
         }
         return new Subject(trimmedName);
@@ -185,7 +185,7 @@ public class ParserUtil {
         requireNonNull(endTime);
 
         Subject trimmedSubject = parseSubjectName(subject);
-        if (!Subject.isValidSubject(subject)) {
+        if (!Subject.isValidSubjectName(subject)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
         }
 
