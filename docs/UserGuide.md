@@ -285,7 +285,7 @@ Each entry in `subjects` defines a distinct academic subject.
   "persons": {
     "name" : "Bernice Yu",
     "phone" : "99272758",
-    "email" : "berniceyu@example.com",
+    "school": "Clementi West Secondary School",
     "address" : "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
     "tags" : [ ],
     "lessons" : [
