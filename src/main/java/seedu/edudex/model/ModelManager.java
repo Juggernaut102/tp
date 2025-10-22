@@ -4,11 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.edudex.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.commons.core.LogsCenter;
 import seedu.edudex.model.person.Person;
@@ -22,6 +24,7 @@ public class ModelManager implements Model {
     private final EduDex eduDex;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final SortedList<Person> sortedPersons;
 
     /**
      * Initializes a ModelManager with the given eduDex and userPrefs.
@@ -33,7 +36,9 @@ public class ModelManager implements Model {
 
         this.eduDex = new EduDex(eduDex);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.eduDex.getPersonList());
+        this.filteredPersons = new FilteredList<>(this.eduDex.getPersonList());
+        this.sortedPersons = new SortedList<>(filteredPersons);
+
     }
 
     public ModelManager() {
@@ -120,6 +125,17 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return filteredPersons;
+    }
+
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> comparator) {
+        requireNonNull(comparator);
+        sortedPersons.setComparator(comparator);
+    }
+
+    @Override
+    public ObservableList<Person> getSortedPersonList() {
+        return FXCollections.unmodifiableObservableList(sortedPersons);
     }
 
     @Override

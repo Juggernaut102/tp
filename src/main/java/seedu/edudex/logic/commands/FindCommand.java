@@ -4,18 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.logic.Messages;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.person.DayMatchesPredicate;
-import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.NameContainsKeywordsPredicate;
-import seedu.edudex.model.person.Person;
+import seedu.edudex.model.person.SubjectComparator;
 import seedu.edudex.model.person.SubjectMatchesPredicate;
 
 /**
@@ -86,27 +82,17 @@ public class FindCommand extends Command {
         requireNonNull(model);
 
         switch (searchType) {
-        case DAY:
-            model.updateFilteredPersonList(dayPredicate);
-            break;
-        case SUBJECT:
-            model.updateFilteredPersonList(subjectPredicate);
-
-            // Sort lessons for each person
-            List<Person> persons = model.getFilteredPersonList();
-            persons.forEach(person -> {
-                List<Lesson> sortedLessons = person.getLessons().stream()
-                                .sorted(Comparator
-                                .comparing((Lesson l) -> l.getDay().getNumericValue())
-                                .thenComparing(l -> l.getStartTime().getTime()))
-                                .collect(Collectors.toList());
-                person.setLessons(sortedLessons);
-            });
-            break;
-        case NAME:
-        default:
-            model.updateFilteredPersonList(namePredicate);
-            break;
+            case DAY:
+                model.updateFilteredPersonList(dayPredicate);
+                break;
+            case SUBJECT:
+                model.updateFilteredPersonList(subjectPredicate);
+                model.sortFilteredPersonList(new SubjectComparator());
+                break;
+            case NAME:
+            default:
+                model.updateFilteredPersonList(namePredicate);
+                break;
         }
 
         return new CommandResult(String.format(
