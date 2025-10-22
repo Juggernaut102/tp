@@ -17,7 +17,7 @@ import seedu.edudex.model.subject.Subject;
  */
 public class DeleteSubjectCommand extends Command {
 
-    public static final String COMMAND_WORD = "deleteSubject";
+    public static final String COMMAND_WORD = "delsub";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a subject from the list of allowed subjects.\n"
             + "Parameters: INDEX\n"
