@@ -23,8 +23,8 @@ import seedu.edudex.model.UserPrefs;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
-import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.PersonBuilder;
 
 /**
