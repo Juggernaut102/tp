@@ -163,7 +163,7 @@ Format: `exit`
 
 EduDex data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+### Editing the JSON data file
 
 EduDex data are saved automatically as a JSON file `[JAR file location]/data/edudex.json`. Advanced users are welcome to update data directly by editing that data file.
 
@@ -265,7 +265,7 @@ Each entry in `subjects` defines a distinct academic subject.
 
 **Rules**
 - Each subject **must** have a unique `subjectName`.
-- Subject names are **case-sensitive**.
+- Subject names are **case-insensitive**.
 - No duplicate entries allowed.
 
 **Example**
