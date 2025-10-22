@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.commons.core.LogsCenter;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
 
 /**
@@ -124,7 +125,13 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+        return sortedPersons;
+    }
+
+    @Override
+    public void updateFilteredPersonList(Predicate<Person> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
     }
 
     @Override
@@ -135,15 +142,29 @@ public class ModelManager implements Model {
 
     @Override
     public ObservableList<Person> getSortedPersonList() {
-        return FXCollections.unmodifiableObservableList(sortedPersons);
+        return sortedPersons;
     }
 
-    @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+    /**
+     * Sorts the lessons of each {@code Person} currently in the filtered person list.
+     * <p>
+     * Lessons are ordered first by the numeric value of their day (Monday → Sunday),
+     * and then by their start time within each day. This ensures that every person's
+     * lesson schedule is consistently displayed in chronological order.
+     * </p>
+     *
+     * <p>This operation mutates each {@code Person}'s internal lesson list by replacing
+     * it with a sorted copy, but does not alter the overall list of persons.</p>
+     */
+    public void sortLessonsForEachPerson() {
+        filteredPersons.forEach(person -> {
+            person.setLessons(person.getLessons().stream()
+                    .sorted(Comparator
+                            .comparing((Lesson l) -> l.getDay().getNumericValue())
+                            .thenComparing(l -> l.getStartTime().getTime()))
+                    .toList());
+        });
     }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {

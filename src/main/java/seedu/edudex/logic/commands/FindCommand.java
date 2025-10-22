@@ -82,17 +82,18 @@ public class FindCommand extends Command {
         requireNonNull(model);
 
         switch (searchType) {
-            case DAY:
-                model.updateFilteredPersonList(dayPredicate);
-                break;
-            case SUBJECT:
-                model.updateFilteredPersonList(subjectPredicate);
-                model.sortFilteredPersonList(new SubjectComparator());
-                break;
-            case NAME:
-            default:
-                model.updateFilteredPersonList(namePredicate);
-                break;
+        case DAY:
+            model.updateFilteredPersonList(dayPredicate);
+            break;
+        case SUBJECT:
+            model.updateFilteredPersonList(subjectPredicate);
+            model.sortFilteredPersonList(new SubjectComparator());
+            model.sortLessonsForEachPerson();
+            break;
+        case NAME:
+        default:
+            model.updateFilteredPersonList(namePredicate);
+            break;
         }
 
         return new CommandResult(String.format(

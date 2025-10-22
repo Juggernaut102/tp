@@ -86,7 +86,22 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Sorts the currently filtered person list according to the given {@link Comparator}.
+     * This allows commands to customize the display order of persons dynamically.
+     *
+     * @param comparator Comparator used to determine the order of persons in the filtered list.
+     *                   Must not be {@code null}.
+     */
     void sortFilteredPersonList(Comparator<Person> comparator);
 
+    /**
+     * Returns an unmodifiable view of the sorted person list.
+     * This list reflects the ordering applied by {@link #sortFilteredPersonList(Comparator)}.
+     *
+     * @return an unmodifiable {@code ObservableList<Person>} sorted according to the current comparator.
+     */
     ObservableList<Person> getSortedPersonList();
+
+    void sortLessonsForEachPerson();
 }

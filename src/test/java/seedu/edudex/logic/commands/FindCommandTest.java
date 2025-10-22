@@ -27,6 +27,7 @@ import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.NameContainsKeywordsPredicate;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Subject;
+import seedu.edudex.model.person.SubjectComparator;
 import seedu.edudex.model.person.SubjectMatchesPredicate;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.testutil.PersonBuilder;
@@ -207,11 +208,12 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
 
         expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.sortFilteredPersonList(new SubjectComparator());
+
         assertCommandSuccess(command, model,
                 String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size()),
                 expectedModel);
 
-        // Verify sorting (Monday should come before Tuesday)
         List<Lesson> sorted = expectedModel.getFilteredPersonList().get(0).getLessons();
         assertEquals("Monday", sorted.get(0).getDay().toString());
     }
