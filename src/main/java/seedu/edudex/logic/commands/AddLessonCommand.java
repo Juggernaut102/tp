@@ -33,10 +33,10 @@ public class AddLessonCommand extends Command {
             + PREFIX_END + "END_TIME \n"
             + "Example: " + COMMAND_WORD
             + " 1 "
-            + PREFIX_SUBJECT + "mathematics"
+            + PREFIX_SUBJECT + "mathematics "
             + PREFIX_DAY + "Monday "
-            + PREFIX_START + "1200 "
-            + PREFIX_END + "1300";
+            + PREFIX_START + "12:00 "
+            + PREFIX_END + "13:00";
 
     public static final String MESSAGE_ADD_LESSON_SUCCESS = "New lesson: %1$s, added to student: %2$s";
     // public static final String MESSAGE_CONFLICTING_LESSON_TIMING = ;

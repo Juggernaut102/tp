@@ -59,7 +59,7 @@ public class Lesson {
 
     @Override
     public String toString() {
-        return String.format("[Name: " + subject.toString()
+        return String.format("[Subject: " + subject.toString()
                 + ", Day: " + day.toString()
                 + ", startTime: " + startTime.toString()
                 + ", endTime: " + endTime.toString()) + "]";
