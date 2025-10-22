@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.UniquePersonList;
+import seedu.edudex.model.subject.UniqueSubjectList;
 
 /**
  * Wraps all data at the EduDex level
@@ -16,6 +17,7 @@ import seedu.edudex.model.person.UniquePersonList;
 public class EduDex implements ReadOnlyEduDex {
 
     private final UniquePersonList persons;
+    private final UniqueSubjectList subjects;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,6 +28,7 @@ public class EduDex implements ReadOnlyEduDex {
      */
     {
         persons = new UniquePersonList();
+        subjects = new UniqueSubjectList();
     }
 
     public EduDex() {}
@@ -49,13 +52,61 @@ public class EduDex implements ReadOnlyEduDex {
     }
 
     /**
+     * Replaces the contents of the subject list with {@code subjects}.
+     * {@code subjects} must not contain duplicate subjects.
+     */
+    public void setSubjects(List<seedu.edudex.model.subject.Subject> subjects) {
+        this.subjects.setSubjects(subjects);
+    }
+
+    /**
      * Resets the existing data of this {@code EduDex} with {@code newData}.
      */
     public void resetData(ReadOnlyEduDex newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setSubjects(newData.getSubjectList());
     }
+
+    //// subject-level operations
+
+    /**
+     * Returns true if a subject with the same name as {@code subject} exists in EduDex.
+     */
+    public boolean hasSubject(seedu.edudex.model.subject.Subject subject) {
+        requireNonNull(subject);
+        return subjects.contains(subject);
+    }
+
+    /**
+     * Adds a subject to EduDex.
+     * The subject must not already exist in EduDex.
+     */
+    public void addSubject(seedu.edudex.model.subject.Subject s) {
+        subjects.add(s);
+    }
+
+    /**
+     * Replaces the given subject {@code target} in the list with {@code editedSubject}.
+     * {@code target} must exist in EduDex.
+     * The subject name of {@code editedSubject} must not be the same as another existing subject in EduDex.
+     */
+    public void setSubject(seedu.edudex.model.subject.Subject target,
+                           seedu.edudex.model.subject.Subject editedSubject) {
+        requireNonNull(editedSubject);
+
+        subjects.setSubject(target, editedSubject);
+    }
+
+    /**
+     * Removes {@code key} from this {@code EduDex}.
+     * {@code key} must exist in EduDex.
+     */
+    public void removeSubject(seedu.edudex.model.subject.Subject key) {
+        subjects.remove(key);
+    }
+
 
     //// person-level operations
 
@@ -106,6 +157,11 @@ public class EduDex implements ReadOnlyEduDex {
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<seedu.edudex.model.subject.Subject> getSubjectList() {
+        return subjects.asUnmodifiableObservableList();
     }
 
     @Override

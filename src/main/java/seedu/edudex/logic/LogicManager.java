@@ -16,6 +16,7 @@ import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.ReadOnlyEduDex;
 import seedu.edudex.model.person.Person;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.storage.Storage;
 
 /**
@@ -69,6 +70,11 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Subject> getSubjectList() {
+        return model.getSubjectList();
     }
 
     @Override

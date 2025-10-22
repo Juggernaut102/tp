@@ -2,6 +2,8 @@ package seedu.edudex.model.person;
 
 import static seedu.edudex.commons.util.AppUtil.checkArgument;
 
+import seedu.edudex.model.subject.Subject;
+
 /**
  * Represents a Lesson in EduDex.
  * Guarantees: immutable; is valid as declared in {@link #isValidStartEndTime(Time, Time)}

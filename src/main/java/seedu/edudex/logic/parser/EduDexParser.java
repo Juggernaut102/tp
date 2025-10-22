@@ -9,10 +9,12 @@ import java.util.regex.Pattern;
 
 import seedu.edudex.commons.core.LogsCenter;
 import seedu.edudex.logic.commands.AddCommand;
+import seedu.edudex.logic.commands.AddSubjectCommand;
 import seedu.edudex.logic.commands.ClearCommand;
 import seedu.edudex.logic.commands.Command;
 import seedu.edudex.logic.commands.DeleteCommand;
 import seedu.edudex.logic.commands.DeleteLessonCommand;
+import seedu.edudex.logic.commands.DeleteSubjectCommand;
 import seedu.edudex.logic.commands.EditCommand;
 import seedu.edudex.logic.commands.ExitCommand;
 import seedu.edudex.logic.commands.FindCommand;
@@ -57,11 +59,17 @@ public class EduDexParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        case AddSubjectCommand.COMMAND_WORD:
+            return new AddSubjectCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteSubjectCommand.COMMAND_WORD:
+            return new DeleteSubjectCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();

@@ -14,4 +14,11 @@ public interface ReadOnlyEduDex {
      */
     ObservableList<Person> getPersonList();
 
+    /**
+     * Returns an unmodifiable view of the subjects list.
+     * This list will not contain any duplicate subjects.
+     */
+    ObservableList<seedu.edudex.model.subject.Subject> getSubjectList();
+
+
 }

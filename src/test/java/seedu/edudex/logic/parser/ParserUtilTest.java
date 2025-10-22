@@ -20,8 +20,8 @@ import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Phone;
-import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -30,6 +30,7 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_SUBJECT = "Sci@nce";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -203,9 +204,26 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseSubject_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseSubjectName((String) null));
+    }
+
+    @Test
+    public void parseSubject_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseSubjectName(INVALID_SUBJECT));
+    }
+
+    @Test
     public void parseSubject_validValueWithoutWhitespace_returnsSubject() throws Exception {
         Subject expectedSubject = new Subject(VALID_SUBJECT);
         assertEquals(expectedSubject, ParserUtil.parseSubjectName(VALID_SUBJECT));
+    }
+
+    @Test
+    public void parseSubject_validValueWithWhitespace_returnsSubject() throws Exception {
+        String subjectWithWhitespace = WHITESPACE + VALID_SUBJECT + WHITESPACE;
+        Subject expectedSubject = new Subject(VALID_SUBJECT);
+        assertEquals(expectedSubject, ParserUtil.parseSubjectName(subjectWithWhitespace));
     }
 
     @Test

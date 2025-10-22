@@ -27,8 +27,6 @@ public class DeleteLessonCommand extends Command {
 
     public static final String MESSAGE_DELETE_LESSON_SUCCESS =
             "Deleted lesson %1$s from student %2$s";
-    public static final String MESSAGE_INVALID_LESSON_INDEX =
-            "The lesson index provided is invalid.";
 
     private final Index studentIndex;
     private final Index lessonIndex;
@@ -65,7 +63,7 @@ public class DeleteLessonCommand extends Command {
         List<Lesson> currentLessons = new ArrayList<>(studentToEdit.getLessons());
 
         if (lessonIndex.getZeroBased() >= currentLessons.size()) {
-            throw new CommandException(MESSAGE_INVALID_LESSON_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_LESSON_INDEX);
         }
 
         Lesson lessonToDelete = currentLessons.remove(lessonIndex.getZeroBased());

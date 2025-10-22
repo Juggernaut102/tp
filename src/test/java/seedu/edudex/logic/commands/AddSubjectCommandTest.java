@@ -5,17 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.testutil.Assert.assertThrows;
-import static seedu.edudex.testutil.TypicalPersons.ALICE;
+import static seedu.edudex.testutil.TypicalSubjects.MATH;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.logic.Messages;
@@ -26,65 +24,66 @@ import seedu.edudex.model.ReadOnlyEduDex;
 import seedu.edudex.model.ReadOnlyUserPrefs;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.subject.Subject;
-import seedu.edudex.testutil.PersonBuilder;
+import seedu.edudex.testutil.SubjectBuilder;
 
-public class AddCommandTest {
+public class AddSubjectCommandTest {
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddCommand(null));
+    public void constructor_nullSubject_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new AddSubjectCommand(null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_subjectAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingSubjectAdded modelStub = new ModelStubAcceptingSubjectAdded();
+        Subject validSubject = new SubjectBuilder().build();
 
-        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
+        CommandResult commandResult = new AddSubjectCommand(validSubject).execute(modelStub);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertEquals(String.format(AddSubjectCommand.MESSAGE_ADD_SUBJECT_SUCCESS, Messages.format(validSubject)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validSubject), modelStub.subjectsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person validPerson = new PersonBuilder().build();
-        AddCommand addCommand = new AddCommand(validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+    public void execute_duplicateSubject_throwsCommandException() {
+        Subject validSubject = new SubjectBuilder().build();
+        AddSubjectCommand addSubjectCommand = new AddSubjectCommand(validSubject);
+        ModelStub modelStub = new ModelStubWithSubject(validSubject);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        assertThrows(CommandException.class,
+                AddSubjectCommand.MESSAGE_DUPLICATE_SUBJECT, () -> addSubjectCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Subject math = new SubjectBuilder().withName("Math").build();
+        Subject science = new SubjectBuilder().withName("Science").build();
+        AddSubjectCommand addMathCommand = new AddSubjectCommand(math);
+        AddSubjectCommand addScienceCommand = new AddSubjectCommand(science);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addMathCommand.equals(addMathCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddSubjectCommand addMathCommandCopy = new AddSubjectCommand(math);
+        assertTrue(addMathCommand.equals(addMathCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addMathCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addMathCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different subject -> returns false
+        assertFalse(addMathCommand.equals(addScienceCommand));
     }
 
     @Test
     public void toStringMethod() {
-        AddCommand addCommand = new AddCommand(ALICE);
-        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addCommand.toString());
+        AddSubjectCommand addSubjectCommand = new AddSubjectCommand(MATH);
+        String expected = AddSubjectCommand.class.getCanonicalName() + "{toAddSubject=" + MATH + "}";
+        assertEquals(expected, addSubjectCommand.toString());
     }
 
     /**
@@ -187,72 +186,51 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortFilteredPersonList(Comparator<Person> comparator) {
-
-        }
-
-        @Override
-        public ObservableList<Person> getSortedPersonList() {
-            return null;
-        }
-
-        @Override
-        public void sortLessonsForEachPerson() {}
-
         public void updateSubjectList(Predicate<Subject> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single subject.
      */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
+    private class ModelStubWithSubject extends ModelStub {
+        private final Subject subject;
 
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
+        ModelStubWithSubject(Subject subject) {
+            requireNonNull(subject);
+            this.subject = subject;
         }
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return this.person.isSamePerson(person);
+        public boolean hasSubject(Subject subject) {
+            requireNonNull(subject);
+            return this.subject.isSameSubject(subject);
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the subject being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingSubjectAdded extends ModelStub {
+        final ArrayList<Subject> subjectsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
+        public boolean hasSubject(Subject subject) {
+            requireNonNull(subject);
+            return subjectsAdded.stream().anyMatch(subject::isSameSubject);
         }
 
         @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addSubject(Subject subject) {
+            requireNonNull(subject);
+            subjectsAdded.add(subject);
         }
 
         @Override
         public ReadOnlyEduDex getEduDex() {
             return new EduDex();
         }
-
-        @Override
-        public void sortFilteredPersonList(Comparator<Person> comparator) {
-            // no-op for testing
-        }
-
-        @Override
-        public ObservableList<Person> getSortedPersonList() {
-            return FXCollections.observableArrayList(getFilteredPersonList());
-        }
     }
+
 }

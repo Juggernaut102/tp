@@ -7,6 +7,8 @@ import static seedu.edudex.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.edudex.model.subject.Subject;
+
 public class LessonTest {
     // Reusable test data
     private final Subject subjectMath = new Subject("Math");
@@ -96,7 +98,7 @@ public class LessonTest {
     @Test
     public void toString_correctFormat() {
         Lesson lesson = new Lesson(subjectMath, dayMonday, time0900, time1000);
-        String expectedString = "[Name: Math, Day: Monday, startTime: 09:00, endTime: 10:00]";
+        String expectedString = "[Name: math, Day: Monday, startTime: 09:00, endTime: 10:00]";
         assertEquals(expectedString, lesson.toString());
     }
 }

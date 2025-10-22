@@ -36,12 +36,11 @@ public class JsonSerializableEduDexTest {
         assertThrows(IllegalValueException.class, dataFromFile::toModelType);
     }
 
-    //    @Test
-    //    public void toModelType_duplicatePersons_throwsIllegalValueException() throws Exception {
-    //        JsonSerializableEduDex dataFromFile = JsonUtil.readJsonFile(DUPLICATE_PERSON_FILE,
-    //                JsonSerializableEduDex.class).get();
-    //        assertThrows(IllegalValueException.class, JsonSerializableEduDex.MESSAGE_DUPLICATE_PERSON,
-    //                dataFromFile::toModelType);
-    //    }
-
+    @Test
+    public void toModelType_duplicatePersons_throwsIllegalValueException() throws Exception {
+        JsonSerializableEduDex dataFromFile = JsonUtil.readJsonFile(DUPLICATE_PERSON_FILE,
+                JsonSerializableEduDex.class).get();
+        assertThrows(IllegalValueException.class, JsonSerializableEduDex.MESSAGE_DUPLICATE_PERSON,
+                dataFromFile::toModelType);
+    }
 }

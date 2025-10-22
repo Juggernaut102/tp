@@ -8,7 +8,7 @@ import static seedu.edudex.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +23,8 @@ import seedu.edudex.model.UserPrefs;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
-import seedu.edudex.model.person.Subject;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.PersonBuilder;
 
 /**
@@ -40,10 +40,14 @@ public class DeleteLessonCommandTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void executeValidLessonIndexSuccess() {
         // Create a copy of a typical student
         Person student = new PersonBuilder(model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased())).build();
+=======
+    public void execute_validLessonIndex_success() {
+>>>>>>> a6dc94b2fb6539edcf2e0e565df9facf0b811b76
 
         // Add a few lessons
         Lesson mathLesson = new Lesson(new Subject("Math"), new Day("Monday"),
@@ -51,11 +55,11 @@ public class DeleteLessonCommandTest {
         Lesson scienceLesson = new Lesson(new Subject("Science"), new Day("Tuesday"),
                 new Time("13:00"), new Time("14:00"));
 
-        List<Lesson> lessons = new ArrayList<>();
-        lessons.add(mathLesson);
-        lessons.add(scienceLesson);
-        student.setLessons(lessons);
-
+        List<Lesson> lessons = Arrays.asList(mathLesson, scienceLesson);
+        Person student = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()))
+                .withLessons(lessons)
+                .build();
         model.setPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), student);
 
         // Delete the first lesson
@@ -73,7 +77,11 @@ public class DeleteLessonCommandTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void executeInvalidLessonIndexThrowsCommandException() {
+=======
+    public void execute_invalidLessonIndex_throwsCommandException() {
+>>>>>>> a6dc94b2fb6539edcf2e0e565df9facf0b811b76
         Person student = new PersonBuilder(model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased())).build();
 
@@ -87,7 +95,7 @@ public class DeleteLessonCommandTest {
         // There’s only 1 lesson, so index 2 is invalid
         DeleteLessonCommand deleteLessonCommand = new DeleteLessonCommand(INDEX_FIRST_PERSON, Index.fromOneBased(2));
 
-        assertCommandFailure(deleteLessonCommand, model, DeleteLessonCommand.MESSAGE_INVALID_LESSON_INDEX);
+        assertCommandFailure(deleteLessonCommand, model, Messages.MESSAGE_INVALID_LESSON_INDEX);
     }
 
     @Test
