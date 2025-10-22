@@ -8,7 +8,6 @@ import seedu.edudex.logic.parser.Prefix;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.subject.Subject;
 
-
 /**
  * Container for user visible messages.
  */
@@ -21,6 +20,8 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_INVALID_LESSON_INDEX =
+            "The lesson index provided is invalid.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

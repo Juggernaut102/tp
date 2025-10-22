@@ -9,9 +9,11 @@ import java.util.regex.Pattern;
 
 import seedu.edudex.commons.core.LogsCenter;
 import seedu.edudex.logic.commands.AddCommand;
+import seedu.edudex.logic.commands.AddSubjectCommand;
 import seedu.edudex.logic.commands.ClearCommand;
 import seedu.edudex.logic.commands.Command;
 import seedu.edudex.logic.commands.DeleteCommand;
+import seedu.edudex.logic.commands.DeleteLessonCommand;
 import seedu.edudex.logic.commands.DeleteSubjectCommand;
 import seedu.edudex.logic.commands.EditCommand;
 import seedu.edudex.logic.commands.ExitCommand;
@@ -57,6 +59,9 @@ public class EduDexParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        case AddSubjectCommand.COMMAND_WORD:
+            return new AddSubjectCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
@@ -80,6 +85,9 @@ public class EduDexParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case DeleteLessonCommand.COMMAND_WORD:
+            return new DeleteLessonCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
