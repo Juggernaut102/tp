@@ -63,7 +63,7 @@ public class Subject {
         }
 
         return otherSubject != null
-                && otherSubject.subjectName.equals(subjectName);
+                && otherSubject.subjectName.equalsIgnoreCase(subjectName);
     }
 
     @Override
