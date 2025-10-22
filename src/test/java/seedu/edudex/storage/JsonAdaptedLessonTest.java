@@ -36,14 +36,15 @@ public class JsonAdaptedLessonTest {
         assertEquals(VALID_LESSON, lesson.toModelType());
     }
 
+    /*
     // Once we have implemented Subject.json validation, we can uncomment these tests
-    //    @Test
-    //    public void toModelType_invalidSubject_throwsIllegalValueException() {
-    //        JsonAdaptedLesson lesson =
-    //                new JsonAdaptedLesson(INVALID_SUBJECT, VALID_DAY, VALID_STARTTIME, VALID_ENDTIME);
-    //        String expectedMessage = Subject.MESSAGE_CONSTRAINTS;
-    //        assertThrows(IllegalValueException.class, expectedMessage, lesson::toModelType);
-    //    }
+        @Test
+        public void toModelType_invalidSubject_throwsIllegalValueException() {
+            JsonAdaptedLesson lesson =
+                    new JsonAdaptedLesson(INVALID_SUBJECT, VALID_DAY, VALID_STARTTIME, VALID_ENDTIME);
+            String expectedMessage = Subject.MESSAGE_CONSTRAINTS;
+            assertThrows(IllegalValueException.class, expectedMessage, lesson::toModelType);
+        }*/
 
     @Test
     public void toModelType_nullSubject_throwsIllegalValueException() {
