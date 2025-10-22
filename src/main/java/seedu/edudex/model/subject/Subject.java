@@ -50,7 +50,7 @@ public class Subject {
 
     @Override
     public String toString() {
-        return subjectName;
+        return subjectName.toLowerCase();
     }
 
     /**
