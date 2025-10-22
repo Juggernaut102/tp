@@ -49,7 +49,7 @@ public class PersonTest {
         // Multiple lessons
         person.addLesson(lessonScienceTuesday);
         String expected = "1. " + lessonMathMonday.toString()
-                +"\n2. " + lessonScienceTuesday.toString();
+                + "\n2. " + lessonScienceTuesday.toString();
         assertEquals(expected, person.getLessonsAsString());
     }
 
