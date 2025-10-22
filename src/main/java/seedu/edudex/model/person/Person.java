@@ -77,15 +77,18 @@ public class Person {
     }
 
     /**
-     * Returns a string representation of all lessons.
+     * Returns a string representation of all lessons, in a numbered list.
      */
     public String getLessonsAsString() {
         if (lessons.isEmpty()) {
             return "No lessons scheduled.";
         }
         StringBuilder sb = new StringBuilder();
-        for (Lesson lesson : lessons) {
-            sb.append(lesson.toString()).append("\n");
+        for (int i = 0; i < lessons.size(); i++) {
+            sb.append(i + 1)
+                    .append(". ")
+                    .append(lessons.get(i))
+                    .append("\n");
         }
         return sb.toString().trim();
     }
