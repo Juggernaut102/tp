@@ -49,7 +49,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.lessons = new ArrayList<>(lessons);    // defensive copy
+        this.lessons = new ArrayList<>(lessons); // defensive copy
     }
 
     public Name getName() {
@@ -174,6 +174,9 @@ public class Person {
                 .toString();
     }
 
+    /**
+     * Make a copy of this Person, that is, return a new Person object with the same attributes.
+     */
     public Person makeCopyOfPerson() {
         return new Person(name, phone, email, address,
                 new HashSet<>(tags), new ArrayList<>(lessons));

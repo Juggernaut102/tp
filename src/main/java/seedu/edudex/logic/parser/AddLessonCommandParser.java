@@ -11,6 +11,9 @@ import seedu.edudex.logic.commands.AddLessonCommand;
 import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.person.Lesson;
 
+/**
+ * Parses input arguments and creates a new AddLessonCommand object
+ */
 public class AddLessonCommandParser implements Parser<AddLessonCommand> {
     @Override
     public AddLessonCommand parse(String args) throws ParseException {
