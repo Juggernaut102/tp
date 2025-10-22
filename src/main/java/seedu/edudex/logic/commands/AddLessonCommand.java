@@ -15,6 +15,7 @@ import seedu.edudex.logic.commands.exceptions.CommandException;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * Adds a Lesson to the specified Student.
@@ -39,6 +40,8 @@ public class AddLessonCommand extends Command {
             + PREFIX_END + "13:00";
 
     public static final String MESSAGE_ADD_LESSON_SUCCESS = "New lesson: %1$s, added to student: %2$s";
+    public static final String MESSAGE_SUBJECT_NOT_TAUGHT = "You tried to add a lesson with "
+            + "a subject that is not in the list of subjects you teach";
     // public static final String MESSAGE_CONFLICTING_LESSON_TIMING = ;
 
     private Index studentIndex;
@@ -63,7 +66,13 @@ public class AddLessonCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        // if conflicting timings, throw exception
+        // if list of subjects taught does not contain input subject, throw exception
+        Subject subjectOfAddedLesson = lessonToAdd.getSubject();
+        if (!model.hasSubject(subjectOfAddedLesson)) {
+            throw new CommandException(MESSAGE_SUBJECT_NOT_TAUGHT);
+        }
+
+        // if conflicting lesson timings, throw exception
 
         Person originalStudent = lastShownList.get(studentIndex.getZeroBased());
         Person updatedStudent = originalStudent.makeCopyOfPerson();

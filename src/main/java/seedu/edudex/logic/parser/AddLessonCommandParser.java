@@ -41,8 +41,6 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
         String startStr = argMultimap.getValue(PREFIX_START).get();
         String endStr = argMultimap.getValue(PREFIX_END).get();
 
-        // Do a check that there is no clash in lesson timings, throw exception if there is
-
         Lesson lesson = ParserUtil.parseLesson(subjectStr, dayStr, startStr, endStr);
         return new AddLessonCommand(studentIndex, lesson);
     }
