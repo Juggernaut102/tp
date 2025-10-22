@@ -34,6 +34,6 @@ public class SubjectCard extends UiPart<Region> {
     public SubjectCard(Subject subject) {
         super(FXML);
         this.subject = subject;
-        name.setText(subject.subjectName);
+        name.setText(subject.toString());
     }
 }
