@@ -1,6 +1,7 @@
 package seedu.edudex.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.person.Name;
@@ -19,8 +20,8 @@ class JsonAdaptedSubject {
      * Constructs a {@code JsonAdaptedTag} with the given {@code tagName}.
      */
     @JsonCreator
-    public JsonAdaptedSubject(String subject) {
-        this.subjectName = subject;
+    public JsonAdaptedSubject(@JsonProperty("subjectName") String subjectName) {
+        this.subjectName = subjectName;
     }
 
     /**
