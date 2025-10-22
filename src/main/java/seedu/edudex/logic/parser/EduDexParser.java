@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import seedu.edudex.commons.core.LogsCenter;
 import seedu.edudex.logic.commands.AddCommand;
+import seedu.edudex.logic.commands.AddLessonCommand;
 import seedu.edudex.logic.commands.AddSubjectCommand;
 import seedu.edudex.logic.commands.ClearCommand;
 import seedu.edudex.logic.commands.Command;
@@ -85,6 +86,9 @@ public class EduDexParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case AddLessonCommand.COMMAND_WORD:
+            return new AddLessonCommandParser().parse(arguments);
 
         case DeleteLessonCommand.COMMAND_WORD:
             return new DeleteLessonCommandParser().parse(arguments);
