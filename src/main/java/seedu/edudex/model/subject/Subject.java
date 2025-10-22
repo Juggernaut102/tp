@@ -30,7 +30,7 @@ public class Subject {
         requireNonNull(name);
         // check validity from Subject.json file for allowed subjects
         checkArgument(isValidSubjectName(name), MESSAGE_CONSTRAINTS);
-        this.subjectName = name;
+        this.subjectName = name.toLowerCase();
     }
 
     /**
