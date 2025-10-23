@@ -74,7 +74,7 @@ optimized for freelance tutors who prefer using **Command Line Interface (CLI)**
 ### Add student
 Adds a student’s contact to EduDex <br>
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
+Format: `add n/NAME p/PHONE_NUMBER e/SCHOOL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
 
 Example:
 `add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday start/1500 end/1600`
@@ -88,7 +88,7 @@ Example:
   - Acceptable values: digits from 0-9, any length
   - Error message: “Phone number must contain only numbers!”
 
-- EMAIL:
+- SCHOOL:
   - Acceptable values: any string will be accepted
   - Error message: no error message
 
@@ -112,13 +112,13 @@ Example:
 - Succeed: 
 ```
 New student added: 
-<NAME>; Phone: <NUMBER>; Email: <EMAIL>; Address: <ADDRESS>; Day: <DAY>; TIME: <TIME_START> - <TIME_END>
+<NAME>; Phone: <NUMBER>; School: <SCHOOL>; Address: <ADDRESS>; Day: <DAY>; TIME: <TIME_START> - <TIME_END>
 ```
 - Fail:
 ```
 Invalid command format!
 add: Adds a student to EduDex.
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
+Format: `add n/NAME p/PHONE_NUMBER e/SCHOOL a/ADDRESS d/DAY start/TIME_START end/TIME_END`
 Example: add n/John Doe p/98765432 e/johnd@example.com a/John street, Block 123, #01-01 d/Wednesday
 start/1500 end/1600
 ```

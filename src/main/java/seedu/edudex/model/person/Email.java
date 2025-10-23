@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.edudex.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's email in EduDex.
+ * Represents a Person's  in EduDex.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
@@ -45,7 +45,7 @@ public class Email {
     }
 
     /**
-     * Returns if a given string is a valid email.
+     * Returns if a given string is a valid school.
      */
     public static boolean isValidEmail(String test) {
         return test.matches(VALIDATION_REGEX);

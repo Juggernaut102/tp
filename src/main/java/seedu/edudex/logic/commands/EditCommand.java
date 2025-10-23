@@ -3,10 +3,10 @@ package seedu.edudex.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SCHOOL;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.edudex.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -26,11 +26,11 @@ import seedu.edudex.logic.commands.exceptions.CommandException;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Day;
-import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
+import seedu.edudex.model.person.School;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.tag.Tag;
 
@@ -47,7 +47,7 @@ public class EditCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_SCHOOL + "SCHOOL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_DAY + "DAY ]"
             + "[" + PREFIX_START + "START ]"
@@ -55,7 +55,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_SCHOOL + "NUS Primary School ";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -112,7 +112,7 @@ public class EditCommand extends Command {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        School updatedSchool = editPersonDescriptor.getSchool().orElse(personToEdit.getSchool());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
@@ -137,7 +137,7 @@ public class EditCommand extends Command {
         //            updatedSubject = personToEdit.getSubject();
         }
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedSchool, updatedAddress, updatedTags);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class EditCommand extends Command {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private Email email;
+        private School school;
         private Address address;
         private Set<Tag> tags;
         private Lesson subject;
@@ -190,7 +190,7 @@ public class EditCommand extends Command {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
-            setEmail(toCopy.email);
+            setSchool(toCopy.school);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setSubject(toCopy.subject);
@@ -205,7 +205,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, subject, day, startTime, endTime);
+            return CollectionUtil.isAnyNonNull(name, phone, school, address, tags, subject, day, startTime, endTime);
         }
 
         public void setName(Name name) {
@@ -224,12 +224,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setSchool(School school) {
+            this.school = school;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<School> getSchool() {
+            return Optional.ofNullable(school);
         }
 
         public void setAddress(Address address) {
@@ -313,7 +313,7 @@ public class EditCommand extends Command {
             EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
+                    && Objects.equals(school, otherEditPersonDescriptor.school)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
                     && Objects.equals(subject, otherEditPersonDescriptor.subject);
@@ -324,7 +324,7 @@ public class EditCommand extends Command {
             return new ToStringBuilder(this)
                     .add("name", name)
                     .add("phone", phone)
-                    .add("email", email)
+                    .add("school", school)
                     .add("address", address)
                     .add("tags", tags)
                     .add("subject", subject)
