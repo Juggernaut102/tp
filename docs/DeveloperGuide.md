@@ -251,6 +251,176 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### Find feature (Enhanced)
+
+#### Implementation
+
+The `FindCommand` has been enhanced to support two additional types of search:
+* **Find by Day** – searches for students who have lessons on a specified day.
+* **Find by Subject** – searches for students who have lessons for a specified subject.
+
+This is in addition to the existing **Find by Name** functionality.
+
+The command is structured as follows:
+* `FindCommand` – Executes the filtering logic.
+* `FindCommandParser` – Parses user input and constructs the correct predicate.
+* `NameContainsKeywordsPredicate`, `DayMatchesPredicate`, and `SubjectMatchesPredicate` – Determine whether a `Person` matches the given search criteria.
+
+Given below is an example usage scenario and how the `FindCommand` behaves.
+
+<puml src="diagrams/FindCommandSequenceDiagram.puml" width="600" />
+
+**Example usage:**
+
+1. The user executes `find d/Monday` to locate all students with lessons on Monday.
+2. `FindCommandParser` detects the prefix `d/` and constructs a `DayMatchesPredicate`.
+3. A `FindCommand` object is created with this predicate.
+4. The `FindCommand` calls `model.updateFilteredPersonList(predicate)` in `ModelManager`.
+5. The UI automatically updates to display the filtered student list.
+
+Similarly, for `find s/Math`, a `SubjectMatchesPredicate` is created and the model is updated accordingly.
+
+---
+
+#### Design considerations
+
+| Aspect | Alternatives | Current choice | Reason |
+|--------|---------------|----------------|--------|
+| Predicate handling | Create separate commands for day and subject searches | Unified `FindCommand` with multiple constructors | Reduces command duplication and simplifies parsing |
+| Case sensitivity | Exact match | Case-insensitive match | Provides better user experience |
+| Error handling | Reject invalid days/subjects silently | Validate against allowed days and empty subjects | Ensures robust input validation |
+
+---
+
+#### Example usages
+
+| Command | Description |
+|----------|-------------|
+| `find alice bob` | Finds students whose names contain “alice” or “bob” |
+| `find d/Tuesday` | Finds students with lessons on Tuesday |
+| `find s/Science` | Finds students taking Science lessons |
+
+---
+
+#### Example UI output
+
+| Input | Output |
+|--------|--------|
+| `find d/Friday` | Displays list of students with Friday lessons |
+| `find s/Math` | Displays students taking Math, with lesson details |
+
+---
+
+### DeleteLesson feature
+
+#### Implementation
+
+The `DeleteLessonCommand` allows users to delete a specific lesson from a student using two indices:
+1. **Student index** – The index of the student in the displayed student list.
+2. **Lesson index** – The index of the lesson in that student’s list of lessons.
+
+The command word is `dellesson`.
+
+**Example usage:**
+
+Deletes the 2nd lesson of the 1st student in the current displayed list.
+
+The command structure is as follows:
+* `DeleteLessonCommand` – Executes lesson deletion logic.
+* `DeleteLessonCommandParser` – Parses and validates user input.
+* `ModelManager` – Handles the modification of the `Person` object.
+
+Given below is a sequence diagram showing how `DeleteLessonCommand` works.
+
+<puml src="diagrams/DeleteLessonSequenceDiagram.puml" width="600" />
+
+**Step-by-step execution:**
+
+1. User executes `dellesson 1 2`.
+2. `DeleteLessonCommandParser` parses both indices and creates a `DeleteLessonCommand`.
+3. `LogicManager` executes the command.
+4. The command retrieves the student at index 1 from `model.getFilteredPersonList()`.
+5. The lesson at index 2 is removed from the student’s lesson list.
+6. The model updates the modified student using `model.setPerson()`.
+7. A success message is displayed:
+
+---
+
+#### Design considerations
+
+| Aspect | Alternatives | Current choice | Reason |
+|--------|---------------|----------------|--------|
+| Command format | `delete lesson 1 2` | `dellesson 1 2` | Shorter and easier to parse |
+| Validation | Ignore invalid indices | Throw `CommandException` with proper messages | Prevents accidental deletions |
+| Data mutation | Modify lesson list directly | Create a new `Person` instance with updated lessons | Preserves immutability of model data |
+
+---
+
+#### Example usages
+
+| Command | Description |
+|----------|-------------|
+| `dellesson 1 1` | Deletes the first lesson from the first student |
+| `dellesson 3 2` | Deletes the second lesson from the third student |
+| `dellesson 2 5` | Deletes the fifth lesson from the second student |
+
+---
+
+#### Example error cases
+
+| Input | Result |
+|--------|--------|
+| `dellesson 0 1` | Error: Invalid student index |
+| `dellesson 1 0` | Error: Invalid lesson index |
+| `dellesson 1 99` | Error: Lesson index out of bounds |
+| `dellesson 1 a` | Error: Invalid format — indices must be integers |
+
+---
+
+#### Interaction with Model
+
+The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
+1. Retrieves the displayed list of students via `getFilteredPersonList()`.
+2. Extracts the target `Person` using the given student index.
+3. Creates a modified copy of the `Person` with the target lesson removed.
+4. Replaces the old person with the new one using `model.setPerson()`.
+
+---
+
+#### Class diagram
+
+<puml src="diagrams/DeleteLessonClassDiagram.puml" width="550" />
+
+---
+
+### Summary
+
+| Command | Function | Example | Output |
+|----------|-----------|----------|---------|
+| `find d/Friday` | Find students by lesson day | `find d/Friday` | Lists all students with Friday lessons |
+| `find s/Math` | Find students by subject | `find s/Math` | Lists students taking Math |
+| `dellesson 1 1` | Delete specific lesson | `dellesson 1 1` | Deletes the 1st lesson of the 1st student |
+
+---
+
+### Example activity flow
+
+<puml src="diagrams/FindAndDeleteLessonActivityDiagram.puml" width="400" />
+
+---
+
+### Example test cases
+
+| Scenario | Command | Expected Result |
+|-----------|----------|-----------------|
+| Find by day | `find d/Monday` | Lists all students with Monday lessons |
+| Find by subject | `find s/Science` | Lists all students taking Science |
+| Delete valid lesson | `dellesson 1 2` | Deletes 2nd lesson of 1st student |
+| Invalid student index | `dellesson 0 1` | Error: Invalid student index |
+| Invalid lesson index | `dellesson 1 5` | Error: Invalid lesson index |
+
+---
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
