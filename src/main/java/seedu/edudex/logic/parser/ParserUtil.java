@@ -179,40 +179,15 @@ public class ParserUtil {
      */
     public static Lesson parseLesson(String subject, String day,
                                      String startTime, String endTime) throws ParseException {
-        requireNonNull(subject);
-        requireNonNull(day);
-        requireNonNull(startTime);
-        requireNonNull(endTime);
 
-        Subject trimmedSubject = parseSubjectName(subject);
-        if (!Subject.isValidSubjectName(subject)) {
-            throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
-        }
-
-        String trimmedDay = day.trim();
-        if (!Day.isValidDay(trimmedDay)) {
-            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
-        }
-
-        String trimmedStartTime = startTime.trim();
-        if (!Time.isValidTime(trimmedStartTime)) {
-            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
-        }
-
-        String trimmedEndTime = endTime.trim();
-        if (!Time.isValidTime(trimmedEndTime)) {
-            throw new ParseException(Time.MESSAGE_CONSTRAINTS);
-        }
-
-        Subject subjectObj = new Subject(subject);
-        Day dayObj = new Day(trimmedDay);
-        Time startTimeObj = new Time(trimmedStartTime);
-        Time endTimeObj = new Time(trimmedEndTime);
+        Subject subjectObj = parseSubjectName(subject);
+        Day dayObj = parseDay(day);
+        Time startTimeObj = parseTime(startTime);
+        Time endTimeObj = parseTime(endTime);
 
         if (!Lesson.isValidStartEndTime(startTimeObj, endTimeObj)) {
             throw new ParseException(Lesson.MESSAGE_CONSTRAINTS);
         }
-
         return new Lesson(subjectObj, dayObj, startTimeObj, endTimeObj);
     }
 

@@ -31,16 +31,25 @@ public class Person {
     private List<Lesson> lessons;
 
     /**
+     * Constructor for initialising a new Person with no lessons.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        this(name, phone, email, address, tags, new ArrayList<>());
+    }
+
+    /**
+     * A more general Constructor, used explicitly if lessons is not an empty list.
+     */
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, List<Lesson> lessons) {
+        requireAllNonNull(name, phone, email, address, tags, lessons);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.lessons = new ArrayList<>(); // Initialize with an empty list of lessons
+        this.lessons = new ArrayList<>(lessons); // defensive copy
     }
 
     public Name getName() {
@@ -68,15 +77,18 @@ public class Person {
     }
 
     /**
-     * Returns a string representation of all lessons.
+     * Returns a string representation of all lessons, in a numbered list.
      */
     public String getLessonsAsString() {
         if (lessons.isEmpty()) {
             return "No lessons scheduled.";
         }
         StringBuilder sb = new StringBuilder();
-        for (Lesson lesson : lessons) {
-            sb.append(lesson.toString()).append("\n");
+        for (int i = 0; i < lessons.size(); i++) {
+            sb.append(i + 1)
+                    .append(". ")
+                    .append(lessons.get(i))
+                    .append("\n");
         }
         return sb.toString().trim();
     }
@@ -160,5 +172,14 @@ public class Person {
                 .add("tags", tags)
                 .add("lessons", lessons)
                 .toString();
+    }
+
+    /**
+     * Make a copy of this Person, that is, return a new Person object with the same attributes.
+     */
+    public Person makeCopyOfPerson() {
+        return new Person(name, phone, email, address,
+                new HashSet<>(tags), new ArrayList<>(lessons));
+        // defensive copying
     }
 }
