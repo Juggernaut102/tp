@@ -122,7 +122,7 @@ Finds persons whose **names**, **lesson days**, or **lesson subjects** match the
 Format:  
 `find KEYWORD [MORE_KEYWORDS]`  
 `find d/DAY`  
-`find s/SUBJECT`
+`find sub/SUBJECT`
 
 * The search is **case-insensitive**.  
   e.g. `find hans` will match `Hans`.
@@ -130,9 +130,9 @@ Format:
   e.g. `find Hans Bo` will match `Bo Hans`.
 * When searching by day (`d/`), only valid days of the week are accepted.  
   e.g. `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`.
-* When searching by subject (`s/`), only subjects matching lesson names will be shown.
+* When searching by subject (`sub/`), only subjects matching lesson names will be shown.
 * Persons matching **at least one** keyword or criterion will be displayed.
-* For `find s/SUBJECT`, lessons within each student are automatically **sorted by day and start time**.
+* For `find sub/SUBJECT`, lessons within each student are automatically **sorted by day and start time**.
 
 <box type="tip" seamless>
 
@@ -140,7 +140,7 @@ Format:
 e.g.
 - `find alice` — finds students with names containing "alice".
 - `find d/Monday` — finds all students with lessons on Monday.
-- `find s/Math` — finds all students taking Math lessons.
+- `find sub/Math` — finds all students taking Math lessons.
   </box>
 
 Examples:
