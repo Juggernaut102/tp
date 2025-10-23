@@ -70,7 +70,7 @@ public class DeleteLessonCommand extends Command {
 
         Person updatedPerson = new Person(studentToEdit.getName(),
                 studentToEdit.getPhone(),
-                studentToEdit.getEmail(),
+                studentToEdit.getSchool(),
                 studentToEdit.getAddress(),
                 studentToEdit.getTags());
         updatedPerson.setLessons(currentLessons);

@@ -7,10 +7,10 @@ import static seedu.edudex.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_DAY_BOB;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ENDTIME_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.edudex.logic.commands.CommandTestUtil.VALID_SCHOOL_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_STARTTIME_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -47,8 +47,8 @@ public class EditPersonDescriptorTest {
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withPhone(VALID_PHONE_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different email -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
+        // different school -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withSchool(VALID_SCHOOL_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different address -> returns false
@@ -70,8 +70,8 @@ public class EditPersonDescriptorTest {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         String expected = EditPersonDescriptor.class.getCanonicalName() + "{name="
                 + editPersonDescriptor.getName().orElse(null) + ", phone="
-                + editPersonDescriptor.getPhone().orElse(null) + ", email="
-                + editPersonDescriptor.getEmail().orElse(null) + ", address="
+                + editPersonDescriptor.getPhone().orElse(null) + ", school="
+                + editPersonDescriptor.getSchool().orElse(null) + ", address="
                 + editPersonDescriptor.getAddress().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + ", subject="
                 + editPersonDescriptor.getSubject().orElse(null)

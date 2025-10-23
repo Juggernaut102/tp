@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a person to EduDex.
 
-Format: `add n/NAME p/PHONE_NUMBER sch/School a/ADDRESS [t/TAG]`
+Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 
 
 <box type="tip" seamless>
@@ -115,23 +115,43 @@ Examples:
 *  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating persons by name, day, or subject: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds persons whose **names**, **lesson days**, or **lesson subjects** match the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format:  
+`find KEYWORD [MORE_KEYWORDS]`  
+`find d/DAY`  
+`find sub/SUBJECT`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is **case-insensitive**.  
+  e.g. `find hans` will match `Hans`.
+* The order of keywords does not matter.  
+  e.g. `find Hans Bo` will match `Bo Hans`.
+* When searching by day (`d/`), only valid days of the week are accepted.  
+  e.g. `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`.
+* When searching by subject (`sub/`), only subjects matching lesson names will be shown.
+* Persons matching **at least one** keyword or criterion will be displayed.
+* For `find sub/SUBJECT`, lessons within each student are automatically **sorted by day and start time**.
+
+<box type="tip" seamless>
+
+**Tip:** You can search by name, day, or subject independently.  
+e.g.
+- `find alice` — finds students with names containing "alice".
+- `find d/Monday` — finds all students with lessons on Monday.
+- `find sub/Math` — finds all students taking Math lessons.
+  </box>
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find John` returns all persons with "John" in their names.
+* `find alex david` returns both `Alex Yeoh` and `David Li`.
+* `find d/Friday` returns all students with Friday lessons.
+* `find sub/math` returns all students taking Science lessons.
+
+![result for 'find Alex David'](images/findNameResult.png)
+![result for 'find sub/Science'](images/findSubjectResult.png)
+![result for 'find d/Friday'](images/findDayResult.png)
 
 ### Deleting a person : `delete`
 
@@ -146,6 +166,37 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in EduDex.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+### Deleting a lesson from a student: `dellesson`
+
+Deletes a specific lesson (by index) from a given student.
+
+Format: `dellesson STUDENT_INDEX LESSON_INDEX`
+
+* Deletes the lesson at the specified `LESSON_INDEX` from the student at `STUDENT_INDEX`.
+* The indices refer to:
+    * `STUDENT_INDEX` — position of the student in the currently displayed student list.
+    * `LESSON_INDEX` — position of the lesson within that student’s list of lessons.
+* Both indices **must be positive integers** (1, 2, 3, …).
+
+<box type="info" seamless>
+
+**Example:**  
+If student 1 has 3 lessons (Math, Science, English),  
+`dellesson 1 2` will delete **Science**.
+</box>
+
+Examples:
+* `dellesson 1 1` — Deletes the first lesson of the first student in the list.
+* `dellesson 2 3` — Deletes the third lesson of the second student in the list.
+
+If an invalid index is entered:
+* EduDex will display **“Invalid student index.”** if `STUDENT_INDEX` is out of range.
+* EduDex will display **“Invalid lesson index.”** if `LESSON_INDEX` does not exist.
+
+![before 'dellesson 1 2'](images/beforeDeleteLesson.png)
+![result for 'dellesson 1 2'](images/deleteLessonResult.png)
+
 
 ### Clearing all persons : `clear`
 
@@ -179,6 +230,25 @@ Format: `delsub INDEX`
 
 Examples:
 * `delsub 1` deletes the 1st subject in EduDex.
+
+### Adding a lesson: `addlesson`
+
+Adds a lesson to the student in EduDex, specified by index.
+
+Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`
+
+* STUDENT_INDEX refers to the index in the currently displayed list of students.
+* STUDENT_INDEX must be a positive integer that is not greater than the size of the
+  currently displayed list of students.
+* SUBJECT must match (case-insensitive) at least one subject in EduDex.
+* DAY must match (case-insensitive) one of the following strings:
+  { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }.
+* START_TIME and END_TIME must be in the 24-hour format HH:MM, and must be a valid time.
+* START_TIME must be earlier than END_TIME.
+
+Examples:
+* `addlesson 1 sub/mathematics d/Monday start/12:00 end/13:00`
+* `addlesson 3 d/Tuesday sub/physics start/13:00 end/15:00`
 
 ### Exiting the program : `exit`
 
@@ -236,18 +306,18 @@ Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.
 
 **Rules**
 
-| Field              | Type              | Constraint                                                                                |
-|--------------------|-------------------|-------------------------------------------------------------------------------------------|
-| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
-| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                                    |
-| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
-| `address`          | string            | Any value, must not be blank                                                              |
-| `tags`             | string[]          | Alphanumeric, optional                                                                    |
-| `lessons`          | Lesson[]          | See fields below.                                                                         |
-| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| Field              | Type              | Constraint                                                                           |
+|--------------------|-------------------|--------------------------------------------------------------------------------------|
+| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                |
+| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                               |
+| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                |
+| `address`          | string            | Any value, must not be blank                                                         |
+| `tags`             | string[]          | Alphanumeric, optional                                                               |
+| `lessons`          | Lesson[]          | See fields below                                                                     |
+| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                |
 | `lesson:day`       | string            | Only one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday |
-| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime.                              |
-| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime.                             |
+| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime                          |
+| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime                         |
 
 
 
