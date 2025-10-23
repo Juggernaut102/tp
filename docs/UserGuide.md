@@ -231,6 +231,25 @@ Format: `delsub INDEX`
 Examples:
 * `delsub 1` deletes the 1st subject in EduDex.
 
+### Adding a lesson: `addlesson`
+
+Adds a lesson to the student in EduDex, specified by index.
+
+Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`
+
+* STUDENT_INDEX refers to the index in the currently displayed list of students.
+* STUDENT_INDEX must be a positive integer that is not greater than the size of the
+  currently displayed list of students.
+* SUBJECT must match (case-insensitive) at least one subject in EduDex.
+* DAY must match (case-insensitive) one of the following strings:
+  { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }.
+* START_TIME and END_TIME must be in the 24-hour format HH:MM, and must be a valid time.
+* START_TIME must be earlier than END_TIME.
+
+Examples:
+* `addlesson 1 sub/mathematics d/Monday start/12:00 end/13:00`
+* `addlesson 3 d/Tuesday sub/physics start/13:00 end/15:00`
+
 ### Exiting the program : `exit`
 
 Exits the program.
