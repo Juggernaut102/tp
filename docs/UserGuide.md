@@ -209,18 +209,18 @@ Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.
 
 **Rules**
 
-| Field              | Type              | Constraint                                                                                |
-|--------------------|-------------------|-------------------------------------------------------------------------------------------|
-| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
-| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                                    |
-| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
-| `address`          | string            | Any value, must not be blank                                                              |
-| `tags`             | string[]          | Alphanumeric, optional                                                                    |
-| `lessons`          | Lesson[]          | See fields below.                                                                         |
-| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| Field              | Type              | Constraint                                                                           |
+|--------------------|-------------------|--------------------------------------------------------------------------------------|
+| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                |
+| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                               |
+| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                |
+| `address`          | string            | Any value, must not be blank                                                         |
+| `tags`             | string[]          | Alphanumeric, optional                                                               |
+| `lessons`          | Lesson[]          | See fields below                                                                     |
+| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                |
 | `lesson:day`       | string            | Only one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday |
-| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime.                              |
-| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime.                             |
+| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime                          |
+| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime                         |
 
 
 
