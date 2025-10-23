@@ -17,7 +17,11 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.edudex.commons.core.GuiSettings;
-import seedu.edudex.model.person.*;
+import seedu.edudex.model.person.Day;
+import seedu.edudex.model.person.Lesson;
+import seedu.edudex.model.person.NameContainsKeywordsPredicate;
+import seedu.edudex.model.person.Person;
+import seedu.edudex.model.person.Time;
 import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.EduDexBuilder;
 import seedu.edudex.testutil.PersonBuilder;
