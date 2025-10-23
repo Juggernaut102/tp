@@ -66,18 +66,18 @@ public class FindCommandParserTest {
     @Test
     public void parse_validSubjectPrefix_returnsFindCommand() {
         FindCommand expectedCommand = new FindCommand(new SubjectMatchesPredicate("Math"));
-        assertParseSuccess(parser, " s/Math", expectedCommand);
+        assertParseSuccess(parser, " sub/Math", expectedCommand);
     }
 
     @Test
     public void parse_emptySubjectPrefix_throwsParseException() {
-        assertParseFailure(parser, " s/",
+        assertParseFailure(parser, " sub/",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_subjectWithSpaces_trimsAndParsesCorrectly() {
         FindCommand expectedCommand = new FindCommand(new SubjectMatchesPredicate("Science"));
-        assertParseSuccess(parser, " s/   Science   ", expectedCommand);
+        assertParseSuccess(parser, " sub/   Science   ", expectedCommand);
     }
 }
