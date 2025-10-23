@@ -2,7 +2,6 @@ package seedu.edudex.testutil;
 
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
-import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.subject.Subject;
 
@@ -39,6 +38,38 @@ public class LessonBuilder {
         day = lessonToCopy.getDay().getCopyOfDay();
         startTime = lessonToCopy.getStartTime().getCopyOfTime();
         endTime = lessonToCopy.getEndTime().getCopyOfTime();
+    }
+
+    /**
+     * Sets the {@code Subject} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withSubject(String subject) {
+        this.subject = new Subject(subject);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Day} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withDay(String day) {
+        this.day = new Day(day);
+        return this;
+    }
+
+    /**
+     * Sets the {@code startTime} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withStartTime(String startTime) {
+        this.startTime = new Time(startTime);
+        return this;
+    }
+
+    /**
+     * Sets the {@code endTime} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withEndTime(String endTime) {
+        this.endTime = new Time(endTime);
+        return this;
     }
 
     /**

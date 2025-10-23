@@ -53,6 +53,8 @@ public class AddLessonCommand extends Command {
      * @param studentIndex index of the student in the last shown list.
      */
     public AddLessonCommand(Index studentIndex, Lesson lessonToAdd) {
+        requireNonNull(studentIndex);
+        requireNonNull(lessonToAdd);
         this.studentIndex = studentIndex;
         this.lessonToAdd = lessonToAdd;
     }
