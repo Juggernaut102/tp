@@ -159,11 +159,11 @@ Examples:
 ![result for 'find Alex David'](images/findAlexDavidResult.png)
 _Find result for names 'Alex' or 'David'_
 
-![result for 'find sub/Science'](images/findSubjectResult.png)
-_Find result for subject 'Science'_
+![result for 'find sub/math'](images/findSubjectResult.png)
+_Find result for subject 'math'_
 
-![result for 'find d/Friday'](images/findDayResult.png)
-_Find result for day 'Friday'_
+![result for 'find d/Monday'](images/findDayResult.png)
+_Find result for day 'Monday'_
 
 ### Deleting a person : `delete`
 
