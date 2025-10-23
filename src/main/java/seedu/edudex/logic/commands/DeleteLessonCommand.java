@@ -18,7 +18,7 @@ import seedu.edudex.model.person.Person;
  */
 public class DeleteLessonCommand extends Command {
 
-    public static final String COMMAND_WORD = "deleteLesson";
+    public static final String COMMAND_WORD = "dellesson";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a lesson identified by the lesson index "
             + "from the student at the given index.\n"

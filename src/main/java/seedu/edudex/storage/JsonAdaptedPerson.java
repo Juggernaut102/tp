@@ -119,8 +119,8 @@ class JsonAdaptedPerson {
             modelLessonList.add(lesson.toModelType());
         }
 
-        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
-        person.setLessons(modelLessonList);
+        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress,
+                modelTags, modelLessonList);
         return person;
     }
 

@@ -6,7 +6,7 @@
 
 # EduDex User Guide
 
-EduDex is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EduDex can get your contact management tasks done faster than traditional GUI apps.
+EduDex is a **desktop app for managing student's contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EduDex can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -31,7 +31,7 @@ EduDex is a **desktop app for managing contacts, optimized for use via a  Line I
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 sch/Raffles Primary School a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -53,10 +53,10 @@ EduDex is a **desktop app for managing contacts, optimized for use via a  Line I
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/strongInMaths` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/owesMoney`, `t/owesMoney t/strongInScience` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a person to EduDex.
 
-Format: Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [d/DAY] [start/START_TIME] [end/END_TIME]`
+Format: `add n/NAME p/PHONE_NUMBER sch/School a/ADDRESS [t/TAG]`
 
 
 <box type="tip" seamless>
@@ -89,8 +89,8 @@ Format: Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [d/DAY] 
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/Monday start/09:00 end/11:00`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal d/Wednesday start/14:00 end/16:00`
+* `add n/John Doe p/98765432 sch/NUS a/John street, block 123`
+* `add n/Betsy Crowe sch/Queenstown Primary School a/Clementi p/1234567 t/weakInAlgebra`
 
 ### Listing all persons : `list`
 
@@ -102,7 +102,7 @@ Format: `list`
 
 Edits an existing person in EduDex.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -112,7 +112,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Locating persons by name: `find`
@@ -147,11 +147,38 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in EduDex.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-### Clearing all entries : `clear`
+### Clearing all persons : `clear`
 
-Clears all entries from EduDex.
+Clears all persons from EduDex.
 
 Format: `clear`
+
+### Adding a subject: `addsub`
+
+Adds a subject to EduDex.
+
+Format: `addsub SUBJECT`
+
+
+* A subject can be any alphanumerical string.
+* A subject is case-insensitive, stored in lower case. e.g `Math` will be stored as `math`
+
+Examples:
+* `addsub English`
+* `addsub MATH`
+
+### Deleting a subject : `delsub`
+
+Deletes the specified subject from EduDex.
+
+Format: `delsub INDEX`
+
+* Deletes the subject at the specified `INDEX`.
+* The index refers to the index number shown in the displayed subject list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `delsub 1` deletes the 1st subject in EduDex.
 
 ### Exiting the program : `exit`
 
@@ -163,9 +190,13 @@ Format: `exit`
 
 EduDex data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+### Editing the JSON data file
 
 EduDex data are saved automatically as a JSON file `[JAR file location]/data/edudex.json`. Advanced users are welcome to update data directly by editing that data file.
+
+
+The `edudex.json` file defines the **data model** for managing tutees in the EduDex application.
+This is intended for power users who wish to edit `edudex.json` without using the GUI.
 
 <box type="warning" seamless>
 
@@ -174,9 +205,145 @@ If your changes to the data file makes its format invalid, EduDex will discard a
 Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-### Archiving data files `[coming in v2.0]`
+#### JSON: Top-Level Overview
 
-_Details coming soon ..._
+```json
+{
+  "persons": [ ... ], // required
+  "subjects": [ ... ] // required
+}
+```
+
+**Person**
+```json
+{
+  "name": "Full Name", // required, 
+  "phone": "8-digit Singapore number", // required
+  "school": "string", // required
+  "address": "Full address string", // required
+  "tags": [ "string", ... ], // optional
+  "lessons": [ // optional
+    {
+    "name": "string",
+    "day": "string",
+    "startTime": "HH:MM",
+    "endTime": "HH:MM"
+    }
+  ] 
+}
+
+```
+
+**Rules**
+
+| Field              | Type              | Constraint                                                                                |
+|--------------------|-------------------|-------------------------------------------------------------------------------------------|
+| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                                    |
+| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `address`          | string            | Any value, must not be blank                                                              |
+| `tags`             | string[]          | Alphanumeric, optional                                                                    |
+| `lessons`          | Lesson[]          | See fields below.                                                                         |
+| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `lesson:day`       | string            | Only one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday |
+| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime.                              |
+| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime.                             |
+
+
+
+**Example**
+```json
+{
+  "name": "Alex Yeoh",
+  "phone": "87438808",
+  "school": "Clementi Village Primary School",
+  "address": "Blk 30 Geylang Street 29, #06-40",
+  "tags": [
+    "prefersMorningLessons",
+    "A-levelCandidate"
+  ],
+  "lessons": [
+    {
+    "subject": "Science",
+    "day": "Monday",
+    "startTime": "10:00",
+    "endTime": "12:00"
+    },
+    {
+      "name": "Math",
+      "day": "Tuesday",
+      "startTime": "14:00",
+      "endTime": "16:00"
+    }
+  ]
+}
+```
+
+#### JSON: Subject
+
+Each entry in `subjects` defines a distinct academic subject.
+
+**Structure**
+```json
+{
+  "subjectName": "Subject Title"
+}
+```
+
+**Rules**
+- Each subject **must** have a unique `subjectName`.
+- Subject names are **case-insensitive**.
+- No duplicate entries allowed.
+
+**Example**
+```json
+{
+  "subjects": [
+    { "subjectName": "Chemistry" },
+    { "subjectName": "Physics" },
+    { "subjectName": "Biology" }
+  ]
+}
+```
+
+**JSON Example**
+```json
+{
+  "persons": {
+    "name" : "Bernice Yu",
+    "phone" : "99272758",
+    "school": "Clementi West Secondary School",
+    "address" : "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
+    "tags" : [ ],
+    "lessons" : [
+      {
+        "subject": "Science",
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:00"
+      }
+    ]
+  },
+  "subjects": [
+    { "subjectName": "Science" }
+  ]
+}
+
+```
+<box type="tip" seamless>
+
+**JSON Tips:**
+1. **Formatting**
+- Use **UTF-8 encoding**.
+- Always maintain **valid JSON syntax**:
+    - Double quotes for all keys and strings.
+    - No trailing commas.
+- Validate the file with a JSON linter before saving.
+
+2. **Adding Entries**
+- To add a new person, append a new object to the `persons` array.
+- To add a new subject, append a new object to `subjects`.
+  </box>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -196,13 +363,14 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [d/DAY] [start/START_TIME] [end/END_TIME]`  
-e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague d/Friday start/10:00 end/12:00`
+| Action  | Format, Examples                                              |
+|---------|---------------------------------------------------------------|
+| **Add** | `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]…`<br>e.g., `add n/James Ho p/22224444 sch/Clementi Primary School a/123, Clementi Rd, 1234665 t/strongInMaths` <br>
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee sch/Jurong Primary School`
+**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `
+
+find James Jake`
 **List**   | `list`
 **Help**   | `help`

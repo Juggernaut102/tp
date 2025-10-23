@@ -44,11 +44,12 @@ public class PersonTest {
 
         // One lesson
         person.addLesson(lessonMathMonday);
-        assertEquals(lessonMathMonday.toString(), person.getLessonsAsString());
+        assertEquals("1. " + lessonMathMonday.toString(), person.getLessonsAsString());
 
         // Multiple lessons
         person.addLesson(lessonScienceTuesday);
-        String expected = lessonMathMonday.toString() + "\n" + lessonScienceTuesday.toString();
+        String expected = "1. " + lessonMathMonday.toString()
+                + "\n2. " + lessonScienceTuesday.toString();
         assertEquals(expected, person.getLessonsAsString());
     }
 
