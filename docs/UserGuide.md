@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a person to EduDex.
 
-Format: `add n/NAME p/PHONE_NUMBER sch/School a/ADDRESS [t/TAG]`
+Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 
 
 <box type="tip" seamless>
