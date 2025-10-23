@@ -1,14 +1,17 @@
 package seedu.edudex.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.edudex.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.edudex.testutil.Assert.assertThrows;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.edudex.logic.commands.FindCommand;
+import seedu.edudex.logic.parser.exceptions.ParseException;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.DayMatchesPredicate;
 import seedu.edudex.model.person.NameContainsKeywordsPredicate;
@@ -80,4 +83,24 @@ public class FindCommandParserTest {
         FindCommand expectedCommand = new FindCommand(new SubjectMatchesPredicate("Science"));
         assertParseSuccess(parser, " sub/   Science   ", expectedCommand);
     }
+    @Test
+    public void parse_validSubject_success() throws ParseException {
+        FindCommandParser parser = new FindCommandParser();
+        FindCommand command = parser.parse(" sub/Math");
+        assertEquals(new FindCommand(new SubjectMatchesPredicate("Math")), command);
+    }
+
+    @Test
+    public void parse_validDay_success() throws ParseException {
+        FindCommandParser parser = new FindCommandParser();
+        FindCommand command = parser.parse(" d/Tuesday");
+        assertEquals(new FindCommand(new DayMatchesPredicate(new Day("Tuesday"))), command);
+    }
+
+    @Test
+    public void parse_invalidSubject_throwsParseException() {
+        FindCommandParser parser = new FindCommandParser();
+        assertThrows(ParseException.class, () -> parser.parse(" sub/  "));
+    }
+
 }

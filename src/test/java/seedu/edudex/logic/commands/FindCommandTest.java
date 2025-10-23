@@ -18,6 +18,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.edudex.logic.Messages;
+import seedu.edudex.model.EduDex;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.ModelManager;
 import seedu.edudex.model.UserPrefs;
@@ -188,6 +190,51 @@ public class FindCommandTest {
     // ----------------------------------------------
     // Subject-Based Find tests
     // ----------------------------------------------
+
+    @Test
+    public void executeBySubject_singleSubjectMatch_success() {
+        Person student = new PersonBuilder().withName("Student A").build();
+        Lesson math = new Lesson(new Subject("Math"), new Day("Monday"),
+                new Time("10:00"), new Time("11:00"));
+        Lesson science = new Lesson(new Subject("Science"), new Day("Tuesday"),
+                new Time("12:00"), new Time("13:00"));
+        student.setLessons(List.of(math, science));
+
+        model.addPerson(student);
+        expectedModel.addPerson(student);
+
+        FindCommand command = new FindCommand(new SubjectMatchesPredicate("Math"));
+        expectedModel.updateFilteredPersonList(new SubjectMatchesPredicate("Math"));
+        expectedModel.sortFilteredPersonList(new SubjectComparator());
+        expectedModel.sortLessonsForEachPerson();
+
+        assertCommandSuccess(command, model,
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1), expectedModel);
+    }
+
+    @Test
+    public void executeBySubject_noMatch_returnsEmptyList() {
+        Model model = new ModelManager(new EduDex(), new UserPrefs());
+        Model expectedModel = new ModelManager(new EduDex(), new UserPrefs());
+
+        // Add a student with a Science lesson
+        Person student = new PersonBuilder().withName("Student A").build();
+        Lesson sci = new Lesson(new Subject("Science"), new Day("Tuesday"),
+                new Time("12:00"), new Time("13:00"));
+        student.setLessons(List.of(sci));
+        model.addPerson(student);
+        expectedModel.addPerson(student);
+
+        FindCommand command = new FindCommand(new SubjectMatchesPredicate("Math"));
+
+        expectedModel.updateFilteredPersonList(new SubjectMatchesPredicate("Math"));
+        expectedModel.sortFilteredPersonList(new SubjectComparator());
+        expectedModel.sortLessonsForEachPerson();
+
+        assertCommandSuccess(command, model,
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 0), expectedModel);
+    }
+
 
     @Test
     public void executeBySubject_subjectMatch_success() {

@@ -12,12 +12,15 @@ import static seedu.edudex.testutil.TypicalSubjects.MATH;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.edudex.commons.core.GuiSettings;
-import seedu.edudex.model.person.NameContainsKeywordsPredicate;
+import seedu.edudex.model.person.*;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.EduDexBuilder;
+import seedu.edudex.testutil.PersonBuilder;
 
 public class ModelManagerTest {
 
@@ -146,5 +149,25 @@ public class ModelManagerTest {
         differentUserPrefs.setEduDexFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(eduDex, differentUserPrefs)));
     }
+
+    @Test
+    public void sortLessonsForEachPerson_sortsChronologically_success() {
+        Model model = new ModelManager(new EduDex(), new UserPrefs());
+
+        Person student = new PersonBuilder().withName("Alice").build();
+        Lesson l1 = new Lesson(new Subject("Math"), new Day("Friday"),
+                new Time("15:00"), new Time("16:00"));
+        Lesson l2 = new Lesson(new Subject("Math"), new Day("Monday"),
+                new Time("10:00"), new Time("11:00"));
+        student.setLessons(List.of(l1, l2));
+
+        model.addPerson(student);
+
+        model.sortLessonsForEachPerson();
+
+        assertEquals("Monday",
+                model.getFilteredPersonList().get(0).getLessons().get(0).getDay().toString());
+    }
+
 
 }
