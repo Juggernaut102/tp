@@ -177,7 +177,7 @@ public class Person {
     /**
      * Makes a copy of this Person, and returns a new Person object with the same attributes.
      */
-    public Person makeCopyOfPerson() {
+    public Person getCopyOfPerson() {
         return new Person(name, phone, school, address,
                 new HashSet<>(tags), new ArrayList<>(lessons));
         // defensive copying
