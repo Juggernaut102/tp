@@ -10,10 +10,12 @@ import static seedu.edudex.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.logic.Messages;
@@ -185,6 +187,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortFilteredPersonList(Comparator<Person> comparator) {
+
+        }
+
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            return null;
+        }
+
+        @Override
+        public void sortLessonsForEachPerson() {}
+
         public void updateSubjectList(Predicate<Subject> predicate) {
             throw new AssertionError("This method should not be called.");
         }
@@ -230,6 +244,15 @@ public class AddCommandTest {
         public ReadOnlyEduDex getEduDex() {
             return new EduDex();
         }
-    }
 
+        @Override
+        public void sortFilteredPersonList(Comparator<Person> comparator) {
+            // no-op for testing
+        }
+
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            return FXCollections.observableArrayList(getFilteredPersonList());
+        }
+    }
 }

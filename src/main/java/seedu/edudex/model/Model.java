@@ -1,6 +1,7 @@
 package seedu.edudex.model;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -117,9 +118,23 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Updates the filter of the filtered subject list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
+     * Sorts the currently filtered person list according to the given {@link Comparator}.
+     * This allows commands to customize the display order of persons dynamically.
+     *
+     * @param comparator Comparator used to determine the order of persons in the filtered list.
+     *                   Must not be {@code null}.
      */
+    void sortFilteredPersonList(Comparator<Person> comparator);
+
+    /**
+     * Returns an unmodifiable view of the sorted person list.
+     * This list reflects the ordering applied by {@link #sortFilteredPersonList(Comparator)}.
+     *
+     * @return an unmodifiable {@code ObservableList<Person>} sorted according to the current comparator.
+     */
+    ObservableList<Person> getSortedPersonList();
+
+    void sortLessonsForEachPerson();
+
     void updateSubjectList(Predicate<Subject> predicate);
 }
-

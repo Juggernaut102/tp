@@ -146,4 +146,5 @@ public class ModelManagerTest {
         differentUserPrefs.setEduDexFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(eduDex, differentUserPrefs)));
     }
+
 }

@@ -4,13 +4,16 @@ import static java.util.Objects.requireNonNull;
 import static seedu.edudex.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.commons.core.LogsCenter;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.subject.Subject;
 
@@ -23,6 +26,7 @@ public class ModelManager implements Model {
     private final EduDex eduDex;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final SortedList<Person> sortedPersons;
     private final FilteredList<Subject> subjects;
 
     /**
@@ -35,7 +39,9 @@ public class ModelManager implements Model {
 
         this.eduDex = new EduDex(eduDex);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.eduDex.getPersonList());
+        this.filteredPersons = new FilteredList<>(this.eduDex.getPersonList());
+        this.sortedPersons = new SortedList<>(filteredPersons);
+
         subjects = new FilteredList<>(this.eduDex.getSubjectList());
     }
 
@@ -149,6 +155,8 @@ public class ModelManager implements Model {
         subjects.setPredicate(predicate);
     }
 
+
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -157,7 +165,7 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+        return sortedPersons;
     }
 
     @Override
@@ -166,6 +174,37 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> comparator) {
+        requireNonNull(comparator);
+        sortedPersons.setComparator(comparator);
+    }
+
+    @Override
+    public ObservableList<Person> getSortedPersonList() {
+        return sortedPersons;
+    }
+
+    /**
+     * Sorts the lessons of each {@code Person} currently in the filtered person list.
+     * <p>
+     * Lessons are ordered first by the numeric value of their day (Monday → Sunday),
+     * and then by their start time within each day. This ensures that every person's
+     * lesson schedule is consistently displayed in chronological order.
+     * </p>
+     *
+     * <p>This operation mutates each {@code Person}'s internal lesson list by replacing
+     * it with a sorted copy, but does not alter the overall list of persons.</p>
+     */
+    public void sortLessonsForEachPerson() {
+        filteredPersons.forEach(person -> {
+            person.setLessons(person.getLessons().stream()
+                    .sorted(Comparator
+                            .comparing((Lesson l) -> l.getDay().getNumericValue())
+                            .thenComparing(l -> l.getStartTime().getTime()))
+                    .toList());
+        });
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

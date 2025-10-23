@@ -10,6 +10,7 @@ import static seedu.edudex.testutil.TypicalSubjects.MATH;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -186,7 +187,22 @@ public class AddSubjectCommandTest {
         }
 
         @Override
+        public void sortFilteredPersonList(Comparator<Person> comparator) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateSubjectList(Predicate<Subject> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void sortLessonsForEachPerson() {
             throw new AssertionError("This method should not be called.");
         }
     }
