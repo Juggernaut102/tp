@@ -115,23 +115,43 @@ Examples:
 *  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating persons by name, day, or subject: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds persons whose **names**, **lesson days**, or **lesson subjects** match the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format:  
+`find KEYWORD [MORE_KEYWORDS]`  
+`find d/DAY`  
+`find s/SUBJECT`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is **case-insensitive**.  
+  e.g. `find hans` will match `Hans`.
+* The order of keywords does not matter.  
+  e.g. `find Hans Bo` will match `Bo Hans`.
+* When searching by day (`d/`), only valid days of the week are accepted.  
+  e.g. `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`.
+* When searching by subject (`s/`), only subjects matching lesson names will be shown.
+* Persons matching **at least one** keyword or criterion will be displayed.
+* For `find s/SUBJECT`, lessons within each student are automatically **sorted by day and start time**.
+
+<box type="tip" seamless>
+
+**Tip:** You can search by name, day, or subject independently.  
+e.g.
+- `find alice` — finds students with names containing "alice".
+- `find d/Monday` — finds all students with lessons on Monday.
+- `find s/Math` — finds all students taking Math lessons.
+  </box>
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find John` returns all persons with "John" in their names.
+* `find alex david` returns both `Alex Yeoh` and `David Li`.
+* `find d/Friday` returns all students with Friday lessons.
+* `find sub/math` returns all students taking Science lessons.
+
+![result for 'find Alex David'](images/findNameResult.png)
+![result for 'find sub/Science'](images/findSubjectResult.png)
+![result for 'find d/Friday'](images/findDayResult.png)
 
 ### Deleting a person : `delete`
 
@@ -146,6 +166,37 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in EduDex.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+### Deleting a lesson from a student: `dellesson`
+
+Deletes a specific lesson (by index) from a given student.
+
+Format: `dellesson STUDENT_INDEX LESSON_INDEX`
+
+* Deletes the lesson at the specified `LESSON_INDEX` from the student at `STUDENT_INDEX`.
+* The indices refer to:
+    * `STUDENT_INDEX` — position of the student in the currently displayed student list.
+    * `LESSON_INDEX` — position of the lesson within that student’s list of lessons.
+* Both indices **must be positive integers** (1, 2, 3, …).
+
+<box type="info" seamless>
+
+**Example:**  
+If student 1 has 3 lessons (Math, Science, English),  
+`dellesson 1 2` will delete **Science**.
+</box>
+
+Examples:
+* `dellesson 1 1` — Deletes the first lesson of the first student in the list.
+* `dellesson 2 3` — Deletes the third lesson of the second student in the list.
+
+If an invalid index is entered:
+* EduDex will display **“Invalid student index.”** if `STUDENT_INDEX` is out of range.
+* EduDex will display **“Invalid lesson index.”** if `LESSON_INDEX` does not exist.
+
+![before 'dellesson 1 2'](images/beforeDeleteLesson.png)
+![result for 'dellesson 1 2'](images/deleteLessonResult.png)
+
 
 ### Clearing all persons : `clear`
 
