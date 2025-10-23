@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a person to EduDex.
 
-Format: Format: `add n/NAME p/PHONE_NUMBER sch/School a/ADDRESS [t/TAG]`
+Format: `add n/NAME p/PHONE_NUMBER sch/School a/ADDRESS [t/TAG]`
 
 
 <box type="tip" seamless>
@@ -147,11 +147,38 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in EduDex.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-### Clearing all entries : `clear`
+### Clearing all persons : `clear`
 
-Clears all entries from EduDex.
+Clears all persons from EduDex.
 
 Format: `clear`
+
+### Adding a subject: `addsub`
+
+Adds a subject to EduDex.
+
+Format: `addsub SUBJECT`
+
+
+* A subject can be any alphanumerical string.
+* A subject is case-insensitive, stored in lower case. e.g `Math` will be stored as `math`
+
+Examples:
+* `addsub English`
+* `addsub MATH`
+
+### Deleting a subject : `delsub`
+
+Deletes the specified subject from EduDex.
+
+Format: `delsub INDEX`
+
+* Deletes the subject at the specified `INDEX`.
+* The index refers to the index number shown in the displayed subject list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `delsub 1` deletes the 1st subject in EduDex.
 
 ### Exiting the program : `exit`
 
