@@ -87,4 +87,11 @@ public class Day {
     private static String normalizeDayString(String input) {
         return capitalize(input.toLowerCase());
     }
+
+    /**
+     * Makes a copy of this Day, and returns a new Day object with the same attributes.
+     */
+    public Day getCopyOfDay() {
+        return new Day(day);
+    }
 }

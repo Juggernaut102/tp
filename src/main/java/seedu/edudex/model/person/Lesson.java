@@ -87,4 +87,13 @@ public class Lesson {
     public int hashCode() {
         return Objects.hash(subject, day, startTime, endTime);
     }
+
+    /**
+     * Makes a copy of this Subject, and return a new Subject object with the same attributes.
+     * All fields are copied defensively.
+     */
+    public Lesson getCopyOfLesson() {
+        return new Lesson(subject.getCopyOfSubject(), day.getCopyOfDay(),
+                startTime.getCopyOfTime(), endTime.getCopyOfTime());
+    }
 }

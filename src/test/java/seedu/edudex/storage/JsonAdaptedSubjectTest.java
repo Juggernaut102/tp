@@ -11,7 +11,7 @@ import seedu.edudex.commons.exceptions.IllegalValueException;
 import seedu.edudex.model.person.Name;
 
 public class JsonAdaptedSubjectTest {
-    private static final String VALID_SUBJECT_MATH = MATH.subjectName;
+    private static final String VALID_SUBJECT_MATH = MATH.getSubjectAsString();
 
     @Test
     public void toModelType_validSubject_returnsSubject() throws Exception {
