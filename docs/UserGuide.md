@@ -18,7 +18,7 @@ EduDex is a **desktop app for managing student's contacts, optimized for use via
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/edudex/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T12-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your EduDex.
 
@@ -92,6 +92,10 @@ Examples:
 * `add n/John Doe p/98765432 sch/NUS a/John street, block 123`
 * `add n/Betsy Crowe sch/Queenstown Primary School a/Clementi p/1234567 t/weakInAlgebra`
 
+![AddContact](images/addContactSuccess.png)
+_Student John Doe added successfully._
+
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in EduDex.
@@ -115,7 +119,10 @@ Examples:
 *  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name, day, or subject: `find`
+![EditSuccess](images/editSuccess.png)
+_John Doe school field edited successfully._
+
+### Locating persons by Name, Day, or Subject: `find`
 
 Finds persons whose **names**, **lesson days**, or **lesson subjects** match the given keywords.
 
@@ -149,9 +156,14 @@ Examples:
 * `find d/Friday` returns all students with Friday lessons.
 * `find sub/math` returns all students taking Science lessons.
 
-![result for 'find Alex David'](images/findNameResult.png)
-![result for 'find sub/Science'](images/findSubjectResult.png)
-![result for 'find d/Friday'](images/findDayResult.png)
+![result for 'find Alex David'](images/findAlexDavidResult.png)
+_Find result for names 'Alex' or 'David'_
+
+![result for 'find sub/math'](images/findSubjectResult.png)
+_Find result for subject 'math'_
+
+![result for 'find d/Monday'](images/findDayResult.png)
+_Find result for day 'Monday'_
 
 ### Deleting a person : `delete`
 
@@ -166,6 +178,58 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in EduDex.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+### Adding a subject: `addsub`
+
+Adds a subject to EduDex.
+
+Format: `addsub SUBJECT`
+
+
+* A subject can be any alphanumerical string.
+* A subject is case-insensitive, stored in lower case. e.g `Math` will be stored as `math`
+
+Examples:
+* `addsub English`
+* `addsub MATH`
+
+![addSubSuccess](images/addSub.png)
+_Subject "mathematics" added successfully._
+
+### Deleting a subject : `delsub`
+
+Deletes the specified subject from EduDex.
+
+Format: `delsub INDEX`
+
+* Deletes the subject at the specified `INDEX`.
+* The index refers to the index number shown in the displayed subject list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `delsub 1` deletes the 1st subject in EduDex.
+
+### Adding a lesson: `addlesson`
+
+Adds a lesson to the student in EduDex, specified by index.
+
+Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`
+
+* STUDENT_INDEX refers to the index in the currently displayed list of students.
+* STUDENT_INDEX must be a positive integer that is not greater than the size of the
+  currently displayed list of students.
+* SUBJECT **must match** (case-insensitive) at least one subject in EduDex.
+* DAY must match (case-insensitive) one of the following strings:
+  { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }.
+* START_TIME and END_TIME must be in the 24-hour format HH:MM, and must be a valid time.
+* START_TIME must be earlier than END_TIME.
+
+Examples:
+* `addlesson 1 sub/mathematics d/Monday start/12:00 end/13:00`
+* `addlesson 3 d/Tuesday sub/physics start/13:00 end/15:00`
+
+![addLessonSuccess](images/addLesson.png)
+_Lesson "mathematics" added successfully to student John Doe._
 
 ### Deleting a lesson from a student: `dellesson`
 
@@ -195,7 +259,10 @@ If an invalid index is entered:
 * EduDex will display **“Invalid lesson index.”** if `LESSON_INDEX` does not exist.
 
 ![before 'dellesson 1 2'](images/beforeDeleteLesson.png)
+_Student Alex Yeoh has 3 lessons before deletion._
+
 ![result for 'dellesson 1 2'](images/deleteLessonResult.png)
+_Student Alex Yeoh has 2 lessons after deletion of the 3rd lesson._
 
 
 ### Clearing all persons : `clear`
@@ -203,52 +270,6 @@ If an invalid index is entered:
 Clears all persons from EduDex.
 
 Format: `clear`
-
-### Adding a subject: `addsub`
-
-Adds a subject to EduDex.
-
-Format: `addsub SUBJECT`
-
-
-* A subject can be any alphanumerical string.
-* A subject is case-insensitive, stored in lower case. e.g `Math` will be stored as `math`
-
-Examples:
-* `addsub English`
-* `addsub MATH`
-
-### Deleting a subject : `delsub`
-
-Deletes the specified subject from EduDex.
-
-Format: `delsub INDEX`
-
-* Deletes the subject at the specified `INDEX`.
-* The index refers to the index number shown in the displayed subject list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `delsub 1` deletes the 1st subject in EduDex.
-
-### Adding a lesson: `addlesson`
-
-Adds a lesson to the student in EduDex, specified by index.
-
-Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`
-
-* STUDENT_INDEX refers to the index in the currently displayed list of students.
-* STUDENT_INDEX must be a positive integer that is not greater than the size of the
-  currently displayed list of students.
-* SUBJECT must match (case-insensitive) at least one subject in EduDex.
-* DAY must match (case-insensitive) one of the following strings:
-  { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }.
-* START_TIME and END_TIME must be in the 24-hour format HH:MM, and must be a valid time.
-* START_TIME must be earlier than END_TIME.
-
-Examples:
-* `addlesson 1 sub/mathematics d/Monday start/12:00 end/13:00`
-* `addlesson 3 d/Tuesday sub/physics start/13:00 end/15:00`
 
 ### Exiting the program : `exit`
 
@@ -433,13 +454,20 @@ Each entry in `subjects` defines a distinct academic subject.
 
 ## Command summary
 
-| Action  | Format, Examples                                              |
-|---------|---------------------------------------------------------------|
-| **Add** | `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]…`<br>e.g., `add n/James Ho p/22224444 sch/Clementi Primary School a/123, Clementi Rd, 1234665 t/strongInMaths` <br>
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee sch/Jurong Primary School`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `
+| Action | Format, Examples |
+| :--- | :--- |
+| **Add Person** | `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]...`<br>e.g., `add n/James Ho p/22224444 sch/Clementi Primary School a/123, Clementi Rd, 1234665 t/strongInMaths` |
+| **Edit Person** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [sch/SCHOOL] [a/ADDRESS] [t/TAG]...`<br>e.g., `edit 2 n/James Lee sch/Jurong Primary School` |
+| **Delete Person** | `delete INDEX`<br>e.g., `delete 3` |
+| **List Persons** | `list` |
+| **Find Persons** | `find KEYWORD [MORE_KEYWORDS]`<br>`find d/DAY`<br>`find sub/SUBJECT`<br>e.g., `find James`, `find d/Monday`, `find sub/Math` |
+| **Add Subject** | `addsub SUBJECT`<br>e.g., `addsub Mathematics` |
+| **Delete Subject**| `delsub INDEX`<br>e.g., `delsub 2` |
+| **Add Lesson** | `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`<br>e.g., `addlesson 1 sub/Mathematics d/Monday start/12:00 end/13:00` |
+| **Delete Lesson** | `dellesson STUDENT_INDEX LESSON_INDEX`<br>e.g., `dellesson 1 2` |
+| **Clear** | `clear` |
+| **Help** | `help` |
+| **Exit** | `exit` |
 
 find James Jake`
 **List**   | `list`
