@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import seedu.edudex.model.person.Address;
-import seedu.edudex.model.person.Email;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
+import seedu.edudex.model.person.School;
 import seedu.edudex.model.tag.Tag;
 import seedu.edudex.model.util.SampleDataUtil;
 
@@ -26,7 +26,7 @@ public class PersonBuilder {
 
     private Name name;
     private Phone phone;
-    private Email email;
+    private School school;
     private Address address;
     private Set<Tag> tags;
     private List<Lesson> lessons;
@@ -37,7 +37,7 @@ public class PersonBuilder {
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
+        school = new School(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         lessons = new ArrayList<>();
@@ -49,7 +49,7 @@ public class PersonBuilder {
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
-        email = personToCopy.getEmail();
+        school = personToCopy.getSchool();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
         lessons = new ArrayList<>(personToCopy.getLessons());
@@ -88,10 +88,10 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code School} of the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
+    public PersonBuilder withSchool(String school) {
+        this.school = new School(school);
         return this;
     }
 
@@ -107,7 +107,7 @@ public class PersonBuilder {
      * Builds the Person object.
      */
     public Person build() {
-        Person student = new Person(name, phone, email, address, tags);
+        Person student = new Person(name, phone, school, address, tags);
         student.setLessons(lessons);
         return student;
     }

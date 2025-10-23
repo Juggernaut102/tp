@@ -22,7 +22,7 @@ public class Person {
     // Identity fields
     private final Name name;
     private final Phone phone;
-    private final Email email;
+    private final School school;
 
     // Data fields
     private final Address address;
@@ -34,19 +34,19 @@ public class Person {
      * Constructor for initialising a new Person with no lessons.
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        this(name, phone, email, address, tags, new ArrayList<>());
+    public Person(Name name, Phone phone, School school, Address address, Set<Tag> tags) {
+        this(name, phone, school, address, tags, new ArrayList<>());
     }
 
     /**
      * A more general Constructor, used explicitly if lessons is not an empty list.
      */
-    public Person(Name name, Phone phone, Email email, Address address,
+    public Person(Name name, Phone phone, School school, Address address,
                   Set<Tag> tags, List<Lesson> lessons) {
-        requireAllNonNull(name, phone, email, address, tags, lessons);
+        requireAllNonNull(name, phone, Person.this.school, address, tags, lessons);
         this.name = name;
         this.phone = phone;
-        this.email = email;
+        this.school = Person.this.school;
         this.address = address;
         this.tags.addAll(tags);
         this.lessons = new ArrayList<>(lessons); // defensive copy
@@ -60,8 +60,8 @@ public class Person {
         return phone;
     }
 
-    public Email getEmail() {
-        return email;
+    public School getSchool() {
+        return school;
     }
 
     public Address getAddress() {
@@ -150,7 +150,7 @@ public class Person {
         Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
-                && email.equals(otherPerson.email)
+                && school.equals(otherPerson.school)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
                 && lessons.equals(otherPerson.lessons);
@@ -159,7 +159,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, school, address, tags);
     }
 
     @Override
@@ -167,7 +167,7 @@ public class Person {
         return new ToStringBuilder(this)
                 .add("name", name)
                 .add("phone", phone)
-                .add("email", email)
+                .add("school", school)
                 .add("address", address)
                 .add("tags", tags)
                 .add("lessons", lessons)
@@ -178,7 +178,7 @@ public class Person {
      * Make a copy of this Person, that is, return a new Person object with the same attributes.
      */
     public Person makeCopyOfPerson() {
-        return new Person(name, phone, email, address,
+        return new Person(name, phone, school, address,
                 new HashSet<>(tags), new ArrayList<>(lessons));
         // defensive copying
     }

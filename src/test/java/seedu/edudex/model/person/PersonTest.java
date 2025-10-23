@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.edudex.logic.commands.CommandTestUtil.VALID_SCHOOL_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.edudex.testutil.Assert.assertThrows;
 import static seedu.edudex.testutil.TypicalPersons.ALICE;
@@ -91,7 +91,7 @@ public class PersonTest {
         assertFalse(ALICE.isSamePerson(null));
 
         // same name, all other attributes different -> returns true
-        Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+        Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withSchool(VALID_SCHOOL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
@@ -135,8 +135,8 @@ public class PersonTest {
         editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different email -> returns false
-        editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
+        // different school -> returns false
+        editedAlice = new PersonBuilder(ALICE).withSchool(VALID_SCHOOL_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different address -> returns false
@@ -162,7 +162,7 @@ public class PersonTest {
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone="
-                + ALICE.getPhone() + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
+                + ALICE.getPhone() + ", school=" + ALICE.getSchool() + ", address=" + ALICE.getAddress()
                 + ", tags=" + ALICE.getTags()
                 + ", lessons=" + ALICE.getLessons() + "}";
         assertEquals(expected, ALICE.toString());
