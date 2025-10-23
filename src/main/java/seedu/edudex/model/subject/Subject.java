@@ -19,7 +19,7 @@ public class Subject {
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String subjectName;
+    private final String subjectName;
 
     /**
      * Constructs a {@code Subject}.
@@ -54,6 +54,13 @@ public class Subject {
     }
 
     /**
+     * Returns the string representhing this Subject.
+     */
+    public String getSubjectAsString() {
+        return subjectName;
+    }
+
+    /**
      * Returns true if both subjects have the same name.
      * This defines a weaker notion of equality between two subjects.
      */
@@ -83,5 +90,12 @@ public class Subject {
     @Override
     public int hashCode() {
         return subjectName.hashCode();
+    }
+
+    /**
+     * Makes a copy of this Subject, and return a new Subject object with the same attributes.
+     */
+    public Subject getCopyOfSubject() {
+        return new Subject(subjectName);
     }
 }

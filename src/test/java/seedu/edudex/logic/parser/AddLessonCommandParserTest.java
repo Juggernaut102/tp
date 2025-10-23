@@ -12,7 +12,9 @@ import org.junit.jupiter.api.Test;
 import seedu.edudex.commons.core.index.Index;
 import seedu.edudex.logic.commands.AddLessonCommand;
 import seedu.edudex.logic.parser.exceptions.ParseException;
+import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
+import seedu.edudex.model.person.Time;
 
 /**
  * Unit tests for AddLessonCommandParser.
@@ -22,7 +24,7 @@ public class AddLessonCommandParserTest {
     private final AddLessonCommandParser parser = new AddLessonCommandParser();
 
     @Test
-    public void parse_validArgs_returnsAddLessonCommand() {
+    public void parse_validArgs_success() {
         String input = "1 sub/math d/MoNday end/13:00 start/12:00";
         try {
             Lesson lesson = ParserUtil.parseLesson("math", "Monday", "12:00", "13:00");
@@ -43,6 +45,12 @@ public class AddLessonCommandParserTest {
     }
 
     @Test
+    public void parse_duplicateFields_throwsParseException() {
+        String input = "1 sub/physics sub/math start/12:00 end/13:00 d/Monday";
+        assertParseFailure(parser, input, getErrorMessageForDuplicatePrefixes(PREFIX_SUBJECT));
+    }
+
+    @Test
     public void parse_invalidIndex_throwsParseException() {
         String input = "a sub/math d/Monday start/12:00 end/13:00";
         assertParseFailure(parser, input,
@@ -52,8 +60,21 @@ public class AddLessonCommandParserTest {
     }
 
     @Test
-    public void parse_duplicatePrefixes_throwsParseException() {
-        String input = "1 sub/physics sub/math start/12:00 end/13:00 d/Monday";
-        assertParseFailure(parser, input, getErrorMessageForDuplicatePrefixes(PREFIX_SUBJECT));
+    public void parse_invalidDay_throwsParseException() {
+        String input = "1 sub/math d/Mond@y start/12:00 end/13:00";
+        assertParseFailure(parser, input, Day.MESSAGE_CONSTRAINTS);
     }
+
+    @Test
+    public void parse_startTimeAfterEndTime_throwsParseException() {
+        String input = "1 sub/math d/Monday start/14:00 end/13:00";
+        assertParseFailure(parser, input, Lesson.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidTime_throwsParseException() {
+        String input = "1 sub/math d/Monday start/11:69 end/13:00";
+        assertParseFailure(parser, input, Time.MESSAGE_CONSTRAINTS);
+    }
+
 }

@@ -12,6 +12,7 @@ public class Time {
     public static final String MESSAGE_CONSTRAINTS =
             "Time should be in the format HH:MM (24-hour format) and should be a valid time.";
     private final LocalTime time;
+    private final String timeString;
 
     /**
      * Constructs a {@code Time}.
@@ -21,6 +22,7 @@ public class Time {
     public Time(String time) {
         checkArgument(isValidTime(time), MESSAGE_CONSTRAINTS);
         this.time = LocalTime.parse(time);
+        this.timeString = time;
     }
 
     /**
@@ -59,5 +61,12 @@ public class Time {
     @Override
     public int hashCode() {
         return time.hashCode();
+    }
+
+    /**
+     * Makes a copy of this Time, and returns a new Time object with the same attributes.
+     */
+    public Time getCopyOfTime() {
+        return new Time(timeString);
     }
 }

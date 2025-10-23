@@ -53,6 +53,8 @@ public class AddLessonCommand extends Command {
      * @param studentIndex index of the student in the last shown list.
      */
     public AddLessonCommand(Index studentIndex, Lesson lessonToAdd) {
+        requireNonNull(studentIndex);
+        requireNonNull(lessonToAdd);
         this.studentIndex = studentIndex;
         this.lessonToAdd = lessonToAdd;
     }
@@ -75,7 +77,7 @@ public class AddLessonCommand extends Command {
         // if conflicting lesson timings, throw exception
 
         Person originalStudent = lastShownList.get(studentIndex.getZeroBased());
-        Person updatedStudent = originalStudent.makeCopyOfPerson();
+        Person updatedStudent = originalStudent.getCopyOfPerson();
         updatedStudent.addLesson(lessonToAdd);
         model.setPerson(originalStudent, updatedStudent);
 
