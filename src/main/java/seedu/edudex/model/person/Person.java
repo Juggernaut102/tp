@@ -43,10 +43,10 @@ public class Person {
      */
     public Person(Name name, Phone phone, School school, Address address,
                   Set<Tag> tags, List<Lesson> lessons) {
-        requireAllNonNull(name, phone, Person.this.school, address, tags, lessons);
+        requireAllNonNull(name, phone, school, address, tags, lessons);
         this.name = name;
         this.phone = phone;
-        this.school = Person.this.school;
+        this.school = school;
         this.address = address;
         this.tags.addAll(tags);
         this.lessons = new ArrayList<>(lessons); // defensive copy

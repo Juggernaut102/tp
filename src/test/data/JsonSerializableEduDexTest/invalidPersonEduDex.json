@@ -3,7 +3,7 @@
   "persons": [ {
     "name": "Hans Muster",
     "phone": "9482424",
-    "school": "invalid@school!3e",
+    "school": " ",
     "address": "4th street"
   } ]
 }

@@ -21,7 +21,7 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "amy@gmail.com";
+    public static final String DEFAULT_SCHOOL = "Jurong Primary School";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
@@ -37,7 +37,7 @@ public class PersonBuilder {
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
-        school = new School(DEFAULT_EMAIL);
+        school = new School(DEFAULT_SCHOOL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         lessons = new ArrayList<>();
