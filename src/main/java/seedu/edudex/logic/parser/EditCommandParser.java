@@ -30,10 +30,10 @@ import seedu.edudex.model.tag.Tag;
  */
 public class EditCommandParser implements Parser<EditCommand> {
 
+    public static final String MESSAGE_CANNOT_EDIT_BOTH =
+            "Cannot edit both person and lesson fields in the same command.";
     private static final Pattern EDIT_LESSON_FORMAT =
             Pattern.compile("^(\\d+)\\s+lesson/(\\d+)(?:\\s+(.*))?$");
-    private static final String MESSAGE_CANNOT_EDIT_BOTH =
-            "Cannot edit both person and lesson fields in the same command.";
 
 
     /**

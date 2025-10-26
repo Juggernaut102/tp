@@ -2,6 +2,7 @@ package seedu.edudex.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -167,4 +168,23 @@ public class PersonTest {
                 + ", lessons=" + ALICE.getLessons() + "}";
         assertEquals(expected, ALICE.toString());
     }
+
+    @Test
+    public void hasLessonConflict() {
+        Person person = new PersonBuilder().build();
+        person.addLesson(lessonMathMonday);
+
+        // No conflict
+        assertNull(person.hasLessonConflict(lessonScienceTuesday, -1));
+
+        // Conflict with same lesson
+        Lesson conflictedLesson = lessonMathMonday;
+        assertEquals(person.hasLessonConflict(lessonMathMonday, -1), conflictedLesson);
+
+        // Conflict with overlapping time
+        Lesson conflictingLesson = new Lesson(new Subject("Math"), new Day("Monday"),
+                new Time("09:30"), new Time("10:30"));
+        assertEquals(person.hasLessonConflict(conflictingLesson, -1), conflictedLesson);
+    }
+
 }
