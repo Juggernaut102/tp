@@ -5,16 +5,21 @@ import static seedu.edudex.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.edudex.logic.parser.CliSyntax.PREFIX_LESSON;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SCHOOL;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.edudex.commons.core.index.Index;
 import seedu.edudex.logic.commands.EditCommand;
@@ -27,6 +32,9 @@ import seedu.edudex.model.tag.Tag;
  */
 public class EditCommandParser implements Parser<EditCommand> {
 
+    private static final Pattern EDIT_LESSON_FORMAT =
+            Pattern.compile("^(\\d+)\\s+lesson/(\\d+)\\s*$");
+
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -36,19 +44,37 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_SCHOOL,
-                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_DAY, PREFIX_START, PREFIX_END);
+                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_SUBJECT, PREFIX_DAY, PREFIX_START, PREFIX_END);
 
-        Index index;
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_SCHOOL, PREFIX_ADDRESS,
+                PREFIX_SUBJECT, PREFIX_DAY, PREFIX_START, PREFIX_END);
+
+        Index personIndex;
+        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditLessonDescriptor editLessonDescriptor = null;
+
+        String preamble = argMultimap.getPreamble();
+        Matcher lessonMatcher = EDIT_LESSON_FORMAT.matcher(preamble);
+
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            if (lessonMatcher.matches()) {
+                // Lesson edit format
+                personIndex = ParserUtil.parseIndex(lessonMatcher.group(1));
+                Index lessonIndex = ParserUtil.parseIndex(lessonMatcher.group(2));
+
+                editLessonDescriptor = new EditLessonParser().parse(argMultimap);
+                editPersonDescriptor.setLessonIndex(lessonIndex);
+                editPersonDescriptor.setEditLessonDescriptor(editLessonDescriptor);
+            } else {
+                // Regular edit format
+                personIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
+                editLessonDescriptor = new EditLessonDescriptor();
+            }
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_SCHOOL, PREFIX_ADDRESS);
-
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
@@ -63,36 +89,13 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
 
-        // Temporary before support for multiple subjects are added
-        if (argMultimap.getValue(PREFIX_DAY).isPresent()) {
-            editPersonDescriptor.setDay(ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get()));
-        }
-
-        // Temporary before support for multiple subjects are added
-        if (argMultimap.getValue(PREFIX_START).isPresent()) {
-            editPersonDescriptor.setStartTime(ParserUtil.parseTime(argMultimap.getValue(PREFIX_START).get()));
-        }
-
-        // Temporary before support for multiple subjects are added
-        if (argMultimap.getValue(PREFIX_END).isPresent()) {
-            editPersonDescriptor.setEndTime(ParserUtil.parseTime(argMultimap.getValue(PREFIX_END).get()));
-        }
-
-        // Edit the entire subject
-        //        if (argMultimap.getValue(PREFIX_DAY).isPresent()
-        //                && argMultimap.getValue(PREFIX_START).isPresent()
-        //                && argMultimap.getValue(PREFIX_END).isPresent()) {
-        //            editPersonDescriptor.setSubject(ParserUtil.parseLesson(argMultimap.getValue(PREFIX_DAY).get(),
-        //                    argMultimap.getValue(PREFIX_START).get(), argMultimap.getValue(PREFIX_END).get()));
-        //        }
-
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
+        if (!editPersonDescriptor.isAnyFieldEdited() && !editLessonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new EditCommand(personIndex, editPersonDescriptor);
     }
 
     /**

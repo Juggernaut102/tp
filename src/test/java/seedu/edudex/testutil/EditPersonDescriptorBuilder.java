@@ -86,13 +86,13 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code Subject} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withSubject(String day, String startTime, String endTime) {
-        descriptor.setSubject(new Lesson(new Subject("Math"), new Day(day), new Time(startTime), new Time(endTime)));
-        return this;
-    }
+//    /**
+//     * Sets the {@code Subject} of the {@code EditPersonDescriptor} that we are building.
+//     */
+//    public EditPersonDescriptorBuilder withSubject(String day, String startTime, String endTime) {
+//        descriptor.setSubject(new Lesson(new Subject("Math"), new Day(day), new Time(startTime), new Time(endTime)));
+//        return this;
+//    }
 
     public EditPersonDescriptor build() {
         return descriptor;
