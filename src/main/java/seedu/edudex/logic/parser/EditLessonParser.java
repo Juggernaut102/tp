@@ -7,8 +7,15 @@ import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
 
 import seedu.edudex.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates an EditLessonDescriptor object
+ */
 public class EditLessonParser {
 
+    /**
+     * Parses the given {@code ArgumentMultimap} and returns an EditLessonDescriptor object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public EditLessonDescriptor parse(ArgumentMultimap argMultimap) throws ParseException {
         EditLessonDescriptor editLessonDescriptor = new EditLessonDescriptor();
 

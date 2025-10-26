@@ -6,12 +6,10 @@ import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SCHOOL;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.edudex.logic.commands.AddCommand;
 import seedu.edudex.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.tag.Tag;
 
@@ -51,8 +49,6 @@ public class PersonUtil {
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
         descriptor.getSchool().ifPresent(school -> sb.append(PREFIX_SCHOOL).append(school.value).append(" "));
         descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
-
-        Optional<Lesson> subject = descriptor.getSubject();
 
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();

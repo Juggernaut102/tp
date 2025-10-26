@@ -23,6 +23,7 @@ import seedu.edudex.model.EduDex;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.ReadOnlyEduDex;
 import seedu.edudex.model.ReadOnlyUserPrefs;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.SubjectBuilder;
@@ -203,6 +204,11 @@ public class AddSubjectCommandTest {
 
         @Override
         public void sortLessonsForEachPerson() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Person findPersonWithLessonConflict(Lesson editedLesson, Person personToEdit) {
             throw new AssertionError("This method should not be called.");
         }
     }

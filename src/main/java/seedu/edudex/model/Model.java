@@ -140,4 +140,5 @@ public interface Model {
     void updateSubjectList(Predicate<Subject> predicate);
 
     Person findPersonWithLessonConflict(Lesson editedLesson, Person personToEdit);
+
 }
