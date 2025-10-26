@@ -8,6 +8,10 @@ import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.subject.Subject;
 
+/**
+ * Stores the details to edit the lesson with. Each non-empty field value will replace the
+ * corresponding field value of the lesson.
+ */
 public class EditLessonDescriptor {
     private Subject subject;
     private Day day;
@@ -16,6 +20,10 @@ public class EditLessonDescriptor {
 
     public EditLessonDescriptor() {}
 
+    /**
+     * Copy constructor
+     * @param toCopy EditLessonDescriptor to copy from
+     */
     public EditLessonDescriptor(EditLessonDescriptor toCopy) {
         setSubject(toCopy.subject);
         setDay(toCopy.day);
@@ -57,7 +65,7 @@ public class EditLessonDescriptor {
     }
 
     @Override
-    public boolean equals (Object other) {
+    public boolean equals(Object other) {
         if (other == this) {
             return true;
         }

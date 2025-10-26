@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.edudex.commons.core.index.Index;
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.tag.Tag;
