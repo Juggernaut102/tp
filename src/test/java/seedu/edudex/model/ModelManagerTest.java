@@ -2,6 +2,7 @@ package seedu.edudex.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.edudex.testutil.Assert.assertThrows;
@@ -173,5 +174,53 @@ public class ModelManagerTest {
                 model.getFilteredPersonList().get(0).getLessons().get(0).getDay().toString());
     }
 
+    @Test
+    public void findPersonWithLessonConflict_returnsNull_success() {
+        Model model = new ModelManager(new EduDex(), new UserPrefs());
 
+        Person student1 = new PersonBuilder().withName("Alice").build();
+        Lesson l1 = new Lesson(new Subject("Math"), new Day("Friday"),
+                new Time("15:00"), new Time("16:00"));
+        student1.setLessons(List.of(l1));
+
+        Person student2 = new PersonBuilder().withName("Bob").build();
+        Lesson l2 = new Lesson(new Subject("Science"), new Day("Friday"),
+                new Time("15:30"), new Time("16:30"));
+        student2.setLessons(List.of(l2));
+
+        model.addPerson(student1);
+        model.addPerson(student2);
+
+        Lesson newLesson = new Lesson(new Subject("English"), new Day("Monday"),
+                new Time("10:00"), new Time("11:00"));
+
+        assertNull(model.findPersonWithLessonConflict(newLesson, student1));
+        assertNull(model.findPersonWithLessonConflict(newLesson, student2));
+
+    }
+
+    @Test
+    public void findPersonWithLessonConflict_returnsPersonWithConflict_success() {
+        Model model = new ModelManager(new EduDex(), new UserPrefs());
+
+        Person student1 = new PersonBuilder().withName("Alice").build();
+        Lesson l1 = new Lesson(new Subject("Math"), new Day("Friday"),
+                new Time("15:00"), new Time("16:00"));
+        student1.setLessons(List.of(l1));
+
+        Person student2 = new PersonBuilder().withName("Bob").build();
+        Lesson l2 = new Lesson(new Subject("Science"), new Day("Friday"),
+                new Time("15:30"), new Time("16:30"));
+        student2.setLessons(List.of(l2));
+
+        model.addPerson(student1);
+        model.addPerson(student2);
+
+        Lesson newLesson = new Lesson(new Subject("English"), new Day("Friday"),
+                new Time("15:15"), new Time("16:15"));
+
+        assertEquals(student1, model.findPersonWithLessonConflict(newLesson, student2));
+        assertEquals(student2, model.findPersonWithLessonConflict(newLesson, student1));
+
+    }
 }

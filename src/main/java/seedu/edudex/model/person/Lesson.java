@@ -112,6 +112,6 @@ public class Lesson {
         boolean isOverlapping = this.startTime.getTime().isBefore(otherLesson.endTime.getTime())
                 && otherLesson.startTime.getTime().isBefore(this.endTime.getTime());
 
-        return isOverlapping ? otherLesson : null;
+        return isOverlapping ? this : null; // return existing lesson if conflict exists, else null
     }
 }
