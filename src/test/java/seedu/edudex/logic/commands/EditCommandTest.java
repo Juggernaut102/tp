@@ -15,6 +15,9 @@ import static seedu.edudex.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.edudex.commons.core.index.Index;
@@ -24,7 +27,11 @@ import seedu.edudex.model.EduDex;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.ModelManager;
 import seedu.edudex.model.UserPrefs;
+import seedu.edudex.model.person.Day;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
+import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.EditPersonDescriptorBuilder;
 import seedu.edudex.testutil.PersonBuilder;
 
@@ -183,14 +190,44 @@ public class EditCommandTest {
 
     @Test
     public void execute_editLessonInPersonSuccess() {
-        Person editedPerson = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        // Setup: Person with a lesson
+        Person personWithLesson = new PersonBuilder().withName("Bob").build();
+        Lesson originalLesson = new Lesson(
+                new Subject("Mathematics"),
+                new Day("Monday"),
+                new Time("10:00"),
+                new Time("12:00")
+        );
+        personWithLesson.setLessons(new ArrayList<>(List.of(originalLesson)));
+
+        Model model = new ModelManager(new EduDex(), new UserPrefs());
+        model.addPerson(personWithLesson);
+        model.addSubject(new Subject("Mathematics"));
+        model.addSubject(new Subject("Physics"));
+
+        // Edit all lesson fields
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withLessonEdit(0, "Physics", "Tuesday", "14:00", "16:00")
+                .build();
+
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+        // Create expected model
+        Model expectedModel = new ModelManager(new EduDex(), new UserPrefs());
+        Person expectedPerson = new PersonBuilder().withName("Bob").build();
+        Lesson editedLesson = new Lesson(
+                new Subject("Physics"),
+                new Day("Tuesday"),
+                new Time("14:00"),
+                new Time("16:00")
+        );
+        expectedPerson.setLessons(new ArrayList<>(List.of(editedLesson)));
+        expectedModel.addPerson(expectedPerson);
+        expectedModel.addSubject(new Subject("Mathematics"));
+        expectedModel.addSubject(new Subject("Physics"));
 
-        Model expectedModel = new ModelManager(new EduDex(model.getEduDex()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(expectedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -208,6 +245,33 @@ public class EditCommandTest {
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
+
+    @Test
+    public void execute_editLessonStartTimeAfterEndTimeFailure() {
+        // Setup: Person with a lesson (10:00-12:00)
+        Person personWithLesson = new PersonBuilder().withName("Nina").build();
+        Lesson lesson = new Lesson(
+                new Subject("Mathematics"),
+                new Day("Monday"),
+                new Time("10:00"),
+                new Time("12:00")
+        );
+        personWithLesson.setLessons(new ArrayList<>(List.of(lesson)));
+
+        Model model = new ModelManager(new EduDex(), new UserPrefs());
+        model.addPerson(personWithLesson);
+        model.addSubject(new Subject("Mathematics"));
+
+        // Try to edit only start time to 13:00, which makes it 13:00-12:00 (invalid)
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withLessonEdit(0, null, null, "13:00", null)
+                .build();
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, Lesson.MESSAGE_CONSTRAINTS);
+    }
+
 
     @Test
     public void execute_editLessonInPersonInvalidIndexFailure() {
