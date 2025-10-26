@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.edudex.commons.core.GuiSettings;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.subject.Subject;
 
@@ -137,4 +138,6 @@ public interface Model {
     void sortLessonsForEachPerson();
 
     void updateSubjectList(Predicate<Subject> predicate);
+
+    Person findPersonWithLessonConflict(Lesson editedLesson, Person personToEdit);
 }
