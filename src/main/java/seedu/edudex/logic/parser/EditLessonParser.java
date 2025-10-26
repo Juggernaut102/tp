@@ -5,10 +5,7 @@ import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
 
-import java.util.List;
-
 import seedu.edudex.logic.parser.exceptions.ParseException;
-import seedu.edudex.model.person.Lesson;
 
 public class EditLessonParser {
 

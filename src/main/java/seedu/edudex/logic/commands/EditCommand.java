@@ -1,15 +1,19 @@
 package seedu.edudex.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.edudex.logic.commands.AddLessonCommand.MESSAGE_SUBJECT_NOT_TAUGHT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.edudex.logic.parser.CliSyntax.PREFIX_LESSON;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SCHOOL;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.edudex.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.edudex.model.person.Lesson.MESSAGE_CONFLICTING_LESSON;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +48,7 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person or a specific lesson "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -52,13 +56,21 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_SCHOOL + "SCHOOL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_DAY + "DAY ]"
-            + "[" + PREFIX_START + "START ]"
-            + "[" + PREFIX_END + "END ]"
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "OR\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + PREFIX_LESSON + "LESSON_INDEX "
+            + "[" + PREFIX_SUBJECT + "SUBJECT] "
+            + "[" + PREFIX_DAY + "DAY] "
+            + "[" + PREFIX_START + "START_TIME] "
+            + "[" + PREFIX_END + "END_TIME]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_SCHOOL + "NUS Primary School ";
+            + PREFIX_SCHOOL + "NUS Primary School \n"
+            + "Example (lesson edit): " + COMMAND_WORD + " 2 "
+            + PREFIX_LESSON + "1 "
+            + PREFIX_DAY + "Monday";
+
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -96,7 +108,7 @@ public class EditCommand extends Command {
                     editPersonDescriptor.getEditLessonDescriptor().isPresent()) {
                 // Lesson edit case
                 editedPerson = createEditedPersonWithLesson(personToEdit, editPersonDescriptor.getLessonIndex().get(),
-                        editPersonDescriptor.getEditLessonDescriptor().get());
+                        editPersonDescriptor.getEditLessonDescriptor().get(), model);
             }
             else {
                 // Regular person edit case
@@ -117,7 +129,8 @@ public class EditCommand extends Command {
     }
 
     private Person createEditedPersonWithLesson(Person personToEdit, Index index,
-                                                EditLessonDescriptor editLessonDescriptor) {
+                                                EditLessonDescriptor editLessonDescriptor,
+                                                Model model) throws CommandException {
         assert personToEdit != null;
 
         List<Lesson> currentLessons = personToEdit.getLessons();
@@ -136,11 +149,28 @@ public class EditCommand extends Command {
         Time updatedStartTime = editLessonDescriptor.getStartTime().orElse(lessonToEdit.getStartTime());
         Time updatedEndTime = editLessonDescriptor.getEndTime().orElse(lessonToEdit.getEndTime());
 
+        if (!model.hasSubject(updatedSubject)) {
+            throw new CommandException(MESSAGE_SUBJECT_NOT_TAUGHT);
+        }
+
         if (!Lesson.isValidStartEndTime(updatedStartTime, updatedEndTime)) {
             throw new IllegalArgumentException(Lesson.MESSAGE_CONSTRAINTS);
         }
 
         Lesson editedLesson = new Lesson(updatedSubject, updatedDay, updatedStartTime, updatedEndTime);
+
+        // Check for conflicting lessons within the same person's lessons
+        Lesson conflictedLesson = personToEdit.hasLessonConflict(editedLesson, index.getZeroBased());
+        if (conflictedLesson != null) {
+            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with: " + conflictedLesson);
+        }
+
+        // Check for conflicts with all other persons' lessons
+        Person personWithLessonConflict = model.findPersonWithLessonConflict(editedLesson, personToEdit);
+        if (personWithLessonConflict != null) {
+            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with lesson of: "
+                    + personWithLessonConflict.getName());
+        }
 
         // Create a new list of lessons with the edited lesson
         List<Lesson> newLessons = new ArrayList<>(currentLessons);
@@ -210,7 +240,6 @@ public class EditCommand extends Command {
         private School school;
         private Address address;
         private Set<Tag> tags;
-        private List<Lesson> lessons;
 
         private Index lessonIndex;
         private EditLessonDescriptor editLessonDescriptor;
@@ -229,7 +258,13 @@ public class EditCommand extends Command {
             setTags(toCopy.tags);
 
             setLessonIndex(toCopy.lessonIndex);
-            setEditLessonDescriptor(toCopy.editLessonDescriptor);
+
+            // defensive copy using constructor of EditLessonDescriptor
+            if (toCopy.editLessonDescriptor != null) {
+                setEditLessonDescriptor(new EditLessonDescriptor(toCopy.editLessonDescriptor));
+            } else {
+                setEditLessonDescriptor(null);
+            }
 
         }
 

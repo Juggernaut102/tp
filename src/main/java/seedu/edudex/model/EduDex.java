@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.edudex.commons.util.ToStringBuilder;
+import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.UniquePersonList;
 import seedu.edudex.model.subject.UniqueSubjectList;
@@ -182,5 +183,25 @@ public class EduDex implements ReadOnlyEduDex {
     @Override
     public int hashCode() {
         return persons.hashCode();
+    }
+
+    /**
+     * Finds and returns a person who has a lesson that conflicts with the given lesson.
+     * Excludes the specified person from the search.
+     * @param lesson
+     * @param personToExclude
+     * @return Person with conflicting lesson, or null if none found.
+     */
+    public Person findPersonWithLessonConflict(Lesson lesson, Person personToExclude) {
+        for (Person person : persons) {
+            if (person.equals(personToExclude)) {
+                continue; // skip checking against the specified person
+            }
+            Lesson conflictingLesson = person.hasLessonConflict(lesson, -1);
+            if (conflictingLesson != null) {
+                return person; // found a person with a conflicting lesson
+            }
+        }
+        return null; // no conflicts found
     }
 }
