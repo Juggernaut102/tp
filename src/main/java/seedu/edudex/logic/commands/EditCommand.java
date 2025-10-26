@@ -11,6 +11,7 @@ import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.edudex.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +24,7 @@ import seedu.edudex.commons.util.CollectionUtil;
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.logic.Messages;
 import seedu.edudex.logic.commands.exceptions.CommandException;
+import seedu.edudex.logic.parser.EditLessonDescriptor;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.person.Address;
 import seedu.edudex.model.person.Day;
@@ -32,6 +34,7 @@ import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
 import seedu.edudex.model.person.School;
 import seedu.edudex.model.person.Time;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.tag.Tag;
 
 /**
@@ -87,8 +90,18 @@ public class EditCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
+
         try {
-            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+            if (editPersonDescriptor.getLessonIndex().isPresent() &&
+                    editPersonDescriptor.getEditLessonDescriptor().isPresent()) {
+                // Lesson edit case
+                editedPerson = createEditedPersonWithLesson(personToEdit, editPersonDescriptor.getLessonIndex().get(),
+                        editPersonDescriptor.getEditLessonDescriptor().get());
+            }
+            else {
+                // Regular person edit case
+                editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+            }
         } catch (IllegalArgumentException e) {
             // display start time after end time exception
             throw new CommandException(e.getMessage());
@@ -103,6 +116,47 @@ public class EditCommand extends Command {
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
+    private Person createEditedPersonWithLesson(Person personToEdit, Index index,
+                                                EditLessonDescriptor editLessonDescriptor) {
+        assert personToEdit != null;
+
+        List<Lesson> currentLessons = personToEdit.getLessons();
+
+        if (currentLessons == null || currentLessons.isEmpty()) {
+            throw new IllegalArgumentException(Messages.MESSAGE_NO_LESSONS);
+        }
+        if (index.getZeroBased() >= currentLessons.size()) {
+            throw new IllegalArgumentException(Messages.MESSAGE_INVALID_LESSON_INDEX);
+        }
+
+        Lesson lessonToEdit = currentLessons.get(index.getZeroBased());
+
+        Subject updatedSubject = editLessonDescriptor.getSubject().orElse(lessonToEdit.getSubject());
+        Day updatedDay = editLessonDescriptor.getDay().orElse(lessonToEdit.getDay());
+        Time updatedStartTime = editLessonDescriptor.getStartTime().orElse(lessonToEdit.getStartTime());
+        Time updatedEndTime = editLessonDescriptor.getEndTime().orElse(lessonToEdit.getEndTime());
+
+        if (!Lesson.isValidStartEndTime(updatedStartTime, updatedEndTime)) {
+            throw new IllegalArgumentException(Lesson.MESSAGE_CONSTRAINTS);
+        }
+
+        Lesson editedLesson = new Lesson(updatedSubject, updatedDay, updatedStartTime, updatedEndTime);
+
+        // Create a new list of lessons with the edited lesson
+        List<Lesson> newLessons = new ArrayList<>(currentLessons);
+        newLessons.set(index.getZeroBased(), editedLesson);
+
+        Person editedPerson = new Person(
+                personToEdit.getName(),
+                personToEdit.getPhone(),
+                personToEdit.getSchool(),
+                personToEdit.getAddress(),
+                personToEdit.getTags());
+        editedPerson.setLessons(newLessons); // Set the updated list of lessons
+        return editedPerson;
+
+    }
+
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -115,29 +169,11 @@ public class EditCommand extends Command {
         School updatedSchool = editPersonDescriptor.getSchool().orElse(personToEdit.getSchool());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        List<Lesson> currentLessons = personToEdit.getLessons();
 
-        // Temporary before support for multiple subjects are added
-        Lesson updatedSubject;
-
-        if (editPersonDescriptor.getSubject().isPresent()) {
-            // editSubjectDescriptor will handle this in the future
-            updatedSubject = editPersonDescriptor.getSubject().get();
-        } else if (editPersonDescriptor.getDay().isPresent()
-                || editPersonDescriptor.getStartTime().isPresent()
-                || editPersonDescriptor.getEndTime().isPresent()) {
-            // Partial updates to subject fields (temporary before support for multiple subjects are added)
-        //            Day updatedDay = editPersonDescriptor.getDay().orElse(personToEdit.getDay());
-        //            Time updatedStartTime = editPersonDescriptor.getStartTime()
-        //                    .orElse(personToEdit.getSubject().getStartTime());
-        //            Time updatedEndTime = editPersonDescriptor.getEndTime()
-        //                    .orElse(personToEdit.getSubject().getEndTime());
-        //            updatedSubject = new Lesson(updatedDay, updatedStartTime, updatedEndTime);
-        } else {
-            // ".orElse()"
-        //            updatedSubject = personToEdit.getSubject();
-        }
-
-        return new Person(updatedName, updatedPhone, updatedSchool, updatedAddress, updatedTags);
+        Person updatedPerson = new Person(updatedName, updatedPhone, updatedSchool, updatedAddress, updatedTags);
+        updatedPerson.setLessons(new ArrayList<>(currentLessons));
+        return updatedPerson;
     }
 
     @Override
@@ -174,12 +210,10 @@ public class EditCommand extends Command {
         private School school;
         private Address address;
         private Set<Tag> tags;
-        private Lesson subject;
+        private List<Lesson> lessons;
 
-        // Temporary before support for multiple subjects are added
-        private Day day;
-        private Time startTime;
-        private Time endTime;
+        private Index lessonIndex;
+        private EditLessonDescriptor editLessonDescriptor;
 
         public EditPersonDescriptor() {}
 
@@ -193,19 +227,17 @@ public class EditCommand extends Command {
             setSchool(toCopy.school);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
-            setSubject(toCopy.subject);
 
-            // Temporary before support for multiple subjects are added
-            setDay(toCopy.day);
-            setStartTime(toCopy.startTime);
-            setEndTime(toCopy.endTime);
+            setLessonIndex(toCopy.lessonIndex);
+            setEditLessonDescriptor(toCopy.editLessonDescriptor);
+
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, school, address, tags, subject, day, startTime, endTime);
+            return CollectionUtil.isAnyNonNull(name, phone, school, address, tags);
         }
 
         public void setName(Name name) {
@@ -240,45 +272,21 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setSubject(Lesson subject) {
-            this.subject = subject;
+        public void setLessonIndex(Index lessonIndex) {
+            this.lessonIndex = lessonIndex;
         }
 
-        public Optional<Lesson> getSubject() {
-            return Optional.ofNullable(subject);
+        public Optional<Index> getLessonIndex() {
+            return Optional.ofNullable(lessonIndex);
         }
 
-        // Temporary before support for multiple subjects are added
-        public Optional<Day> getDay() {
-            return Optional.ofNullable(day);
+        public void setEditLessonDescriptor(EditLessonDescriptor editLessonDescriptor) {
+            this.editLessonDescriptor = editLessonDescriptor;
         }
 
-        // Temporary before support for multiple subjects are added
-        public void setDay(Day day) {
-            this.day = day;
+        public Optional<EditLessonDescriptor> getEditLessonDescriptor() {
+            return Optional.ofNullable(editLessonDescriptor);
         }
-
-        // Temporary before support for multiple subjects are added
-        public Optional<Time> getStartTime() {
-            return Optional.ofNullable(startTime);
-        }
-
-        // Temporary before support for multiple subjects are added
-        public void setStartTime(Time time) {
-            this.startTime = time;
-        }
-
-        // Temporary before support for multiple subjects are added
-        public Optional<Time> getEndTime() {
-            return Optional.ofNullable(endTime);
-        }
-
-        // Temporary before support for multiple subjects are added
-        public void setEndTime(Time time) {
-            this.endTime = time;
-        }
-
-
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
@@ -316,7 +324,8 @@ public class EditCommand extends Command {
                     && Objects.equals(school, otherEditPersonDescriptor.school)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(subject, otherEditPersonDescriptor.subject);
+                    && Objects.equals(lessonIndex, otherEditPersonDescriptor.lessonIndex)
+                    && Objects.equals(editLessonDescriptor, otherEditPersonDescriptor.editLessonDescriptor);
         }
 
         @Override
@@ -327,7 +336,8 @@ public class EditCommand extends Command {
                     .add("school", school)
                     .add("address", address)
                     .add("tags", tags)
-                    .add("subject", subject)
+                    .add("lessonIndex", lessonIndex)
+                    .add("editLessonDescriptor", editLessonDescriptor)
                     .toString();
         }
     }
