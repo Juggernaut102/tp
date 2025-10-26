@@ -104,13 +104,12 @@ public class EditCommand extends Command {
         Person editedPerson;
 
         try {
-            if (editPersonDescriptor.getLessonIndex().isPresent() &&
-                    editPersonDescriptor.getEditLessonDescriptor().isPresent()) {
+            if (editPersonDescriptor.getLessonIndex().isPresent()
+                    && editPersonDescriptor.getEditLessonDescriptor().isPresent()) {
                 // Lesson edit case
                 editedPerson = createEditedPersonWithLesson(personToEdit, editPersonDescriptor.getLessonIndex().get(),
                         editPersonDescriptor.getEditLessonDescriptor().get(), model);
-            }
-            else {
+            } else {
                 // Regular person edit case
                 editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
             }
