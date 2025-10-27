@@ -175,16 +175,16 @@ public class PersonTest {
         person.addLesson(lessonMathMonday);
 
         // No conflict
-        assertNull(person.hasLessonConflict(lessonScienceTuesday, -1));
+        assertNull(person.hasLessonConflict(lessonScienceTuesday, null));
 
         // Conflict with same lesson
         Lesson conflictedLesson = lessonMathMonday;
-        assertEquals(person.hasLessonConflict(lessonMathMonday, -1), conflictedLesson);
+        assertEquals(person.hasLessonConflict(lessonMathMonday, null), conflictedLesson);
 
         // Conflict with overlapping time
         Lesson conflictingLesson = new Lesson(new Subject("Math"), new Day("Monday"),
                 new Time("09:30"), new Time("10:30"));
-        assertEquals(person.hasLessonConflict(conflictingLesson, -1), conflictedLesson);
+        assertEquals(person.hasLessonConflict(conflictingLesson, null), conflictedLesson);
     }
 
 }
