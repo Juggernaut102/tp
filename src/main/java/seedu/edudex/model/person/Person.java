@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.edudex.commons.core.index.Index;
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.tag.Tag;
@@ -136,12 +137,12 @@ public class Person {
      * Checks if the given lesson conflicts with any of the same student's lessons.
      *
      * @param otherLesson The lesson to check for conflicts.
-     * @param index The index of the lesson to exclude from conflict checking.
+     * @param index The index of the lesson being edited (to exclude from conflict check).
      * @return The conflicting lesson if there is a conflict, null otherwise.
      */
-    public Lesson hasLessonConflict(Lesson otherLesson, int index) {
+    public Lesson hasLessonConflict(Lesson otherLesson, Index index) {
         for (int i = 0; i < lessons.size(); i++) {
-            if (i == index) {
+            if (index != null && i == index.getZeroBased()) {
                 continue; // skip checking against the lesson being edited
             }
             Lesson existingLesson = lessons.get(i);

@@ -197,7 +197,9 @@ public class EduDex implements ReadOnlyEduDex {
             if (person.equals(personToExclude)) {
                 continue; // skip checking against the specified editing person
             }
-            Lesson conflictingLesson = person.hasLessonConflict(lesson, -1); // -1 indicates to check all lessons
+            // null index since not editing existing lesson
+            Lesson conflictingLesson = person.hasLessonConflict(lesson, null);
+
             if (conflictingLesson == null) {
                 continue; // no conflict for this person
             }
