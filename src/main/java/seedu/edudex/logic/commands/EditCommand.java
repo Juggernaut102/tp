@@ -159,7 +159,7 @@ public class EditCommand extends Command {
         Lesson editedLesson = new Lesson(updatedSubject, updatedDay, updatedStartTime, updatedEndTime);
 
         // Check for conflicting lessons within the same person's lessons
-        Lesson conflictedLesson = personToEdit.hasLessonConflict(editedLesson, index.getZeroBased());
+        Lesson conflictedLesson = personToEdit.hasLessonConflict(editedLesson, index);
         if (conflictedLesson != null) {
             throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with: " + conflictedLesson);
         }
