@@ -195,12 +195,16 @@ public class EduDex implements ReadOnlyEduDex {
     public Person findPersonWithLessonConflict(Lesson lesson, Person personToExclude) {
         for (Person person : persons) {
             if (person.equals(personToExclude)) {
-                continue; // skip checking against the specified person
+                continue; // skip checking against the specified editing person
             }
-            Lesson conflictingLesson = person.hasLessonConflict(lesson, -1);
-            if (conflictingLesson != null) {
-                return person; // found a person with a conflicting lesson
+            Lesson conflictingLesson = person.hasLessonConflict(lesson, -1); // -1 indicates to check all lessons
+            if (conflictingLesson == null) {
+                continue; // no conflict for this person
             }
+            if (conflictingLesson.equals(lesson)) {
+                continue; // another person can have the same lesson - same day,time - not a conflict
+            }
+            return person; // found a person with a conflicting lesson
         }
         return null; // no conflicts found
     }
