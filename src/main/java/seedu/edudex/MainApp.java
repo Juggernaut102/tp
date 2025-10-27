@@ -40,13 +40,13 @@ public class MainApp extends Application {
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
-    private boolean isFirstLaunch = false;
-
     protected Ui ui;
     protected Logic logic;
     protected Storage storage;
     protected Model model;
     protected Config config;
+
+    private boolean isFirstLaunch = false;
 
     @Override
     public void init() throws Exception {
