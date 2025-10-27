@@ -13,13 +13,14 @@ import seedu.edudex.model.subject.Subject;
 
 
 /**
- * Deletes a subject from the list of allowed subjects.
+ * Deletes a subject identified using it's displayed index from EduDex
  */
 public class DeleteSubjectCommand extends Command {
 
     public static final String COMMAND_WORD = "delsub";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a subject from the list of allowed subjects.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes a subject from the list of allowed subjects.\n"
             + "Parameters: INDEX\n"
             + "Example: " + COMMAND_WORD + " 1";
 

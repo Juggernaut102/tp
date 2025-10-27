@@ -101,14 +101,6 @@ public class DeleteCommandTest {
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
-    @Test
-    public void toStringMethod() {
-        Index targetIndex = Index.fromOneBased(1);
-        DeleteCommand deleteCommand = new DeleteCommand(targetIndex);
-        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
-        assertEquals(expected, deleteCommand.toString());
-    }
-
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

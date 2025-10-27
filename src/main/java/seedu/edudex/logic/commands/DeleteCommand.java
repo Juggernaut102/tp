@@ -28,6 +28,7 @@ public class DeleteCommand extends Command {
     private final Index targetIndex;
 
     public DeleteCommand(Index targetIndex) {
+        requireNonNull(targetIndex);
         this.targetIndex = targetIndex;
     }
 
@@ -35,6 +36,8 @@ public class DeleteCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+
+        assert lastShownList != null;
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -58,12 +61,5 @@ public class DeleteCommand extends Command {
 
         DeleteCommand otherDeleteCommand = (DeleteCommand) other;
         return targetIndex.equals(otherDeleteCommand.targetIndex);
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
-                .toString();
     }
 }

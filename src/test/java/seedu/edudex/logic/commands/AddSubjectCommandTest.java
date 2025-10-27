@@ -88,7 +88,7 @@ public class AddSubjectCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * A default model stub (Methods should not be called)
      */
     private class ModelStub implements Model {
         @Override
@@ -226,7 +226,7 @@ public class AddSubjectCommandTest {
     }
 
     /**
-     * A Model stub that always accept the subject being added.
+     * A Model stub that always accepts the subject being added.
      */
     private class ModelStubAcceptingSubjectAdded extends ModelStub {
         final ArrayList<Subject> subjectsAdded = new ArrayList<>();
