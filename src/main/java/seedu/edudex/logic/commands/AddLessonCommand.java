@@ -82,13 +82,14 @@ public class AddLessonCommand extends Command {
         // 1) Check for conflicting lessons within the same student's lessons
         Lesson conflictedLesson = originalStudent.hasLessonConflict(lessonToAdd, null);
         if (conflictedLesson != null) {
-            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with: " + conflictedLesson);
+            throw new CommandException(MESSAGE_CONFLICTING_LESSON
+                    + "\nConflicts with an existing lesson the student has: " + conflictedLesson);
         }
 
         // 2) Check for conflicts with all other students' lessons
         Person personWithLessonConflict = model.findPersonWithLessonConflict(lessonToAdd, originalStudent);
         if (personWithLessonConflict != null) {
-            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with lesson of: "
+            throw new CommandException(MESSAGE_CONFLICTING_LESSON + "\nConflicts with lesson of: "
                     + personWithLessonConflict.getName());
         }
 
@@ -118,7 +119,7 @@ public class AddLessonCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("studentIndex", studentIndex)
+                .add("studentIndex", studentIndex.getOneBased())
                 .add("lessonToAdd", lessonToAdd)
                 .toString();
     }

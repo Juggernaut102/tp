@@ -114,7 +114,7 @@ public class EditCommand extends Command {
                 editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
             }
         } catch (IllegalArgumentException e) {
-            // display start time after end time exception
+            // start time after end time, or conflicting lesson timings
             throw new CommandException(e.getMessage());
         }
 
@@ -161,13 +161,14 @@ public class EditCommand extends Command {
         // Check for conflicting lessons within the same person's lessons
         Lesson conflictedLesson = personToEdit.hasLessonConflict(editedLesson, index);
         if (conflictedLesson != null) {
-            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with: " + conflictedLesson);
+            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON
+                    + "\nConflicts with an existing lesson the student has: " + conflictedLesson);
         }
 
         // Check for conflicts with all other persons' lessons
         Person personWithLessonConflict = model.findPersonWithLessonConflict(editedLesson, personToEdit);
         if (personWithLessonConflict != null) {
-            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with lesson of: "
+            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + "\nConflicts with lesson of: "
                     + personWithLessonConflict.getName());
         }
 
