@@ -50,6 +50,27 @@ public class UiManager implements Ui {
         }
     }
 
+    /**
+     * Shows welcome message on first launch of app.
+     */
+    @Override
+    public void showWelcomeMessage() {
+        Platform.runLater(() -> {
+            // Show welcome message in the ResultDisplay area
+            mainWindow.setResultDisplay();
+
+            // Also show a popup dialog
+            showAlertDialogAndWait(
+                    Alert.AlertType.INFORMATION,
+                    "Welcome to EduDex!",
+                    "First-time setup complete",
+                    "A sample EduDex has been created for you.\n\n"
+                            + "Please start by adding the subjects you teach.\n"
+                            + "Example: addsub SUBJECT"
+            );
+        });
+    }
+
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
