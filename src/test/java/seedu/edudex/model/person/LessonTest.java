@@ -112,12 +112,12 @@ public class LessonTest {
         Lesson lesson4 = new Lesson(subjectScience, dayTuesday, time0900, time1000);
 
         // Overlapping lessons on the same day should conflict
-        assertEquals(lesson1.conflictsWith(lesson2), lesson1);
+        assertTrue(lesson1.conflictsWith(lesson2));
 
         // Non-overlapping lessons on the same day should not conflict
-        assertNull(lesson1.conflictsWith(lesson3));
+        assertFalse(lesson1.conflictsWith(lesson3));
 
         // Lessons on different days should not conflict
-        assertNull(lesson1.conflictsWith(lesson4));
+        assertFalse(lesson1.conflictsWith(lesson4));
     }
 }
