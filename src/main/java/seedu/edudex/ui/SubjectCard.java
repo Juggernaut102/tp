@@ -27,6 +27,8 @@ public class SubjectCard extends UiPart<Region> {
     private HBox cardPane;
     @FXML
     private Label name;
+    @FXML
+    private Label id;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -34,6 +36,16 @@ public class SubjectCard extends UiPart<Region> {
     public SubjectCard(Subject subject) {
         super(FXML);
         this.subject = subject;
+        name.setText(subject.toString());
+    }
+
+    /**
+     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     */
+    public SubjectCard(Subject subject, int displayedIndex) {
+        super(FXML);
+        this.subject = subject;
+        id.setText(displayedIndex + ". ");
         name.setText(subject.toString());
     }
 }
