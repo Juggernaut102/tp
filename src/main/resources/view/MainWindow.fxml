@@ -11,8 +11,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Label?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Address App" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="EduDex" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/edudex_32.png" />
   </icons>
@@ -46,20 +47,34 @@
           </padding>
         </StackPane>
 
-        <VBox fx:id="subjectList" styleClass="pane-with-border" minWidth="340" prefWidth="340" maxHeight="200">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="subjectListPanelPlaceholder" />
-        </VBox>
+        <SplitPane fx:id="mainSplitPane" orientation="HORIZONTAL" dividerPositions="0.6" VBox.vgrow="ALWAYS">
+
+          <VBox prefWidth="450.0" styleClass="pane-with-border">
+            <Label text="Students" styleClass="header-label"/>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          </VBox>
+
+          <VBox prefWidth="350.0" styleClass="pane-with-border">
+            <Label text="Subjects" styleClass="header-label"/>
+            <StackPane fx:id="subjectListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          </VBox>
+
+        </SplitPane>
+
+<!--        <VBox fx:id="subjectList" styleClass="pane-with-border" minWidth="340" prefWidth="340" maxHeight="200">-->
+<!--          <padding>-->
+<!--            <Insets top="10" right="10" bottom="10" left="10" />-->
+<!--          </padding>-->
+<!--          <StackPane fx:id="subjectListPanelPlaceholder" />-->
+<!--        </VBox>-->
 
 
-        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+<!--        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">-->
+<!--          <padding>-->
+<!--            <Insets top="10" right="10" bottom="10" left="10" />-->
+<!--          </padding>-->
+<!--          <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>-->
+<!--        </VBox>-->
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
