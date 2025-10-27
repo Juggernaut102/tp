@@ -14,7 +14,14 @@
     "school" : "Raffles Primary School",
     "address" : "311, Clementi Ave 2, #02-25",
     "tags" : [ "owesMoney", "friends" ],
-    "lessons" : [ ]
+    "lessons" : [
+      {
+        "subject": "Mathematics",
+        "day": "Monday",
+        "startTime": "12:00",
+        "endTime": "13:00"
+      }
+    ]
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",

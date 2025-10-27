@@ -30,6 +30,7 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25")
             .withSchool("Raffles Primary School").withPhone("98765432")
             .withTags("owesMoney", "friends")
+            .withLessons(List.of(new LessonBuilder().build()))
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withSchool("Jurong Primary School").withAddress("wall street")
