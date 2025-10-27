@@ -13,6 +13,7 @@ import seedu.edudex.model.subject.Subject;
 public class Lesson {
     public static final String MESSAGE_CONSTRAINTS =
             "Start time should be before end time.";
+    public static final String MESSAGE_CONFLICTING_LESSON = "This lesson conflicts with an existing lesson.";
     private final Subject subject;
     private final Day day;
     private final Time startTime;
@@ -95,5 +96,22 @@ public class Lesson {
     public Lesson getCopyOfLesson() {
         return new Lesson(subject.getCopyOfSubject(), day.getCopyOfDay(),
                 startTime.getCopyOfTime(), endTime.getCopyOfTime());
+    }
+
+    /**
+     * Checks if this lesson conflicts with another lesson.
+     * @param otherLesson The other lesson to check against.
+     * @return The conflicting lesson if there is a conflict, null otherwise.
+     */
+    public Lesson conflictsWith(Lesson otherLesson) {
+        if (!this.day.equals(otherLesson.day)) {
+            return null; // Different days, no conflict
+        }
+
+        // Check if time intervals overlap
+        boolean isOverlapping = this.startTime.getTime().isBefore(otherLesson.endTime.getTime())
+                && otherLesson.startTime.getTime().isBefore(this.endTime.getTime());
+
+        return isOverlapping ? this : null; // return existing lesson if conflict exists, else null
     }
 }

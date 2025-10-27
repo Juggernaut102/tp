@@ -143,6 +143,22 @@ public class ModelManager implements Model {
         eduDex.setSubject(target, editedSubject);
     }
 
+    //==== Lesson List Accessors =============================================================
+
+    /**
+     * Finds and returns a person who has a lesson that conflicts with the given lesson.
+     * Excludes the specified person from the search.
+     * @param lesson
+     * @param personToExclude
+     * @return Person with conflicting lesson, or null if none found.
+     */
+    @Override
+    public Person findPersonWithLessonConflict(Lesson lesson, Person personToExclude) {
+        requireNonNull(lesson);
+        requireNonNull(personToExclude);
+        return eduDex.findPersonWithLessonConflict(lesson, personToExclude);
+    }
+
     //=========== Subject List Accessors =============================================================
     @Override
     public ObservableList<Subject> getSubjectList() {

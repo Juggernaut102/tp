@@ -22,6 +22,8 @@ public class Messages {
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_INVALID_LESSON_INDEX =
             "The lesson index provided is invalid.";
+    public static final String MESSAGE_NO_LESSONS = "This student has no lessons. "
+            + "Add lessons using the addlesson command.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

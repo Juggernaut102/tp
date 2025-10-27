@@ -2,6 +2,7 @@ package seedu.edudex.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.testutil.Assert.assertThrows;
 
@@ -16,6 +17,7 @@ public class LessonTest {
     private final Day dayMonday = new Day("Monday");
     private final Day dayTuesday = new Day("Tuesday");
     private final Time time0900 = new Time("09:00");
+    private final Time time0930 = new Time("09:30");
     private final Time time1000 = new Time("10:00");
     private final Time time1100 = new Time("11:00");
 
@@ -100,5 +102,22 @@ public class LessonTest {
         Lesson lesson = new Lesson(subjectMath, dayMonday, time0900, time1000);
         String expectedString = "[Subject: math, Day: Monday, startTime: 09:00, endTime: 10:00]";
         assertEquals(expectedString, lesson.toString());
+    }
+
+    @Test
+    public void testConflicts() {
+        Lesson lesson1 = new Lesson(subjectMath, dayMonday, time0900, time1000);
+        Lesson lesson2 = new Lesson(subjectScience, dayMonday, time0930, time1000);
+        Lesson lesson3 = new Lesson(subjectMath, dayMonday, time1000, time1100);
+        Lesson lesson4 = new Lesson(subjectScience, dayTuesday, time0900, time1000);
+
+        // Overlapping lessons on the same day should conflict
+        assertEquals(lesson1.conflictsWith(lesson2), lesson1);
+
+        // Non-overlapping lessons on the same day should not conflict
+        assertNull(lesson1.conflictsWith(lesson3));
+
+        // Lessons on different days should not conflict
+        assertNull(lesson1.conflictsWith(lesson4));
     }
 }
