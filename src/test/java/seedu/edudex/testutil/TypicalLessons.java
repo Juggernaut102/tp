@@ -1,10 +1,12 @@
 package seedu.edudex.testutil;
 
-import seedu.edudex.model.person.Lesson;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import seedu.edudex.model.person.Lesson;
+
+
 
 /**
  * A utility class containing a list of {@code Lesson} objects to be used in tests.

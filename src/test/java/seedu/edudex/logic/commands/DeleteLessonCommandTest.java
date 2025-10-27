@@ -10,7 +10,6 @@ import static seedu.edudex.testutil.TypicalLessons.MATH;
 import static seedu.edudex.testutil.TypicalLessons.SCIENCE;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;

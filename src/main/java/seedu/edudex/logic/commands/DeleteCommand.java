@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import seedu.edudex.commons.core.index.Index;
-import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.logic.Messages;
 import seedu.edudex.logic.commands.exceptions.CommandException;
 import seedu.edudex.model.Model;
@@ -27,6 +26,9 @@ public class DeleteCommand extends Command {
 
     private final Index targetIndex;
 
+    /**
+     * Creates a DeleteCommand to remove the person at {@code targetIndex}
+     */
     public DeleteCommand(Index targetIndex) {
         requireNonNull(targetIndex);
         this.targetIndex = targetIndex;
