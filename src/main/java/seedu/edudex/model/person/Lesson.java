@@ -101,17 +101,17 @@ public class Lesson {
     /**
      * Checks if this lesson conflicts with another lesson.
      * @param otherLesson The other lesson to check against.
-     * @return The conflicting lesson if there is a conflict, null otherwise.
+     * @return true if there is a conflict, false otherwise.
      */
-    public Lesson conflictsWith(Lesson otherLesson) {
+    public boolean conflictsWith(Lesson otherLesson) {
         if (!this.day.equals(otherLesson.day)) {
-            return null; // Different days, no conflict
+            return false; // Different days, no conflict
         }
 
         // Check if time intervals overlap
         boolean isOverlapping = this.startTime.getTime().isBefore(otherLesson.endTime.getTime())
                 && otherLesson.startTime.getTime().isBefore(this.endTime.getTime());
 
-        return isOverlapping ? this : null; // return existing lesson if conflict exists, else null
+        return isOverlapping; // return existing lesson if conflict exists, else null
     }
 }
