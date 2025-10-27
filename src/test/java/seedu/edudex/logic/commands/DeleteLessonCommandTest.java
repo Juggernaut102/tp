@@ -6,12 +6,13 @@ import static seedu.edudex.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.edudex.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.edudex.testutil.TypicalLessons.MATH;
+import static seedu.edudex.testutil.TypicalLessons.SCIENCE;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.edudex.commons.core.index.Index;
@@ -26,29 +27,18 @@ import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.PersonBuilder;
+import seedu.edudex.testutil.TypicalLessons;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteLessonCommand}.
  */
 public class DeleteLessonCommandTest {
 
-    private Model model;
-
-    @BeforeEach
-    public void setUp() {
-        model = new ModelManager(new EduDex(getTypicalEduDex()), new UserPrefs());
-    }
+    private Model model = new ModelManager(getTypicalEduDex(), new UserPrefs());
 
     @Test
-    public void execute_validLessonIndex_success() {
-
-        // Add a few lessons
-        Lesson mathLesson = new Lesson(new Subject("Math"), new Day("Monday"),
-                new Time("10:00"), new Time("11:00"));
-        Lesson scienceLesson = new Lesson(new Subject("Science"), new Day("Tuesday"),
-                new Time("13:00"), new Time("14:00"));
-
-        List<Lesson> lessons = Arrays.asList(mathLesson, scienceLesson);
+    public void execute_validIndexLesson_success() {
+        List<Lesson> lessons = TypicalLessons.getTypicalLessons();
         Person student = new PersonBuilder(model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withLessons(lessons)
@@ -59,11 +49,11 @@ public class DeleteLessonCommandTest {
         DeleteLessonCommand deleteLessonCommand = new DeleteLessonCommand(INDEX_FIRST_PERSON, Index.fromOneBased(1));
 
         String expectedMessage = String.format(DeleteLessonCommand.MESSAGE_DELETE_LESSON_SUCCESS,
-                mathLesson.getSubject(), student.getName());
+                MATH.getSubject(), student.getName());
 
         Model expectedModel = new ModelManager(new EduDex(model.getEduDex()), new UserPrefs());
         Person expectedStudent = new PersonBuilder(student).build();
-        expectedStudent.setLessons(List.of(scienceLesson)); // expected remaining lesson
+        expectedStudent.setLessons(List.of(SCIENCE)); // expected remaining lesson
         expectedModel.setPerson(student, expectedStudent);
 
         assertCommandSuccess(deleteLessonCommand, model, expectedMessage, expectedModel);

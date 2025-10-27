@@ -89,7 +89,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * A default model stub (Methods should not be called)
      */
     private class ModelStub implements Model {
         @Override

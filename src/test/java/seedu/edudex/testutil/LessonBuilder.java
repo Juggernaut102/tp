@@ -10,7 +10,7 @@ import seedu.edudex.model.subject.Subject;
  */
 public class LessonBuilder {
 
-    public static final String DEFAULT_SUBJECT = "mathematics";
+    public static final String DEFAULT_SUBJECT = "Mathematics";
     public static final String DEFAULT_DAY = "Monday";
     public static final String DEFAULT_STARTTIME = "12:00";
     public static final String DEFAULT_ENDTIME = "13:00";
