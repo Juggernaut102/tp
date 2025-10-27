@@ -5,6 +5,7 @@ import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
+import static seedu.edudex.model.person.Lesson.MESSAGE_CONFLICTING_LESSON;
 
 import java.util.List;
 
@@ -74,10 +75,23 @@ public class AddLessonCommand extends Command {
             throw new CommandException(MESSAGE_SUBJECT_NOT_TAUGHT);
         }
 
-        // if conflicting lesson timings, throw exception
-
         Person originalStudent = lastShownList.get(studentIndex.getZeroBased());
         Person updatedStudent = originalStudent.getCopyOfPerson();
+
+        // If we have conflicting lesson timings, throw exception
+        // 1) Check for conflicting lessons within the same student's lessons
+        Lesson conflictedLesson = originalStudent.hasLessonConflict(lessonToAdd, null);
+        if (conflictedLesson != null) {
+            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with: " + conflictedLesson);
+        }
+
+        // 2) Check for conflicts with all other students' lessons
+        Person personWithLessonConflict = model.findPersonWithLessonConflict(lessonToAdd, originalStudent);
+        if (personWithLessonConflict != null) {
+            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + " Conflicts with lesson of: "
+                    + personWithLessonConflict.getName());
+        }
+
         updatedStudent.addLesson(lessonToAdd);
         model.setPerson(originalStudent, updatedStudent);
 
