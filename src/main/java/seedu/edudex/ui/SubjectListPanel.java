@@ -41,7 +41,7 @@ public class SubjectListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new SubjectCard(subject).getRoot());
+                setGraphic(new SubjectCard(subject, getIndex() + 1).getRoot());
             }
         }
     }
