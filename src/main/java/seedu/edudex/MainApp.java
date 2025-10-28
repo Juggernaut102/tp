@@ -46,6 +46,8 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
 
+    private boolean isFirstLaunch = false;
+
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing EduDex ]===========================");
@@ -77,11 +79,14 @@ public class MainApp extends Application {
 
         Optional<ReadOnlyEduDex> eduDexOptional;
         ReadOnlyEduDex initialData;
+        isFirstLaunch = false;
+
         try {
             eduDexOptional = storage.readEduDex();
             if (!eduDexOptional.isPresent()) {
                 logger.info("Creating a new data file " + storage.getEduDexFilePath()
                         + " populated with a sample EduDex.");
+                isFirstLaunch = true;
             }
             initialData = eduDexOptional.orElseGet(SampleDataUtil::getSampleEduDex);
         } catch (DataLoadingException e) {
@@ -89,7 +94,6 @@ public class MainApp extends Application {
                     + " Will be starting with an empty EduDex.");
             initialData = new EduDex();
         }
-
         return new ModelManager(initialData, userPrefs);
     }
 
@@ -172,6 +176,11 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting EduDex " + MainApp.VERSION);
         ui.start(primaryStage);
+
+        // Show welcome message if first launch
+        if (isFirstLaunch) {
+            ui.showWelcomeMessage();
+        }
     }
 
     @Override

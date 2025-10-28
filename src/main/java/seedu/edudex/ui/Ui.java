@@ -10,4 +10,7 @@ public interface Ui {
     /** Starts the UI (and the App).  */
     void start(Stage primaryStage);
 
+    /** Shows welcome message on first launch of app. */
+    void showWelcomeMessage();
+
 }

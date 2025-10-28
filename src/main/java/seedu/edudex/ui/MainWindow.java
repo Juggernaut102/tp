@@ -24,6 +24,9 @@ import seedu.edudex.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final String ADD_STARTING_SUBJECT_MESSAGE = "Welcome to EduDex! "
+            + "Please start by adding the subjects you teach.\n"
+            + "Format: addsub SUBJECT, replacing SUBJECT with the subject of interest.";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -200,5 +203,12 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Displays text in text box.
+     */
+    void setResultDisplay() {
+        resultDisplay.setFeedbackToUser(ADD_STARTING_SUBJECT_MESSAGE);
     }
 }
