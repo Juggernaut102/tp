@@ -23,7 +23,7 @@ EduDex is a **desktop app for managing student's contacts, optimized for use via
 1. Copy the file to the folder you want to use as the _home folder_ for your EduDex.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar edudex.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the below should appear in a few seconds, with a pop-up asking you to start by adding subjects. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -33,6 +33,10 @@ EduDex is a **desktop app for managing student's contacts, optimized for use via
 
    * `add n/John Doe p/98765432 sch/Raffles Primary School a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
+   * `addsub english` : Adds a subject named `english` to the subject list.
+   
+   * `addlesson 1 sub/english d/monday start/10:00 end/11:00` : Adds a lesson to the first contact, with a subject of english, day of Monday, and timing from 10:00-11:00
+   
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
    * `clear` : Deletes all contacts.
@@ -81,6 +85,8 @@ Format: `help`
 Adds a person to EduDex.
 
 Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
+
+* Names are case-insensitive, e.g. `john doe` is the same person as `JOHN DOE`.
 
 
 <box type="tip" seamless>
@@ -135,6 +141,7 @@ Format:
   e.g. `find hans` will match `Hans`.
 * The order of keywords does not matter.  
   e.g. `find Hans Bo` will match `Bo Hans`.
+* For name search, persons matching at least one keyword will be returned (i.e. OR search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * When searching by day (`d/`), only valid days of the week are accepted.  
   e.g. `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`.
 * When searching by subject (`sub/`), only subjects matching lesson names will be shown.
@@ -223,6 +230,7 @@ Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME
   { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }.
 * START_TIME and END_TIME must be in the 24-hour format HH:MM, and must be a valid time.
 * START_TIME must be earlier than END_TIME.
+* Lessons that extend into the next day must be added as 2 separate lessons.  e.g. A lesson that stretches from Monday 22:00 to Tuesday 02:00 should be recorded as a lesson from Monday 22:00 to 23:59 and a lesson from Tuesday 00:00 to 02:00.
 
 Examples:
 * `addlesson 1 sub/mathematics d/Monday start/12:00 end/13:00`

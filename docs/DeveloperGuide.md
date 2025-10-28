@@ -266,20 +266,6 @@ The command is structured as follows:
 * `FindCommandParser` – Parses user input and constructs the correct predicate.
 * `NameContainsKeywordsPredicate`, `DayMatchesPredicate`, and `SubjectMatchesPredicate` – Determine whether a `Person` matches the given search criteria.
 
-Given below is an example usage scenario and how the `FindCommand` behaves.
-
-<puml src="diagrams/FindCommandSequenceDiagram.puml" width="600" />
-
-**Example usage:**
-
-1. The user executes `find d/Monday` to locate all students with lessons on Monday.
-2. `FindCommandParser` detects the prefix `d/` and constructs a `DayMatchesPredicate`.
-3. A `FindCommand` object is created with this predicate.
-4. The `FindCommand` calls `model.updateFilteredPersonList(predicate)` in `ModelManager`.
-5. The UI automatically updates to display the filtered student list.
-
-Similarly, for `find s/Math`, a `SubjectMatchesPredicate` is created and the model is updated accordingly.
-
 ---
 
 #### Design considerations
@@ -294,20 +280,20 @@ Similarly, for `find s/Math`, a `SubjectMatchesPredicate` is created and the mod
 
 #### Example usages
 
-| Command | Description |
-|----------|-------------|
-| `find alice bob` | Finds students whose names contain “alice” or “bob” |
-| `find d/Tuesday` | Finds students with lessons on Tuesday |
-| `find s/Science` | Finds students taking Science lessons |
+| Command            | Description |
+|--------------------|-------------|
+| `find alice bob`   | Finds students whose names contain “alice” or “bob” |
+| `find d/Tuesday`   | Finds students with lessons on Tuesday |
+| `find sub/Science` | Finds students taking Science lessons |
 
 ---
 
 #### Example UI output
 
-| Input | Output |
-|--------|--------|
+| Input           | Output |
+|-----------------|--------|
 | `find d/Friday` | Displays list of students with Friday lessons |
-| `find s/Math` | Displays students taking Math, with lesson details |
+| `find sub/Math` | Displays students taking Math, with lesson details |
 
 ---
 
@@ -329,10 +315,6 @@ The command structure is as follows:
 * `DeleteLessonCommand` – Executes lesson deletion logic.
 * `DeleteLessonCommandParser` – Parses and validates user input.
 * `ModelManager` – Handles the modification of the `Person` object.
-
-Given below is a sequence diagram showing how `DeleteLessonCommand` works.
-
-<puml src="diagrams/DeleteLessonSequenceDiagram.puml" width="600" />
 
 **Step-by-step execution:**
 
@@ -387,18 +369,12 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 
 ---
 
-#### Class diagram
-
-<puml src="diagrams/DeleteLessonClassDiagram.puml" width="550" />
-
----
-
 ### Summary
 
-| Command | Function | Example | Output |
-|----------|-----------|----------|---------|
+| Command         | Function | Example         | Output |
+|-----------------|-----------|-----------------|---------|
 | `find d/Friday` | Find students by lesson day | `find d/Friday` | Lists all students with Friday lessons |
-| `find s/Math` | Find students by subject | `find s/Math` | Lists students taking Math |
+| `find sub/Math`  | Find students by subject | `find sub/Math` | Lists students taking Math |
 | `dellesson 1 1` | Delete specific lesson | `dellesson 1 1` | Deletes the 1st lesson of the 1st student |
 
 ---
@@ -411,13 +387,13 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 
 ### Example test cases
 
-| Scenario | Command | Expected Result |
-|-----------|----------|-----------------|
-| Find by day | `find d/Monday` | Lists all students with Monday lessons |
-| Find by subject | `find s/Science` | Lists all students taking Science |
-| Delete valid lesson | `dellesson 1 2` | Deletes 2nd lesson of 1st student |
-| Invalid student index | `dellesson 0 1` | Error: Invalid student index |
-| Invalid lesson index | `dellesson 1 5` | Error: Invalid lesson index |
+| Scenario | Command            | Expected Result |
+|-----------|--------------------|-----------------|
+| Find by day | `find d/Monday`    | Lists all students with Monday lessons |
+| Find by subject | `find sub/Science` | Lists all students taking Science |
+| Delete valid lesson | `dellesson 1 2`    | Deletes 2nd lesson of 1st student |
+| Invalid student index | `dellesson 0 1`    | Error: Invalid student index |
+| Invalid lesson index | `dellesson 1 5`    | Error: Invalid lesson index |
 
 ---
 
