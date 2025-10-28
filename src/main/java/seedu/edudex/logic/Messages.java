@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import seedu.edudex.logic.parser.Prefix;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.subject.Subject;
+import seedu.edudex.model.tag.Tag;
 
 /**
  * Container for user visible messages.
@@ -50,9 +51,14 @@ public class Messages {
                 .append("; Address: ")
                 .append(person.getAddress())
                 .append("; Lessons: ")
-                .append(person.getLessonsAsString())
-                .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+                .append(person.getLessonsAsString());
+
+        Set<Tag> tags = person.getTags();
+        if (!tags.isEmpty()) {
+            builder.append("; Tags: ");
+            tags.forEach(builder::append);
+        }
+
         return builder.toString();
     }
 
