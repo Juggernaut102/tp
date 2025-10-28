@@ -110,9 +110,17 @@ Format: `list`
 
 ### Editing a person : `edit`
 
-Edits an existing person in EduDex.
+Edits an existing person fields **or** lesson fields in EduDex.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
+**Person fields that can be edited**: Name, Phone Number, School, Address, Tags
+**Lesson fields that can be edited**: Subject, Day, Start Time, End Time
+
+Format: 
+`edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
+or
+`edit INDEX lessson/LESSON_INDEX [sub/SUBJECT] [d/DAY] [start/START_TIME] [end/END_TIME]`'
+
+where `LESSON_INDEX` refers to a positive index of the lesson in the student's lesson list which is shown when `list` command is used.
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -124,9 +132,21 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
 Examples:
 *  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 3 lesson/1 sub/Mathematics d/Monday start/10:00 end/12:00` Edits the first lesson of the 3rd person to have subject `Mathematics`, day `Monday`, start time `10:00` and end time `12:00`.
 
-![EditSuccess](images/editSuccess.png)
-_John Doe school field edited successfully._
+**Caution:**
+* When editing lesson fields, ensure that the `SUBJECT` matches (case-insensitive) one of the existing subjects in EduDex.
+* When editing a lesson, you **cannot** edit person fields at the same time and vice versa (e.g., `edit 1 lesson/1 sub/Math n/Alice` is invalid). 
+* The edited lesson time must not conflict with other students' existing lessons (overlapping time).
+* `DAY` must be a valid day of the week (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday).
+* All time values must be in 24-hour format (HH:MM) and the end time must be after the start time.
+
+|                       Before                       |                      After                       |
+|:--------------------------------------------------:|:------------------------------------------------:|
+| ![Before Edit School](images/BeforeEditLesson.png) |   ![After Edit School](images/EditSchool.png)    |
+|              _Before editing school_               |              _After editing school_              |
+| ![Before Edit Lesson](images/BeforeEditLesson.png) | ![After Edit Lesson](images/AfterEditLesson.png) |
+|              _Before editing lesson_               |              _After editing lesson_              |
 
 ### Locating persons by Name, Day, or Subject: `find`
 
@@ -164,12 +184,15 @@ Examples:
 * `find sub/math` returns all students taking Science lessons.
 
 ![result for 'find Alex David'](images/findAlexDavidResult.png)
+
 _Find result for names 'Alex' or 'David'_
 
 ![result for 'find sub/math'](images/findSubjectResult.png)
-_Find result for subject 'math'_
+
+_Find result for subject 'english'_
 
 ![result for 'find d/Monday'](images/findDayResult.png)
+
 _Find result for day 'Monday'_
 
 ### Deleting a person : `delete`
@@ -201,7 +224,7 @@ Examples:
 * `addsub MATH`
 
 ![addSubSuccess](images/addSub.png)
-_Subject "mathematics" added successfully._
+_Subject "english" added successfully._
 
 ### Deleting a subject : `delsub`
 
@@ -237,7 +260,7 @@ Examples:
 * `addlesson 3 d/Tuesday sub/physics start/13:00 end/15:00`
 
 ![addLessonSuccess](images/addLesson.png)
-_Lesson "mathematics" added successfully to student John Doe._
+_Lesson "math" added successfully to student John Doe._
 
 ### Deleting a lesson from a student: `dellesson`
 
@@ -266,11 +289,11 @@ If an invalid index is entered:
 * EduDex will display **“Invalid student index.”** if `STUDENT_INDEX` is out of range.
 * EduDex will display **“Invalid lesson index.”** if `LESSON_INDEX` does not exist.
 
-![before 'dellesson 1 2'](images/beforeDeleteLesson.png)
-_Student Alex Yeoh has 3 lessons before deletion._
 
-![result for 'dellesson 1 2'](images/deleteLessonResult.png)
-_Student Alex Yeoh has 2 lessons after deletion of the 3rd lesson._
+|                          Before                          |                            After                             |
+|:--------------------------------------------------------:|:------------------------------------------------------------:|
+| ![before 'dellesson 1 2'](images/beforeDeleteLesson.png) | ![result for 'dellesson 1 2'](images/deleteLessonResult.png) |
+|     _Student Ran Doe has 2 lessons before deletion._     |        _Student Ran Doe has 1 lesson after deletion._        |
 
 
 ### Clearing all persons : `clear`
@@ -462,21 +485,19 @@ Each entry in `subjects` defines a distinct academic subject.
 
 ## Command summary
 
-| Action | Format, Examples |
-| :--- | :--- |
-| **Add Person** | `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]...`<br>e.g., `add n/James Ho p/22224444 sch/Clementi Primary School a/123, Clementi Rd, 1234665 t/strongInMaths` |
-| **Edit Person** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [sch/SCHOOL] [a/ADDRESS] [t/TAG]...`<br>e.g., `edit 2 n/James Lee sch/Jurong Primary School` |
-| **Delete Person** | `delete INDEX`<br>e.g., `delete 3` |
-| **List Persons** | `list` |
-| **Find Persons** | `find KEYWORD [MORE_KEYWORDS]`<br>`find d/DAY`<br>`find sub/SUBJECT`<br>e.g., `find James`, `find d/Monday`, `find sub/Math` |
-| **Add Subject** | `addsub SUBJECT`<br>e.g., `addsub Mathematics` |
-| **Delete Subject**| `delsub INDEX`<br>e.g., `delsub 2` |
-| **Add Lesson** | `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`<br>e.g., `addlesson 1 sub/Mathematics d/Monday start/12:00 end/13:00` |
-| **Delete Lesson** | `dellesson STUDENT_INDEX LESSON_INDEX`<br>e.g., `dellesson 1 2` |
-| **Clear** | `clear` |
-| **Help** | `help` |
-| **Exit** | `exit` |
-
-find James Jake`
-**List**   | `list`
-**Help**   | `help`
+| Action             | Format, Examples                                                                                                                                                         |
+|:-------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Person**     | `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]...`<br>e.g., `add n/James Ho p/22224444 sch/Clementi Primary School a/123, Clementi Rd, 1234665 t/strongInMaths` |
+| **Edit Person**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [sch/SCHOOL] [a/ADDRESS] [t/TAG]...`<br>e.g., `edit 2 n/James Lee sch/Jurong Primary School`                                       |
+| **Delete Person**  | `delete INDEX`<br>e.g., `delete 3`                                                                                                                                       |
+| **List Persons**   | `list`                                                                                                                                                                   |
+| **Find Persons**   | `find KEYWORD [MORE_KEYWORDS]`<br>`find d/DAY`<br>`find sub/SUBJECT`<br>e.g., `find James`, `find d/Monday`, `find sub/Math`                                             |
+| **Add Subject**    | `addsub SUBJECT`<br>e.g., `addsub Mathematics`                                                                                                                           |
+| **Delete Subject** | `delsub INDEX`<br>e.g., `delsub 2`                                                                                                                                       |
+| **Add Lesson**     | `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`<br>e.g., `addlesson 1 sub/Mathematics d/Monday start/12:00 end/13:00`                          |
+| **Delete Lesson**  | `dellesson STUDENT_INDEX LESSON_INDEX`<br>e.g., `dellesson 1 2`                                                                                                          |
+| **Clear**          | `clear`                                                                                                                                                                  |
+| **Help**           | `help`                                                                                                                                                                   |
+| **Exit**           | `exit`                                                                                                                                                                   |
+| **List**           | `list`                                                                                                                                                                   |`                                                                                                                                                                   
+| **Help**           | `help`                                                                                                                                                                   |`                                                                                                                                                                   
