@@ -15,9 +15,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;

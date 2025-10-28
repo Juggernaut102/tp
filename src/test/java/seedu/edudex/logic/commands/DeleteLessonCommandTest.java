@@ -6,7 +6,6 @@ import static seedu.edudex.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.edudex.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.edudex.testutil.TypicalLessons.MATH;
 import static seedu.edudex.testutil.TypicalLessons.SCIENCE;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
