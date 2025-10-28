@@ -134,7 +134,7 @@ public class Person {
     }
 
     /**
-     * Checks if the given lesson conflicts with any of the same student's lessons.
+     * Checks if the given lesson conflicts with any of this student's lessons.
      *
      * @param otherLesson The lesson to check for conflicts.
      * @param index The index of the lesson being edited (to exclude from conflict check).
@@ -146,7 +146,9 @@ public class Person {
                 continue; // skip checking against the lesson being edited
             }
             Lesson existingLesson = lessons.get(i);
-            return existingLesson.conflictsWith(otherLesson);
+            if (existingLesson.conflictsWith(otherLesson)) {
+                return existingLesson; // return the conflicting existing lesson
+            }
         }
         return null; // no conflict found
     }
