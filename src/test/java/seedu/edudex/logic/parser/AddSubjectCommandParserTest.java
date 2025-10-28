@@ -1,6 +1,5 @@
 package seedu.edudex.logic.parser;
 
-import static seedu.edudex.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.edudex.testutil.TypicalSubjects.MATH;
