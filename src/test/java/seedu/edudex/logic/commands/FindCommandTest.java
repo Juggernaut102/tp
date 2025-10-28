@@ -245,10 +245,13 @@ public class FindCommandTest {
         model.addPerson(student);
         expectedModel.addPerson(student);
 
-        FindCommand command = new FindCommand(new SubjectMatchesPredicate("Math"));
-        expectedModel.updateFilteredPersonList(new SubjectMatchesPredicate("Math"));
+        SubjectMatchesPredicate subjectPredicate = new SubjectMatchesPredicate("Math");
+
+        FindCommand command = new FindCommand(subjectPredicate);
+
+        expectedModel.updateFilteredPersonList(subjectPredicate);
         expectedModel.sortFilteredPersonList(new SubjectComparator());
-        expectedModel.sortLessonsForEachPerson();
+        expectedModel.sortLessonsForEachPersonBySubject(subjectPredicate.getSubjectKeyword());
 
         assertCommandSuccess(command, model,
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1), expectedModel);
@@ -267,11 +270,13 @@ public class FindCommandTest {
         model.addPerson(student);
         expectedModel.addPerson(student);
 
-        FindCommand command = new FindCommand(new SubjectMatchesPredicate("Math"));
+        SubjectMatchesPredicate subjectPredicate = new SubjectMatchesPredicate("Math");
 
-        expectedModel.updateFilteredPersonList(new SubjectMatchesPredicate("Math"));
+        FindCommand command = new FindCommand(subjectPredicate);
+
+        expectedModel.updateFilteredPersonList(subjectPredicate);
         expectedModel.sortFilteredPersonList(new SubjectComparator());
-        expectedModel.sortLessonsForEachPerson();
+        expectedModel.sortLessonsForEachPersonBySubject(subjectPredicate.getSubjectKeyword());
 
         assertCommandSuccess(command, model,
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 0), expectedModel);
