@@ -9,7 +9,7 @@ import seedu.edudex.model.Model;
 import seedu.edudex.model.subject.Subject;
 
 /**
- * Adds a subject to the list of allowed subjects in the subject.json file in data folder.
+ * Adds a subject to EduDex.
  */
 public class AddSubjectCommand extends Command {
 
