@@ -39,6 +39,36 @@ public class StringUtil {
     }
 
     /**
+     * Returns true if the {@code sentence} contains any word that starts with the {@code word},
+     * ignoring case. Partial matches at the beginning of a word are allowed.
+     * <br>examples:<pre>
+     *     containsWordStartingWithIgnoreCase("Alex Yeoh", "Al") == true
+     *     containsWordStartingWithIgnoreCase("Alex Yeoh", "A") == true
+     *     containsWordStartingWithIgnoreCase("Alex Yeoh", "Ye") == true
+     *     containsWordStartingWithIgnoreCase("Alex Yeoh", "ex") == false // not at start of a word
+     *     containsWordStartingWithIgnoreCase("Alex Yeoh", "lex") == false // not at start of a word
+     * </pre>
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        String[] wordsInSentence = sentence.split("\\s+");
+        String lowerWord = preppedWord.toLowerCase();
+
+        return Arrays.stream(wordsInSentence)
+                .anyMatch(w -> w.toLowerCase().startsWith(lowerWord));
+    }
+
+
+
+    /**
      * Returns a detailed message of the t, including the stack trace.
      */
     public static String getDetails(Throwable t) {

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.edudex.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.edudex.testutil.Assert.assertThrows;
+import static seedu.edudex.testutil.TypicalPersons.BENSON;
 import static seedu.edudex.testutil.TypicalPersons.CARL;
 import static seedu.edudex.testutil.TypicalPersons.ELLE;
 import static seedu.edudex.testutil.TypicalPersons.FIONA;
@@ -44,6 +45,7 @@ public class FindCommandTest {
     // ----------------------------------------------
     // Equality tests
     // ----------------------------------------------
+
     @Test
     public void equals() {
         NameContainsKeywordsPredicate firstPredicate =
@@ -58,30 +60,30 @@ public class FindCommandTest {
         FindCommand findByDayFirst = new FindCommand(firstDayPredicate);
         FindCommand findByDaySecond = new FindCommand(secondDayPredicate);
 
-        // same object -> returns true
+        // same object -> true
         assertTrue(findByNameFirst.equals(findByNameFirst));
 
-        // same values -> returns true
+        // same values -> true
         FindCommand findByNameCopy = new FindCommand(firstPredicate);
         assertTrue(findByNameFirst.equals(findByNameCopy));
 
-        // different types -> returns false
+        // different types -> false
         assertFalse(findByNameFirst.equals(1));
 
-        // null -> returns false
+        // null -> false
         assertFalse(findByNameFirst.equals(null));
 
-        // different person -> returns false
+        // different person -> false
         assertFalse(findByNameFirst.equals(findByNameSecond));
 
-        // different mode (name vs day) -> returns false
+        // different mode (name vs day) -> false
         assertFalse(findByNameCopy.equals(findByDayFirst));
 
-        // same day predicate -> returns true
+        // same day predicate -> true
         FindCommand findByDayCopy = new FindCommand(firstDayPredicate);
         assertTrue(findByDayFirst.equals(findByDayCopy));
 
-        // different day predicate -> returns false
+        // different day predicate -> false
         assertFalse(findByDayFirst.equals(findByDaySecond));
     }
 
@@ -110,6 +112,44 @@ public class FindCommandTest {
     }
 
     @Test
+    public void executeByName_partialMatchKeyword_singlePersonFound() {
+        // Ensures that names are matched by substring (separated by whitespace)
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Car");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(CARL), model.getFilteredPersonList());
+    }
+
+
+    @Test
+    public void executeByName_keywordMatchesSurname_singlePersonFound() {
+        // e.g., "Kurz" should match CARL (surname start)
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Kurz");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(CARL), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void executeByName_keywordMatchesSurnamePrefix_multiplePersonsFound() {
+        // "Ku" should match both "Kurz" (CARL) and "Kunz" (FIONA)
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Ku");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+
+        List<Person> filtered = model.getFilteredPersonList();
+        assertEquals(2, filtered.size());
+        assertTrue(filtered.contains(CARL));
+        assertTrue(filtered.contains(FIONA));
+    }
+
+    @Test
     public void executeByName_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = prepareNamePredicate("Kurz Elle Kunz");
@@ -129,41 +169,43 @@ public class FindCommandTest {
         assertEquals(Collections.singletonList(CARL), model.getFilteredPersonList());
     }
 
+
     @Test
-    public void executeByName_partialMatchKeyword_noPersonFound() {
-        // Ensures that names are matched by an entire word (separated by whitespace)
+    public void executeByName_specialCharacters_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Car");
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("@@@ ???");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
+
+
     // ----------------------------------------------
     // Day-Based Find tests
     // ----------------------------------------------
 
-    //    @Test
-    //    public void execute_validDay_personsFound() {
-    //        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-    //        DayMatchesPredicate predicate = new DayMatchesPredicate(new Day("Monday"));
-    //        FindCommand command = new FindCommand(predicate);
-    //        expectedModel.updateFilteredPersonList(predicate);
-    //
-    //        // BENSON has day = "Monday" in TypicalPersons
-    //        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    //        assertEquals(Collections.singletonList(BENSON), model.getFilteredPersonList());
-    //    }
+    @Test
+    public void execute_validDay_personsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        DayMatchesPredicate predicate = new DayMatchesPredicate(new Day("Monday"));
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
 
-    //     @Test
-    //     public void executeByDay_dayNotFound_noPersonsFound() {
-    //        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-    //        DayMatchesPredicate predicate = prepareDayPredicate("Sunday");
-    //        FindCommand command = new FindCommand(predicate);
-    //        expectedModel.updateFilteredPersonList(predicate);
-    //        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    //        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
-    //     }
+        // BENSON has lesson with DEFAULT_DAY as per LessonBuilder()'s default value
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(BENSON), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void executeByDay_dayNotFound_noPersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        DayMatchesPredicate predicate = prepareDayPredicate("Sunday");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
 
     @Test
     public void executeByDay_invalidDayFormat_throwsIllegalArgumentException() {
