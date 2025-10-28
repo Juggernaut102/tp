@@ -58,7 +58,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "OR\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_LESSON + "LESSON_INDEX "
+            + PREFIX_LESSON + "LESSON_INDEX (must be a positive integer) "
             + "[" + PREFIX_SUBJECT + "SUBJECT] "
             + "[" + PREFIX_DAY + "DAY] "
             + "[" + PREFIX_START + "START_TIME] "
@@ -66,7 +66,7 @@ public class EditCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_SCHOOL + "NUS Primary School \n"
-            + "Example (lesson edit): " + COMMAND_WORD + " 2 "
+            + "Example: " + COMMAND_WORD + " 2 "
             + PREFIX_LESSON + "1 "
             + PREFIX_DAY + "Monday";
 
