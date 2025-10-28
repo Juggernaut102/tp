@@ -209,6 +209,11 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseSubject_whitespace_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseSubjectName(WHITESPACE));
+    }
+
+    @Test
     public void parseSubject_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseSubjectName(INVALID_SUBJECT));
     }

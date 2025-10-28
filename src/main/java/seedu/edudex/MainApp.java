@@ -87,6 +87,7 @@ public class MainApp extends Application {
                 logger.info("Creating a new data file " + storage.getEduDexFilePath()
                         + " populated with a sample EduDex.");
                 isFirstLaunch = true;
+                logger.info("This is the first launch of the app.");
             }
             initialData = eduDexOptional.orElseGet(SampleDataUtil::getSampleEduDex);
         } catch (DataLoadingException e) {

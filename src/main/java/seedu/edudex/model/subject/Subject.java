@@ -28,33 +28,45 @@ public class Subject {
      */
     public Subject(String name) {
         requireNonNull(name);
-        // check validity from Subject.json file for allowed subjects
         checkArgument(isValidSubjectName(name), MESSAGE_CONSTRAINTS);
         this.subjectName = name.toLowerCase();
     }
 
     /**
-     * Returns true if a given string is a valid subject from the list of tutor subjects.
+     * Returns true if a given string is alphanumeric.
      */
     public static boolean isValidSubjectName(String name) {
-        // to clarify: this method is intended just to ensure the string is valid
-        // NOT to check if the input by the user is valid (i.e. entered a subject that matches
-        // a subject in the subject list)
-
-        // Such checks should be done when executing the command itself
-        // (in AddSubjectCommand or other equivalent command)
         requireNonNull(name);
-        return name.matches(VALIDATION_REGEX); // use this if matching alphanumeric (similar to name validation)
-        // return true;
+        return name.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Capitalises each word in the given string.
+     */
+    public static String capitalizeWords(String str) {
+        requireNonNull(str);
+
+        String[] words = str.trim().toLowerCase().split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalized.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1))
+                        .append(" ");
+            }
+        }
+
+        return capitalized.toString().trim();
     }
 
     @Override
     public String toString() {
-        return subjectName.toLowerCase();
+        return capitalizeWords(subjectName);
     }
 
     /**
-     * Returns the string representhing this Subject.
+     * Returns the string representing this Subject.
      */
     public String getSubjectAsString() {
         return subjectName;
