@@ -135,6 +135,7 @@ Format:
   e.g. `find hans` will match `Hans`.
 * The order of keywords does not matter.  
   e.g. `find Hans Bo` will match `Bo Hans`.
+* For name search, persons matching at least one keyword will be returned (i.e. OR search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * When searching by day (`d/`), only valid days of the week are accepted.  
   e.g. `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`.
 * When searching by subject (`sub/`), only subjects matching lesson names will be shown.
