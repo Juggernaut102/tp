@@ -266,10 +266,6 @@ The command is structured as follows:
 * `FindCommandParser` – Parses user input and constructs the correct predicate.
 * `NameContainsKeywordsPredicate`, `DayMatchesPredicate`, and `SubjectMatchesPredicate` – Determine whether a `Person` matches the given search criteria.
 
-Given below is an example usage scenario and how the `FindCommand` behaves.
-
-<puml src="diagrams/FindCommandSequenceDiagram.puml" width="600" />
-
 **Example usage:**
 
 1. The user executes `find d/Monday` to locate all students with lessons on Monday.
