@@ -58,5 +58,8 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         subject.setText(person.getLessonsAsString());
+        System.out.println("Rendering PersonCard for: " + person.getName());
+        person.getLessons().forEach(lesson ->
+                System.out.println("  Lesson: " + lesson.getSubject().getSubjectAsString()));
     }
 }

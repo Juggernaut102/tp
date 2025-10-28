@@ -4,11 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.edudex.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -29,6 +32,8 @@ public class ModelManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final SortedList<Person> sortedPersons;
     private final FilteredList<Subject> subjects;
+    private final ObservableList<Person> displayPersons = FXCollections.observableArrayList();
+    private boolean isSubjectFilteredView = false;
 
     /**
      * Initializes a ModelManager with the given eduDex and userPrefs.
@@ -182,19 +187,22 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        return sortedPersons;
+        System.out.println("Returning: " + (isSubjectFilteredView ? "displayPersons" : "sortedPersons"));
+        return isSubjectFilteredView ? displayPersons : sortedPersons;
     }
 
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        isSubjectFilteredView = false;
     }
 
     @Override
     public void sortFilteredPersonList(Comparator<Person> comparator) {
         requireNonNull(comparator);
         sortedPersons.setComparator(comparator);
+        isSubjectFilteredView = false;
     }
 
     @Override
@@ -231,26 +239,36 @@ public class ModelManager implements Model {
      *
      * @return
      */
+
     @Override
-    public List<Person> sortLessonsForEachPersonBySubject(String subjectKeyword) {
+    public void sortLessonsForEachPersonBySubject(String subjectKeyword) {
         requireNonNull(subjectKeyword);
 
-        return filteredPersons.stream()
-                .map(person -> {
-                    Person tempPerson = person.getCopyOfPerson(); // shallow copy
-                    tempPerson.setLessons(person.getLessons().stream()
-                            .filter(lesson -> lesson.getSubject()
-                                    .getSubjectAsString()
-                                    .equalsIgnoreCase(subjectKeyword))
+        isSubjectFilteredView = true;
+        Subject targetSubject = new Subject(subjectKeyword);
+
+        List<Person> filteredCopies = filteredPersons.stream()
+                .map(original -> {
+                    Person copy = original.getCopyOfPerson();
+                    List<Lesson> filteredSortedLessons = original.getLessons().stream()
+                            .filter(lesson -> lesson.getSubject().isSameSubject(targetSubject))
                             .sorted(Comparator
                                     .comparing((Lesson l) -> l.getDay().getNumericValue())
                                     .thenComparing(l -> l.getStartTime().getTime()))
-                            .toList());
-                    return tempPerson;
+                            .collect(Collectors.toCollection(ArrayList::new));
+                    copy.setLessons(filteredSortedLessons);
+                    System.out.println("Filtered copy for: " + copy.getName());
+                    copy.getLessons().forEach(lesson ->
+                            System.out.println("  Lesson: " + lesson.getSubject().getSubjectAsString()));
+                    return copy;
                 })
+                .filter(p -> !p.getLessons().isEmpty()) // ✅ Only include persons with matching lessons
                 .toList();
-    }
 
+        displayPersons.clear();
+        displayPersons.addAll(filteredCopies);
+        System.out.println("Setting displayPersons with " + filteredCopies.size() + " entries");
+    }
 
     @Override
     public boolean equals(Object other) {
