@@ -1,6 +1,7 @@
 package seedu.edudex.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.edudex.logic.Messages.MESSAGE_EMPTY_SUBJECT;
 import static seedu.edudex.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -75,7 +76,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_emptySubjectPrefix_throwsParseException() {
         assertParseFailure(parser, " sub/",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                MESSAGE_EMPTY_SUBJECT);
     }
 
     @Test

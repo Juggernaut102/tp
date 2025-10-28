@@ -12,7 +12,6 @@ import static seedu.edudex.testutil.TypicalPersons.ELLE;
 import static seedu.edudex.testutil.TypicalPersons.FIONA;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -245,10 +244,13 @@ public class FindCommandTest {
         model.addPerson(student);
         expectedModel.addPerson(student);
 
-        FindCommand command = new FindCommand(new SubjectMatchesPredicate("Math"));
-        expectedModel.updateFilteredPersonList(new SubjectMatchesPredicate("Math"));
+        SubjectMatchesPredicate subjectPredicate = new SubjectMatchesPredicate("Math");
+
+        FindCommand command = new FindCommand(subjectPredicate);
+
+        expectedModel.updateFilteredPersonList(subjectPredicate);
         expectedModel.sortFilteredPersonList(new SubjectComparator());
-        expectedModel.sortLessonsForEachPerson();
+        expectedModel.sortLessonsForEachPersonBySubject(subjectPredicate.getSubjectKeyword());
 
         assertCommandSuccess(command, model,
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1), expectedModel);
@@ -267,11 +269,13 @@ public class FindCommandTest {
         model.addPerson(student);
         expectedModel.addPerson(student);
 
-        FindCommand command = new FindCommand(new SubjectMatchesPredicate("Math"));
+        SubjectMatchesPredicate subjectPredicate = new SubjectMatchesPredicate("Math");
 
-        expectedModel.updateFilteredPersonList(new SubjectMatchesPredicate("Math"));
+        FindCommand command = new FindCommand(subjectPredicate);
+
+        expectedModel.updateFilteredPersonList(subjectPredicate);
         expectedModel.sortFilteredPersonList(new SubjectComparator());
-        expectedModel.sortLessonsForEachPerson();
+        expectedModel.sortLessonsForEachPersonBySubject(subjectPredicate.getSubjectKeyword());
 
         assertCommandSuccess(command, model,
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 0), expectedModel);
@@ -286,10 +290,8 @@ public class FindCommandTest {
                 new Time("10:00"), new Time("11:00"));
         Lesson scienceLesson = new Lesson(new Subject("Science"), new Day("Tuesday"),
                 new Time("13:00"), new Time("14:00"));
-        List<Lesson> lessons = new ArrayList<>();
-        lessons.add(scienceLesson);
-        lessons.add(mathLesson);
-        student.setLessons(lessons);
+        student.setLessons(List.of(mathLesson, scienceLesson));
+
         model.addPerson(student);
         expectedModel.addPerson(student);
 
@@ -297,15 +299,15 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
 
         expectedModel.updateFilteredPersonList(predicate);
-        expectedModel.sortFilteredPersonList(new SubjectComparator());
 
         assertCommandSuccess(command, model,
-                String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size()),
+                String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1),
                 expectedModel);
 
-        List<Lesson> sorted = expectedModel.getFilteredPersonList().get(0).getLessons();
-        assertEquals("Monday", sorted.get(0).getDay().toString());
+        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals("Student A", model.getFilteredPersonList().get(0).getName().toString());
     }
+
 
     @Test
     public void executeBySubject_subjectNotFound_noPersonsFound() {

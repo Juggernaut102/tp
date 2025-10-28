@@ -309,6 +309,11 @@ public class AddLessonCommandTest {
         public Person findPersonWithLessonConflict(Lesson editedLesson, Person personToEdit) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public List<Person> sortLessonsForEachPersonBySubject(String subjectKeyword) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

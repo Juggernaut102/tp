@@ -5,6 +5,7 @@ import static seedu.edudex.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -212,6 +213,7 @@ public class ModelManager implements Model {
      * <p>This operation mutates each {@code Person}'s internal lesson list by replacing
      * it with a sorted copy, but does not alter the overall list of persons.</p>
      */
+    @Override
     public void sortLessonsForEachPerson() {
         filteredPersons.forEach(person -> {
             person.setLessons(person.getLessons().stream()
@@ -221,6 +223,35 @@ public class ModelManager implements Model {
                     .toList());
         });
     }
+
+
+    /**
+     * Filters and sorts lessons for each person in the filtered list,
+     * keeping only lessons that match the specified subject (case-insensitive).
+     *
+     * @return
+     */
+    @Override
+    public List<Person> sortLessonsForEachPersonBySubject(String subjectKeyword) {
+        requireNonNull(subjectKeyword);
+
+        return filteredPersons.stream()
+                .map(person -> {
+                    Person tempPerson = person.getCopyOfPerson(); // shallow copy
+                    tempPerson.setLessons(person.getLessons().stream()
+                            .filter(lesson -> lesson.getSubject()
+                                    .getSubjectAsString()
+                                    .equalsIgnoreCase(subjectKeyword))
+                            .sorted(Comparator
+                                    .comparing((Lesson l) -> l.getDay().getNumericValue())
+                                    .thenComparing(l -> l.getStartTime().getTime()))
+                            .toList());
+                    return tempPerson;
+                })
+                .toList();
+    }
+
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
