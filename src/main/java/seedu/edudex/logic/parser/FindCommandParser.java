@@ -62,7 +62,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new SubjectMatchesPredicate(subjectName.trim()));
         }
 
-        // If d/ or s/ prefix is not provided, the default is to treat the arguments as name keywords
+        // If d/ or sub/ prefix is not provided, the default is to treat the arguments as name keywords
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));

@@ -241,6 +241,9 @@ public class FindCommandTest {
                 new Time("12:00"), new Time("13:00"));
         student.setLessons(List.of(math, science));
 
+        model.addSubject(new Subject("Math"));
+        expectedModel.addSubject(new Subject("Math"));
+
         model.addPerson(student);
         expectedModel.addPerson(student);
 
@@ -266,6 +269,10 @@ public class FindCommandTest {
         Lesson sci = new Lesson(new Subject("Science"), new Day("Tuesday"),
                 new Time("12:00"), new Time("13:00"));
         student.setLessons(List.of(sci));
+
+        model.addSubject(new Subject("Math"));
+        expectedModel.addSubject(new Subject("Math"));
+
         model.addPerson(student);
         expectedModel.addPerson(student);
 
@@ -292,6 +299,9 @@ public class FindCommandTest {
                 new Time("13:00"), new Time("14:00"));
         student.setLessons(List.of(mathLesson, scienceLesson));
 
+        model.addSubject(new Subject("Math"));
+        expectedModel.addSubject(new Subject("Math"));
+
         model.addPerson(student);
         expectedModel.addPerson(student);
 
@@ -313,6 +323,9 @@ public class FindCommandTest {
     public void executeBySubject_subjectNotFound_noPersonsFound() {
         SubjectMatchesPredicate predicate = new SubjectMatchesPredicate("Art");
         FindCommand command = new FindCommand(predicate);
+
+        model.addSubject(new Subject("Art"));
+        expectedModel.addSubject(new Subject("Art"));
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model,
                 String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0), expectedModel);

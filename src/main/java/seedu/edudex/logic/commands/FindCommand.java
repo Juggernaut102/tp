@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.logic.Messages;
+import seedu.edudex.logic.commands.exceptions.CommandException;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.person.DayMatchesPredicate;
 import seedu.edudex.model.person.NameContainsKeywordsPredicate;
@@ -78,7 +79,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
         switch (searchType) {
@@ -86,6 +87,10 @@ public class FindCommand extends Command {
             model.updateFilteredPersonList(dayPredicate);
             break;
         case SUBJECT:
+            String subjectName = subjectPredicate.getSubjectKeyword();
+            if (!model.hasSubject(new seedu.edudex.model.subject.Subject(subjectName))) {
+                throw new CommandException("This subject is not in the subject list.");
+            }
             model.updateFilteredPersonList(subjectPredicate);
             model.sortFilteredPersonList(new SubjectComparator());
             model.sortLessonsForEachPersonBySubject(subjectPredicate.getSubjectKeyword());
