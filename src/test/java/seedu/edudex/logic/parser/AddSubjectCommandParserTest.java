@@ -8,6 +8,7 @@ import static seedu.edudex.testutil.TypicalSubjects.MATH;
 import org.junit.jupiter.api.Test;
 
 import seedu.edudex.logic.commands.AddSubjectCommand;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -27,6 +28,6 @@ public class AddSubjectCommandParserTest {
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSubjectCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " ", String.format(Subject.MESSAGE_CONSTRAINTS));
     }
 }
