@@ -224,6 +224,7 @@ Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME
   { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }.
 * START_TIME and END_TIME must be in the 24-hour format HH:MM, and must be a valid time.
 * START_TIME must be earlier than END_TIME.
+* Lessons that extend into the next day must be added as 2 separate lessons. e.g. A lesson that stretches from Monday 22:00 to Tuesday 02:00 should be recorded as a lesson from Monday 22:00 to 23:59 and a lesson from Tuesday 00:00 to 02:00.
 
 Examples:
 * `addlesson 1 sub/mathematics d/Monday start/12:00 end/13:00`
