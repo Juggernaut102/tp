@@ -24,6 +24,8 @@ public class Messages {
             "The lesson index provided is invalid.";
     public static final String MESSAGE_NO_LESSONS = "This student has no lessons. "
             + "Add lessons using the addlesson command.";
+    public static final String MESSAGE_EMPTY_SUBJECT =
+            "Subject cannot be empty. Please enter one of the subjects listed (e.g., find sub/Math).";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

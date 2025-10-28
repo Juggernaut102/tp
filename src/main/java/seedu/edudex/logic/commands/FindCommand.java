@@ -90,7 +90,7 @@ public class FindCommand extends Command {
         case SUBJECT:
             model.updateFilteredPersonList(subjectPredicate);
             model.sortFilteredPersonList(new SubjectComparator());
-            model.sortLessonsForEachPerson();
+            model.sortLessonsForEachPersonBySubject(subjectPredicate.getSubjectKeyword());
             break;
         case NAME:
         default:

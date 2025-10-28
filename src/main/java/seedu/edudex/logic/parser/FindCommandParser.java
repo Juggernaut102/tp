@@ -1,5 +1,6 @@
 package seedu.edudex.logic.parser;
 
+import static seedu.edudex.logic.Messages.MESSAGE_EMPTY_SUBJECT;
 import static seedu.edudex.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
@@ -35,20 +36,30 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         // find by day (e.g. "find d/Monday")
         if (argMultimap.getValue(PREFIX_DAY).isPresent()) {
-            String dayValue = argMultimap.getValue(PREFIX_DAY).get().trim();
-            if (dayValue.isEmpty() || !Day.isValidDay(dayValue)) {
-                throw new ParseException(String.format(Day.MESSAGE_CONSTRAINTS));
+            String dayValue = argMultimap.getValue(PREFIX_DAY).get();
+
+            // user typed "find d/" (empty)
+            if (dayValue.isBlank()) {
+                throw new ParseException(Day.MESSAGE_CONSTRAINTS);
             }
-            return new FindCommand(new DayMatchesPredicate(new Day(dayValue)));
+
+            // user typed "find d/ " or invalid spelling
+            if (!Day.isValidDay(dayValue.trim())) {
+                throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+            }
+
+            return new FindCommand(new DayMatchesPredicate(new Day(dayValue.trim())));
         }
 
         // find by subject (e.g. "find s/Math")
         if (argMultimap.getValue(PREFIX_SUBJECT).isPresent()) {
-            String subjectName = argMultimap.getValue(PREFIX_SUBJECT).get().trim();
-            if (subjectName.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            String subjectName = argMultimap.getValue(PREFIX_SUBJECT).get();
+            if (subjectName.isBlank()) {
+                throw new ParseException(MESSAGE_EMPTY_SUBJECT);
             }
-            return new FindCommand(new SubjectMatchesPredicate(subjectName));
+
+            // if they type "find s/ " — allow it; it’ll just return nobody
+            return new FindCommand(new SubjectMatchesPredicate(subjectName.trim()));
         }
 
         // If d/ or s/ prefix is not provided, the default is to treat the arguments as name keywords
