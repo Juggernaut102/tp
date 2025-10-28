@@ -26,7 +26,7 @@ public class DeleteLessonCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 2";
 
     public static final String MESSAGE_DELETE_LESSON_SUCCESS =
-            "Deleted lesson %1$s from student %2$s.";
+            "Deleted lesson %1$s from student %2$s";
 
     private final Index studentIndex;
     private final Index lessonIndex;
