@@ -257,12 +257,9 @@ public class ModelManager implements Model {
                                     .thenComparing(l -> l.getStartTime().getTime()))
                             .collect(Collectors.toCollection(ArrayList::new));
                     copy.setLessons(filteredSortedLessons);
-                    System.out.println("Filtered copy for: " + copy.getName());
-                    copy.getLessons().forEach(lesson ->
-                            System.out.println("  Lesson: " + lesson.getSubject().getSubjectAsString()));
                     return copy;
                 })
-                .filter(p -> !p.getLessons().isEmpty()) // ✅ Only include persons with matching lessons
+                .filter(p -> !p.getLessons().isEmpty())
                 .toList();
 
         displayPersons.clear();
