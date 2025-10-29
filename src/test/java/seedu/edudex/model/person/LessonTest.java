@@ -99,7 +99,7 @@ public class LessonTest {
     @Test
     public void toString_correctFormat() {
         Lesson lesson = new Lesson(subjectMath, dayMonday, time0900, time1000);
-        String expectedString = "[Subject: math, Day: Monday, startTime: 09:00, endTime: 10:00]";
+        String expectedString = "[Subject: Math, Day: Monday, startTime: 09:00, endTime: 10:00]";
         assertEquals(expectedString, lesson.toString());
     }
 

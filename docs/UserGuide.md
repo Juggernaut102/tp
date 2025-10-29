@@ -33,7 +33,7 @@ EduDex is a **desktop app for managing student's contacts, optimized for use via
 
    * `add n/John Doe p/98765432 sch/Raffles Primary School a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
-   * `addsub english` : Adds a subject named `english` to the subject list.
+   * `addsub english` : Adds a subject named `English` to the subject list.
    
    * `addlesson 1 sub/english d/monday start/10:00 end/11:00` : Adds a lesson to the first contact, with a subject of english, day of Monday, and timing from 10:00-11:00
    
@@ -153,15 +153,10 @@ Format:
 **Tip:** You can search by name, day, or subject independently.  
 e.g.
 - `find alice` — finds students with names containing "alice".
+- `find alex david` — finds both `Alex Yeoh` and `David Li`.
 - `find d/Monday` — finds all students with lessons on Monday.
 - `find sub/Math` — finds all students taking Math lessons.
   </box>
-
-Examples:
-* `find John` returns all persons with "John" in their names.
-* `find alex david` returns both `Alex Yeoh` and `David Li`.
-* `find d/Friday` returns all students with Friday lessons.
-* `find sub/math` returns all students taking Science lessons.
 
 ![result for 'find Alex David'](images/findAlexDavidResult.png)
 _Find result for names 'Alex' or 'David'_
@@ -194,7 +189,7 @@ Format: `addsub SUBJECT`
 
 
 * A subject can be any alphanumerical string.
-* A subject is case-insensitive, stored in lower case. e.g `Math` will be stored as `math`
+* A subject is **case-insensitive**. e.g `Math` will be a duplicate of `math`.
 
 Examples:
 * `addsub English`
