@@ -53,6 +53,7 @@ public class Messages {
                 .append("; Address: ")
                 .append(person.getAddress())
                 .append("; Lessons: ")
+                .append("\n")
                 .append(person.getLessonsAsString());
 
         Set<Tag> tags = person.getTags();
