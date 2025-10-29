@@ -187,7 +187,6 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        System.out.println("Returning: " + (isSubjectFilteredView ? "displayPersons" : "sortedPersons"));
         return isSubjectFilteredView ? displayPersons : sortedPersons;
     }
 
@@ -264,7 +263,6 @@ public class ModelManager implements Model {
 
         displayPersons.clear();
         displayPersons.addAll(filteredCopies);
-        System.out.println("Setting displayPersons with " + filteredCopies.size() + " entries");
     }
 
     @Override
