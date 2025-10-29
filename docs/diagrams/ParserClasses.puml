@@ -21,10 +21,10 @@ Class Prefix
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> EduDexParser
 
-EduDexParser .down.> XYZCommandParser: <<create>>
+EduDexParser .down.> XYZCommandParser: creates >
 
-XYZCommandParser ..> XYZCommand : <<create>>
-EduDexParser ..> Command : <<use>>
+XYZCommandParser ..> XYZCommand : creates >
+EduDexParser ..> Command : uses >
 XYZCommandParser .up.|> Parser
 XYZCommandParser ..> ArgumentMultimap
 XYZCommandParser ..> ArgumentTokenizer
