@@ -6,7 +6,6 @@ import static seedu.edudex.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.edudex.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.edudex.testutil.TypicalLessons.MATH;
 import static seedu.edudex.testutil.TypicalLessons.SCIENCE;
 import static seedu.edudex.testutil.TypicalPersons.getTypicalEduDex;
 
@@ -48,7 +47,7 @@ public class DeleteLessonCommandTest {
         DeleteLessonCommand deleteLessonCommand = new DeleteLessonCommand(INDEX_FIRST_PERSON, Index.fromOneBased(1));
 
         String expectedMessage = String.format(DeleteLessonCommand.MESSAGE_DELETE_LESSON_SUCCESS,
-                MATH.getSubject(), student.getName());
+                lessons.get(0), student.getName());
 
         Model expectedModel = new ModelManager(new EduDex(model.getEduDex()), new UserPrefs());
         Person expectedStudent = new PersonBuilder(student).build();

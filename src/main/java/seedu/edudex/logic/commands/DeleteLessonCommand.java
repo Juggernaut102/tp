@@ -79,7 +79,7 @@ public class DeleteLessonCommand extends Command {
 
         return new CommandResult(String.format(
                 MESSAGE_DELETE_LESSON_SUCCESS,
-                lessonToDelete.getSubject(),
+                lessonToDelete,
                 studentToEdit.getName()));
     }
 
