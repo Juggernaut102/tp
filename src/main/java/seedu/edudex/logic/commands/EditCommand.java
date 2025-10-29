@@ -1,7 +1,6 @@
 package seedu.edudex.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.edudex.logic.commands.AddLessonCommand.MESSAGE_SUBJECT_NOT_TAUGHT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
@@ -59,7 +58,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "OR\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_LESSON + "LESSON_INDEX "
+            + PREFIX_LESSON + "LESSON_INDEX (must be a positive integer) "
             + "[" + PREFIX_SUBJECT + "SUBJECT] "
             + "[" + PREFIX_DAY + "DAY] "
             + "[" + PREFIX_START + "START_TIME] "
@@ -67,7 +66,7 @@ public class EditCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_SCHOOL + "NUS Primary School \n"
-            + "Example (lesson edit): " + COMMAND_WORD + " 2 "
+            + "Example: " + COMMAND_WORD + " 2 "
             + PREFIX_LESSON + "1 "
             + PREFIX_DAY + "Monday";
 
@@ -75,6 +74,9 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in EduDex.";
+    private static final String MESSAGE_EDIT_SUBJECT_NOT_TAUGHT = "You tried to edit a lesson with "
+            + "a subject not taught.\nEither use \"addsub SUBJECT\" to add a subject first."
+            + "\nOr use \"dellesson STUDENT_INDEX LESSON_INDEX\" to delete lesson of old subject";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -149,7 +151,7 @@ public class EditCommand extends Command {
         Time updatedEndTime = editLessonDescriptor.getEndTime().orElse(lessonToEdit.getEndTime());
 
         if (!model.hasSubject(updatedSubject)) {
-            throw new CommandException(MESSAGE_SUBJECT_NOT_TAUGHT);
+            throw new CommandException(MESSAGE_EDIT_SUBJECT_NOT_TAUGHT);
         }
 
         if (!Lesson.isValidStartEndTime(updatedStartTime, updatedEndTime)) {
