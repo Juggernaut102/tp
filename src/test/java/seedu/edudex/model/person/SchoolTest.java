@@ -30,7 +30,7 @@ public class SchoolTest {
 
         // valid schooles
         assertTrue(School.isValidSchool("NUS Primary School"));
-        assertTrue(School.isValidSchool("-")); // one character
+        assertTrue(School.isValidSchool("A")); // one character
         assertTrue(School.isValidSchool("Schoooooooooooooooooooooooooooooooooooooooooool")); // long school
     }
 
