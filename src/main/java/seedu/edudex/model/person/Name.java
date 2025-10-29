@@ -48,7 +48,7 @@ public class Name {
      * Returns true iff the two Name objects have matching string content (case-insensitive).
      */
     public boolean matchesCaseInsensitive(Name otherName) {
-        return this.fullName.equalsIgnoreCase(otherName.fullName) ;
+        return this.fullName.equalsIgnoreCase(otherName.fullName);
     }
 
     @Override
