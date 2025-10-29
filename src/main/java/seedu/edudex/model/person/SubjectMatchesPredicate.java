@@ -31,6 +31,11 @@ public class SubjectMatchesPredicate implements Predicate<Person> {
                 && subjectName.equalsIgnoreCase(((SubjectMatchesPredicate) other).subjectName));
     }
 
+    public String getSubjectKeyword() {
+        return subjectName;
+    }
+
+
     @Override
     public String toString() {
         return String.format("SubjectMatchesPredicate{subject=%s}", subjectName);

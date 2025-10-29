@@ -16,8 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import seedu.edudex.commons.core.index.Index;
 import seedu.edudex.logic.commands.EditCommand;
@@ -29,12 +27,6 @@ import seedu.edudex.model.tag.Tag;
  * Parses input arguments and creates a new EditCommand object
  */
 public class EditCommandParser implements Parser<EditCommand> {
-
-    public static final String MESSAGE_CANNOT_EDIT_BOTH =
-            "Cannot edit both person and lesson fields in the same command.";
-    private static final Pattern EDIT_LESSON_FORMAT =
-            Pattern.compile("^(\\d+)\\s+lesson/(\\d+)(?:\\s+(.*))?$");
-
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
@@ -52,53 +44,12 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         Index personIndex;
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        EditLessonDescriptor editLessonDescriptor = null;
-
-        String preamble = argMultimap.getPreamble();
-        Matcher lessonMatcher = EDIT_LESSON_FORMAT.matcher(preamble);
-
-        boolean isLessonEdit = lessonMatcher.matches();
 
         // check if format is correct
         try {
-            if (isLessonEdit) {
-                // Lesson edit format: personIndex lesson/lessonIndex
-                personIndex = ParserUtil.parseIndex(lessonMatcher.group(1));
-                Index lessonIndex = ParserUtil.parseIndex(lessonMatcher.group(2));
-                editPersonDescriptor.setLessonIndex(lessonIndex);
-            } else {
-                // Regular edit format
-                personIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
-            }
+            personIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
-        }
-
-        // Check if person fields are present
-        boolean hasPersonFields = argMultimap.getValue(PREFIX_NAME).isPresent()
-                || argMultimap.getValue(PREFIX_PHONE).isPresent()
-                || argMultimap.getValue(PREFIX_SCHOOL).isPresent()
-                || argMultimap.getValue(PREFIX_ADDRESS).isPresent()
-                || argMultimap.getValue(PREFIX_TAG).isPresent();
-
-        // Check if lesson fields are present
-        boolean hasLessonFields = argMultimap.getValue(PREFIX_SUBJECT).isPresent()
-                || argMultimap.getValue(PREFIX_DAY).isPresent()
-                || argMultimap.getValue(PREFIX_START).isPresent()
-                || argMultimap.getValue(PREFIX_END).isPresent();
-
-        // Cannot edit both person and lesson fields simultaneously
-        if (hasPersonFields && hasLessonFields) {
-            throw new ParseException(MESSAGE_CANNOT_EDIT_BOTH);
-        }
-
-        // parse the lesson fields if present
-        if (isLessonEdit) {
-            // Ensure no person fields are being edited at the same time
-            editLessonDescriptor = new EditLessonParser().parse(argMultimap);
-            editPersonDescriptor.setEditLessonDescriptor(editLessonDescriptor);
-        } else {
-            editLessonDescriptor = new EditLessonDescriptor();
         }
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
@@ -116,7 +67,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
-        if (!editPersonDescriptor.isAnyFieldEdited() && !editLessonDescriptor.isAnyFieldEdited()) {
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 

@@ -3,13 +3,13 @@
   "persons": [ {
     "name": "Alice Pauline",
     "phone": "94351253",
-    "school": "alice@example.com",
+    "school": "Marsiling Primary School",
     "address": "123, Jurong West Ave 6, #08-111",
     "tags": [ "friends" ]
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
-    "school": "pauline@example.com",
+    "school": "Outram Primary School",
     "address": "4th street"
   } ]
 }

@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import seedu.edudex.logic.parser.Prefix;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.subject.Subject;
+import seedu.edudex.model.tag.Tag;
 
 /**
  * Container for user visible messages.
@@ -24,6 +25,8 @@ public class Messages {
             "The lesson index provided is invalid.";
     public static final String MESSAGE_NO_LESSONS = "This student has no lessons. "
             + "Add lessons using the addlesson command.";
+    public static final String MESSAGE_EMPTY_SUBJECT =
+            "Subject cannot be empty. Please enter one of the subjects listed (e.g., find sub/Math).";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -51,9 +54,14 @@ public class Messages {
                 .append(person.getAddress())
                 .append("; Lessons: ")
                 .append("\n")
-                .append(person.getLessonsAsString())
-                .append(";\nTags: ");
-        person.getTags().forEach(builder::append);
+                .append(person.getLessonsAsString());
+
+        Set<Tag> tags = person.getTags();
+        if (!tags.isEmpty()) {
+            builder.append("; Tags: ");
+            tags.forEach(builder::append);
+        }
+
         return builder.toString();
     }
 
