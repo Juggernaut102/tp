@@ -6,7 +6,7 @@
 
 # EduDex User Guide
 
-EduDex is a **desktop app for managing student's contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EduDex can get your contact management tasks done faster than traditional GUI apps.
+EduDex is a **desktop app for managing student's contacts, optimized for use via a  Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). EduDex is targeted towards freelance tutors who find it difficult to manage a large number of student contacts. If you can type fast, EduDex can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -86,7 +86,7 @@ Adds a person to EduDex.
 
 Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 
-* Names are case-insensitive, e.g. `john doe` is the same person as `JOHN DOE`.
+* Names are **case-insensitive**, e.g. `john doe` is the same person as `JOHN DOE`.
 
 
 <box type="tip" seamless>
@@ -223,7 +223,7 @@ Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME
 * SUBJECT **must match** (case-insensitive) at least one subject in EduDex.
 * DAY must match (case-insensitive) one of the following strings:
   { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }.
-* START_TIME and END_TIME must be in the 24-hour format HH:MM, and must be a valid time.
+* START_TIME and END_TIME must be in the 24-hour format **HH:MM**, and must be a valid time.
 * START_TIME must be earlier than END_TIME.
 * Lessons that extend into the next day must be added as 2 separate lessons.  e.g. A lesson that stretches from Monday 22:00 to Tuesday 02:00 should be recorded as a lesson from Monday 22:00 to 23:59 and a lesson from Tuesday 00:00 to 02:00.
 
