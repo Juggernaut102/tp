@@ -14,6 +14,7 @@ import seedu.edudex.model.person.DayMatchesPredicate;
 import seedu.edudex.model.person.NameContainsKeywordsPredicate;
 import seedu.edudex.model.person.SubjectComparator;
 import seedu.edudex.model.person.SubjectMatchesPredicate;
+import seedu.edudex.model.subject.Subject;
 
 /**
  * Finds and lists all persons in EduDex whose name contains any of the argument keywords.
@@ -88,7 +89,7 @@ public class FindCommand extends Command {
             break;
         case SUBJECT:
             String subjectName = subjectPredicate.getSubjectKeyword();
-            if (!model.hasSubject(new seedu.edudex.model.subject.Subject(subjectName))) {
+            if (!model.hasSubject(new Subject(subjectName))) {
                 throw new CommandException("This subject is not in the subject list.");
             }
             model.updateFilteredPersonList(subjectPredicate);
