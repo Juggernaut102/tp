@@ -15,10 +15,16 @@ Class UserPrefs
 Class UniquePersonList
 Class Person
 Class Address
-Class Email
+Class School
 Class Name
 Class Phone
 Class Tag
+Class Lesson
+Class Day
+Class Time
+
+Class UniqueSubjectList
+Class Subject
 
 Class I #FFFFFF
 }
@@ -36,19 +42,29 @@ ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
 EduDex *--> "1" UniquePersonList
+EduDex *--> "1" UniqueSubjectList
+
 UniquePersonList --> "~* all" Person
+UniqueSubjectList --> "~* all" Subject
+
 Person *--> Name
 Person *--> Phone
-Person *--> Email
+Person *--> School
 Person *--> Address
 Person *--> "*" Tag
+Person *--> "0..*" Lesson
 
-Person -[hidden]up--> I
+Lesson *--> Day
+Lesson *--> "2" Time
+Lesson --> Subject
+
 UniquePersonList -[hidden]right-> I
+UniqueSubjectList -[hidden]right-> I
+Subject -[hidden]right-> Person
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
 
 ModelManager --> "~* filtered" Person
+ModelManager --> "~* filtered" Subject
 @enduml
