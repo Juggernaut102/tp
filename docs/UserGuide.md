@@ -318,7 +318,7 @@ Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.
   "tags": [ "string", ... ], // optional
   "lessons": [ // optional
     {
-    "name": "string",
+    "subject": "string",
     "day": "string",
     "startTime": "HH:MM",
     "endTime": "HH:MM"
@@ -364,7 +364,7 @@ Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.
     "endTime": "12:00"
     },
     {
-      "name": "Math",
+      "subject": "Math",
       "day": "Tuesday",
       "startTime": "14:00",
       "endTime": "16:00"
@@ -380,7 +380,7 @@ Each entry in `subjects` defines a distinct academic subject.
 **Structure**
 ```json
 {
-  "subjectName": "Subject Title"
+  "subjectName": "subject title"
 }
 ```
 
@@ -393,9 +393,9 @@ Each entry in `subjects` defines a distinct academic subject.
 ```json
 {
   "subjects": [
-    { "subjectName": "Chemistry" },
-    { "subjectName": "Physics" },
-    { "subjectName": "Biology" }
+    { "subjectName": "chemistry" },
+    { "subjectName": "physics" },
+    { "subjectName": "biology" }
   ]
 }
 ```
@@ -419,7 +419,7 @@ Each entry in `subjects` defines a distinct academic subject.
     ]
   },
   "subjects": [
-    { "subjectName": "Science" }
+    { "subjectName": "science" }
   ]
 }
 
