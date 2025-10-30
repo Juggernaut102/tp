@@ -2,17 +2,11 @@ package seedu.edudex.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_LESSON;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SCHOOL;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_START;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.edudex.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.edudex.model.person.Lesson.MESSAGE_CONFLICTING_LESSON;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,17 +21,13 @@ import seedu.edudex.commons.util.CollectionUtil;
 import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.logic.Messages;
 import seedu.edudex.logic.commands.exceptions.CommandException;
-import seedu.edudex.logic.parser.EditLessonDescriptor;
 import seedu.edudex.model.Model;
 import seedu.edudex.model.person.Address;
-import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Name;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Phone;
 import seedu.edudex.model.person.School;
-import seedu.edudex.model.person.Time;
-import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.tag.Tag;
 
 /**
@@ -47,7 +37,7 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person or a specific lesson "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -55,28 +45,11 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_SCHOOL + "SCHOOL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "OR\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_LESSON + "LESSON_INDEX (must be a positive integer) "
-            + "[" + PREFIX_SUBJECT + "SUBJECT] "
-            + "[" + PREFIX_DAY + "DAY] "
-            + "[" + PREFIX_START + "START_TIME] "
-            + "[" + PREFIX_END + "END_TIME]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_SCHOOL + "NUS Primary School \n"
-            + "Example: " + COMMAND_WORD + " 2 "
-            + PREFIX_LESSON + "1 "
-            + PREFIX_DAY + "Monday";
-
+            + "[" + PREFIX_TAG + "TAG]...\n";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in EduDex.";
-    private static final String MESSAGE_EDIT_SUBJECT_NOT_TAUGHT = "You tried to edit a lesson with "
-            + "a subject not taught.\nEither use \"addsub SUBJECT\" to add a subject first."
-            + "\nOr use \"dellesson STUDENT_INDEX LESSON_INDEX\" to delete lesson of old subject";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -103,22 +76,7 @@ public class EditCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson;
-
-        try {
-            if (editPersonDescriptor.getLessonIndex().isPresent()
-                    && editPersonDescriptor.getEditLessonDescriptor().isPresent()) {
-                // Lesson edit case
-                editedPerson = createEditedPersonWithLesson(personToEdit, editPersonDescriptor.getLessonIndex().get(),
-                        editPersonDescriptor.getEditLessonDescriptor().get(), model);
-            } else {
-                // Regular person edit case
-                editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-            }
-        } catch (IllegalArgumentException e) {
-            // start time after end time, or conflicting lesson timings
-            throw new CommandException(e.getMessage());
-        }
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -127,66 +85,6 @@ public class EditCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
-    }
-
-    private Person createEditedPersonWithLesson(Person personToEdit, Index index,
-                                                EditLessonDescriptor editLessonDescriptor,
-                                                Model model) throws CommandException {
-        assert personToEdit != null;
-
-        List<Lesson> currentLessons = personToEdit.getLessons();
-
-        if (currentLessons == null || currentLessons.isEmpty()) {
-            throw new IllegalArgumentException(Messages.MESSAGE_NO_LESSONS);
-        }
-        if (index.getZeroBased() >= currentLessons.size()) {
-            throw new IllegalArgumentException(Messages.MESSAGE_INVALID_LESSON_INDEX);
-        }
-
-        Lesson lessonToEdit = currentLessons.get(index.getZeroBased());
-
-        Subject updatedSubject = editLessonDescriptor.getSubject().orElse(lessonToEdit.getSubject());
-        Day updatedDay = editLessonDescriptor.getDay().orElse(lessonToEdit.getDay());
-        Time updatedStartTime = editLessonDescriptor.getStartTime().orElse(lessonToEdit.getStartTime());
-        Time updatedEndTime = editLessonDescriptor.getEndTime().orElse(lessonToEdit.getEndTime());
-
-        if (!model.hasSubject(updatedSubject)) {
-            throw new CommandException(MESSAGE_EDIT_SUBJECT_NOT_TAUGHT);
-        }
-
-        if (!Lesson.isValidStartEndTime(updatedStartTime, updatedEndTime)) {
-            throw new IllegalArgumentException(Lesson.MESSAGE_CONSTRAINTS);
-        }
-
-        Lesson editedLesson = new Lesson(updatedSubject, updatedDay, updatedStartTime, updatedEndTime);
-
-        // Check for conflicting lessons within the same person's lessons
-        Lesson conflictedLesson = personToEdit.hasLessonConflict(editedLesson, index);
-        if (conflictedLesson != null) {
-            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON
-                    + "\nConflicts with an existing lesson the student has: " + conflictedLesson);
-        }
-
-        // Check for conflicts with all other persons' lessons
-        Person personWithLessonConflict = model.findPersonWithLessonConflict(editedLesson, personToEdit);
-        if (personWithLessonConflict != null) {
-            throw new IllegalArgumentException(MESSAGE_CONFLICTING_LESSON + "\nConflicts with lesson of: "
-                    + personWithLessonConflict.getName());
-        }
-
-        // Create a new list of lessons with the edited lesson
-        List<Lesson> newLessons = new ArrayList<>(currentLessons);
-        newLessons.set(index.getZeroBased(), editedLesson);
-
-        Person editedPerson = new Person(
-                personToEdit.getName(),
-                personToEdit.getPhone(),
-                personToEdit.getSchool(),
-                personToEdit.getAddress(),
-                personToEdit.getTags());
-        editedPerson.setLessons(newLessons); // Set the updated list of lessons
-        return editedPerson;
-
     }
 
     /**
@@ -243,9 +141,6 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
 
-        private Index lessonIndex;
-        private EditLessonDescriptor editLessonDescriptor;
-
         public EditPersonDescriptor() {}
 
         /**
@@ -258,16 +153,6 @@ public class EditCommand extends Command {
             setSchool(toCopy.school);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
-
-            setLessonIndex(toCopy.lessonIndex);
-
-            // defensive copy using constructor of EditLessonDescriptor
-            if (toCopy.editLessonDescriptor != null) {
-                setEditLessonDescriptor(new EditLessonDescriptor(toCopy.editLessonDescriptor));
-            } else {
-                setEditLessonDescriptor(null);
-            }
-
         }
 
         /**
@@ -309,22 +194,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setLessonIndex(Index lessonIndex) {
-            this.lessonIndex = lessonIndex;
-        }
-
-        public Optional<Index> getLessonIndex() {
-            return Optional.ofNullable(lessonIndex);
-        }
-
-        public void setEditLessonDescriptor(EditLessonDescriptor editLessonDescriptor) {
-            this.editLessonDescriptor = editLessonDescriptor;
-        }
-
-        public Optional<EditLessonDescriptor> getEditLessonDescriptor() {
-            return Optional.ofNullable(editLessonDescriptor);
-        }
-
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -342,8 +211,6 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
-
-
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -360,9 +227,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(school, otherEditPersonDescriptor.school)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(lessonIndex, otherEditPersonDescriptor.lessonIndex)
-                    && Objects.equals(editLessonDescriptor, otherEditPersonDescriptor.editLessonDescriptor);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
         @Override
@@ -373,8 +238,6 @@ public class EditCommand extends Command {
                     .add("school", school)
                     .add("address", address)
                     .add("tags", tags)
-                    .add("lessonIndex", lessonIndex)
-                    .add("editLessonDescriptor", editLessonDescriptor)
                     .toString();
         }
     }

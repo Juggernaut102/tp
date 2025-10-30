@@ -1,4 +1,4 @@
-package seedu.edudex.logic.parser;
+package seedu.edudex.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.edudex.logic.parser.EditLessonDescriptor;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.subject.Subject;

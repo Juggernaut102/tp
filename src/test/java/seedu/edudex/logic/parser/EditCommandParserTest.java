@@ -8,7 +8,6 @@ import static seedu.edudex.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.edudex.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.edudex.logic.commands.CommandTestUtil.INVALID_SCHOOL_DESC;
 import static seedu.edudex.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.edudex.logic.commands.CommandTestUtil.LESSON_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
@@ -17,25 +16,18 @@ import static seedu.edudex.logic.commands.CommandTestUtil.SCHOOL_DESC_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.edudex.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_DAY_AMY;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_ENDTIME_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_SCHOOL_AMY;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_STARTTIME_AMY;
-import static seedu.edudex.logic.commands.CommandTestUtil.VALID_SUBJECT_AMY;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.edudex.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_LESSON;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SCHOOL;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.edudex.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.edudex.logic.parser.EditCommandParser.MESSAGE_CANNOT_EDIT_BOTH;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.edudex.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -168,13 +160,6 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // lessons
-        userInput = targetIndex.getOneBased() + LESSON_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withLessonEdit(1, VALID_SUBJECT_AMY,
-                VALID_DAY_AMY, VALID_STARTTIME_AMY, VALID_ENDTIME_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
     }
 
     @Test
@@ -219,68 +204,4 @@ public class EditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-
-    @Test
-    public void parse_lessonEdit_success() {
-        // edit 1 lesson field
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = "";
-        EditPersonDescriptor descriptor;
-
-
-        userInput = targetIndex.getOneBased() + " " + PREFIX_LESSON + "1 " + PREFIX_DAY + VALID_DAY_AMY;
-        descriptor = new EditPersonDescriptorBuilder()
-                .withLessonEdit(0, null, VALID_DAY_AMY, null, null)
-                .build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-
-        // edit all lesson fields
-        userInput = targetIndex.getOneBased() + LESSON_DESC_AMY; // lesson index 2 in DESC_AMY is 1 in 0-based index
-        descriptor = new EditPersonDescriptorBuilder()
-                .withLessonEdit(1, VALID_SUBJECT_AMY, VALID_DAY_AMY, VALID_STARTTIME_AMY, VALID_ENDTIME_AMY)
-                .build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_lessonEditWithPersonFields_failure() {
-        // lesson edit with person fields
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_LESSON + "1 "
-                + PREFIX_DAY + VALID_DAY_AMY + NAME_DESC_AMY;
-
-        assertParseFailure(parser, userInput, MESSAGE_CANNOT_EDIT_BOTH);
-    }
-
-    @Test
-    public void parse_lessonEditNoLessonFields_failure() {
-        // lesson edit without lesson fields
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_LESSON + "1";
-
-        assertParseFailure(parser, userInput, EditCommand.MESSAGE_NOT_EDITED);
-    }
-
-    @Test
-    public void parse_lessonEditMissingLessonIndex_failure() {
-        // lesson edit without lesson index
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_LESSON + PREFIX_DAY + VALID_DAY_AMY;
-
-        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_lessonEditInvalidLessonIndex_failure() {
-        // lesson edit with invalid lesson index
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_LESSON + "a "
-                + PREFIX_DAY + VALID_DAY_AMY;
-
-        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
-    }
-
 }
