@@ -2,7 +2,6 @@ package seedu.edudex.model;
 
 import java.nio.file.Path;
 import java.util.Comparator;
-import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -138,7 +137,7 @@ public interface Model {
 
     void sortLessonsForEachPerson();
 
-    List<Person> sortLessonsForEachPersonBySubject(String subjectKeyword);
+    void sortLessonsForEachPersonBySubject(String subjectKeyword);
 
     void updateSubjectList(Predicate<Subject> predicate);
 
