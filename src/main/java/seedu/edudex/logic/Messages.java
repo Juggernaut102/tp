@@ -28,7 +28,7 @@ public class Messages {
     public static final String MESSAGE_EMPTY_SUBJECT =
             "Subject cannot be empty. Please enter one of the subjects listed (e.g., find sub/Math).";
     public static final String MESSAGE_INVALID_SUBJECT =
-            "This subject is not in the subject list. Please enter one of the subjects listed (e.g., find sub/Math).";
+            "This subject is not in the subject list. Add subject to subject list first.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
