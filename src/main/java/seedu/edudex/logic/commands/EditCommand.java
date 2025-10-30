@@ -90,6 +90,10 @@ public class EditCommand extends Command {
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
+     *
+     * @param personToEdit The person whose details are to be edited. Must not be null.
+     * @param editPersonDescriptor The descriptor containing the new details to apply to the person.
+     * @return A new {@code Person} object with the edited details.
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;

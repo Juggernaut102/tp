@@ -26,6 +26,8 @@ public class Day {
 
     /**
      * Returns true if a given string is a valid day.
+     *
+     * @param day String to verify
      */
     public static boolean isValidDay(String day) {
         for (String validDay : VALID_DAYS) {

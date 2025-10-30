@@ -44,7 +44,6 @@ public class AddLessonCommand extends Command {
     public static final String MESSAGE_SUBJECT_NOT_TAUGHT = "You tried to add a lesson with "
             + "a subject that is not in the list of subjects you teach.\n "
             + "Use \"addsub SUBJECT\" to add a subject first.";
-    // public static final String MESSAGE_CONFLICTING_LESSON_TIMING = ;
 
     private Index studentIndex;
     private Lesson lessonToAdd;
@@ -53,6 +52,7 @@ public class AddLessonCommand extends Command {
      * Constructs a AddLessonCommand.
      *
      * @param studentIndex index of the student in the last shown list.
+     * @param lessonToAdd lesson to add for the student.
      */
     public AddLessonCommand(Index studentIndex, Lesson lessonToAdd) {
         requireNonNull(studentIndex);
