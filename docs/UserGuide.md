@@ -141,7 +141,7 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 
 **Field Requirements:**
 * `NAME` should only contain alphanumeric characters and spaces, must not be blank
-* `PHONE_NUMBER` must be at least 3 digits long
+* `PHONE_NUMBER` should only contain numbers, at least 3 digits long
 * `SCHOOL` should only contain alphanumeric characters and spaces, must not be blank
 * `ADDRESS` can be any value, must not be blank
 * `TAG` (optional) should be alphanumeric
@@ -411,7 +411,7 @@ Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.
 ```json
 {
   "name": "Full Name", // required, 
-  "phone": "8-digit Singapore number", // required
+  "phone": "At least 3 digit number", // required
   "school": "string", // required
   "address": "Full address string", // required
   "tags": [ "string", ... ], // optional
