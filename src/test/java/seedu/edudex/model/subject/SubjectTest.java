@@ -10,21 +10,22 @@ import seedu.edudex.model.ModelManager;
 
 public class SubjectTest {
 
+    //
     @Test
-    public void validateExistsIn_subjectNotInModel_throwsCommandException() {
+    public void existsIn_subjectNotInModel_throwsCommandException() {
         Model model = new ModelManager(); // empty model
         Subject subject = new Subject("Art");
 
-        assertThrows(CommandException.class, () -> subject.validateExistsIn(model));
+        assertThrows(CommandException.class, () -> subject.ExistsIn(model));
     }
 
     @Test
-    public void validateExistsIn_subjectInModel_doesNotThrow() throws CommandException {
+    public void existsIn_subjectInModel_doesNotThrow() throws CommandException {
         Model model = new ModelManager();
         Subject subject = new Subject("Math");
         model.addSubject(subject);
 
         // Should not throw
-        subject.validateExistsIn(model);
+        subject.ExistsIn(model);
     }
 }
