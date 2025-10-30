@@ -6,7 +6,7 @@
 
 # EduDex User Guide
 
-EduDex is a **desktop app for managing student's contacts, optimized for use via a  Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). EduDex is targeted towards freelance tutors who find it difficult to manage a large number of student contacts. If you can type fast, EduDex can get your contact management tasks done faster than traditional GUI apps.
+EduDex is a **desktop app for managing student's contacts, optimized for use via a  Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). EduDex is targeted towards technically-able freelance tutors who find it difficult to manage a large number of student contacts. If you can type fast, EduDex can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
