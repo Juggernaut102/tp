@@ -3,6 +3,10 @@ package seedu.edudex.model.subject;
 import static java.util.Objects.requireNonNull;
 import static seedu.edudex.commons.util.AppUtil.checkArgument;
 
+import seedu.edudex.logic.Messages;
+import seedu.edudex.logic.commands.exceptions.CommandException;
+import seedu.edudex.model.Model;
+
 /**
  * Represents a Subject in EduDex.
  * Guarantees: immutable; is valid as declared in {@link #isValidSubjectName(String)}
@@ -110,4 +114,19 @@ public class Subject {
     public Subject getCopyOfSubject() {
         return new Subject(subjectName);
     }
+
+    /**
+     * Validates that this subject exists in the given model.
+     * Throws a CommandException if it does not.
+     *
+     * @param model The model to check against.
+     * @throws CommandException if the subject is not registered in the model.
+     */
+    public void validateExistsIn(Model model) throws CommandException {
+        requireNonNull(model);
+        if (!model.hasSubject(this)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SUBJECT);
+        }
+    }
+
 }
