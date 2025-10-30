@@ -192,7 +192,7 @@ Format:
 </box>
 
 Examples:
-*  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st student to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st student to be `91234567` and `Jurong Primary School` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
 |                       Before                       |                      After                       |
