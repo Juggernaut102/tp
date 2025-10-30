@@ -368,7 +368,6 @@ Use case ends.
     - 2d1. EduDex shows error with correct command format  
       Use case ends.
 
----
 
 ## Use Case 2: List All Students
 
@@ -382,19 +381,13 @@ Use case ends.
 3. EduDex displays all students in a formatted list  
 Use case ends.
 
-**Extensions:**
-- **3a. No students in the system**
-    - 3a1. EduDex shows message: *"No students found. Use 'add' to add your first student."*  
-     Use case ends
-
----
 
 ## Use Case 3: Delete a Student
 
 **Preconditions:**
 - User has launched the EduDex application
 - User is at the command prompt
-- There is at least one student in the system
+- At least one student exists in the list
 
 **Main Success Scenario:**
 1. User enters `list` to view current students and their indices
@@ -412,13 +405,45 @@ Use case ends.
     - 2b1. EduDex shows error: *"The student index provided is invalid"*  
       Use case ends.
 
-- **2c. User enters delete without viewing list first**
-    - 2c1. EduDex shows error: *"Please use 'list' to view students first"*  
+
+## Use Case 4: Find by Name
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+
+**Main Success Scenario:**
+1. User enters `find alice`.
+2. EduDex performs a case-insensitive search over names.
+3. EduDex filters the list to students whose names contain “alice”.
+4. EduDex displays the filtered list and a result summary (e.g., “3 students listed”).  
+   Use case ends.
+
+**Postconditions:**
+- Current list view shows only matched students.
+
+## Use Case 5: Find by Day
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+- At least one student has at least one lesson scheduled.
+
+**Main Success Scenario:**
+1. User enters `find d/Monday`.
+2. EduDex validates the day value.
+3. EduDex filters to students who have ≥1 lesson on Monday.
+4. EduDex displays the filtered list and a result summary.  
+   Use case ends.
+
+**Extensions:**
+- **2a. Invalid day value**
+    - 2a1. EduDex shows error: *"Please enter a valid day of the week (Monday…Sunday)."*  
       Use case ends.
 
----
-
-## Use Case 4: Exit the Application
+## Use Case 6: Exit the Application
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -437,9 +462,7 @@ Use case ends.
     - 2a3. User confirms
     - Use case resumes from step 3.
 
----
-
-## Use Case 5: Handle Invalid Command
+## Use Case 7: Handle Invalid Command
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -460,6 +483,8 @@ Use case ends.
     - 2b1. EduDex suggests possible correct commands  
       Use case ends.
 
+---
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -472,7 +497,6 @@ Use case ends.
 8. Application should be able to operate without an internet connection. 
 9. All similar operations should follow the same command patterns and provide similar output formats
 10. Product developed in a breadth-first incremental manner, with each increment being a usable product that satisfies all the requirements identified up to that point.
-
 
 ### Glossary
 
@@ -514,8 +538,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
@@ -531,12 +553,52 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Finding Persons by Name
+
+1. Finding a person by a single keyword
+
+    1. Prerequisites: Ensure the EduDex application is launched with at least one student in the list.
+
+    1. Test case: `find alice`  
+       Expected: All students whose names contain "alice" (case-insensitive) are listed. Example: "Alice Tan", "Alicia Wong". Status message shows the number of students listed.
+
+    1. Test case: `find ALICE`  
+       Expected: Same results as above (case-insensitive behavior).
+
+    1. Test case: `find bob` (when no “bob” exists)  
+       Expected: list panel becomes empty.
+
+### Finding Persons by Day
+
+1. Finding students with lessons on a specific day
+
+    1. Prerequisites: At least one student has a lesson on Monday.
+
+    1. Test case: `find d/Monday`  
+       Expected: Only students with lessons scheduled on Monday are listed.
+
+    1. Test case: `find d/monDAY`  
+       Expected: Same results as above (case-insensitive).
+
+    1. Test case: `find d/Funday`  
+       Expected: Error message displayed — “Please enter a valid day of the week (Monday…Sunday).” No change to list.
+
+    1. Test case: `find d/Sunday` (no students with Sunday lessons)  
+       Expected: list panel becomes empty.
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Close EduDex (if running). 
+   2. Navigate to [JAR file location]/data/. 
+   3. Move edudex.json outside the data folder, or delete it. 
+   4. Launch EduDex by double-clicking the JAR. 
+     Expected: EduDex detects that the data file is missing and starts with an empty data file.
+   5. A new edudex.json is created under [JAR file location]/data/.
 
-1. _{ more test cases …​ }_
+<box type="info" seamless>
+
+**Note:** This aligns with the guide’s warning that if the data file is not valid for use, EduDex will start with an empty data file on the next run.
+
+</box>
