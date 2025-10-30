@@ -8,19 +8,17 @@ import java.util.function.Predicate;
 public class DayMatchesPredicate implements Predicate<Person> {
     private final Day day;
 
+    /**
+     * Constructs a {@code DayMatchesPredicate} with the specified day.
+     *
+     * @param day The day to match against a person's lessons.
+     */
     public DayMatchesPredicate(Day day) {
         this.day = day;
     }
 
     @Override
     public boolean test(Person person) {
-        //        if (person.getSubject() == null) {
-        //            return false;
-        //        }
-        //        // Match day, ignoring case
-        //        return person.getSubject().getDay() != null
-        //                && person.getSubject().getDay().equals(day);
-        // return true; // Placeholder implementation
         if (person.getLessons() == null || person.getLessons().isEmpty()) {
             return false;
         }

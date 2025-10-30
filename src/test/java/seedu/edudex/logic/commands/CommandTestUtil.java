@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_END;
-import static seedu.edudex.logic.parser.CliSyntax.PREFIX_LESSON;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.edudex.logic.parser.CliSyntax.PREFIX_SCHOOL;
@@ -55,7 +54,6 @@ public class CommandTestUtil {
     public static final String SUBJECT_DESC_BOB = " " + PREFIX_SUBJECT + VALID_SUBJECT_BOB + " "
             + PREFIX_DAY + VALID_DAY_BOB + " " + PREFIX_START
             + VALID_STARTTIME_BOB + " " + PREFIX_END + VALID_ENDTIME_BOB;
-    public static final String LESSON_DESC_AMY = " " + PREFIX_LESSON + "2 " + SUBJECT_DESC_AMY;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;

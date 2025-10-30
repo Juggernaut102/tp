@@ -13,7 +13,7 @@ public class Subject {
     public static final String MESSAGE_SUBJECT_NOT_FOUND =
             "Subject should only be from the list of subjects previously indicated.";
 
-    /*
+    /**
      * The first character of the subject must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
@@ -34,6 +34,8 @@ public class Subject {
 
     /**
      * Returns true if a given string is alphanumeric.
+     *
+     * @param name String to test
      */
     public static boolean isValidSubjectName(String name) {
         requireNonNull(name);
@@ -42,6 +44,8 @@ public class Subject {
 
     /**
      * Capitalises each word in the given string.
+     *
+     * @param str given string
      */
     public static String capitalizeWords(String str) {
         requireNonNull(str);

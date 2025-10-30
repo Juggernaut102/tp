@@ -51,6 +51,8 @@ public class FindCommand extends Command {
 
     /**
      * Constructor for finding by name.
+     *
+     * @param predicate The predicate to filter persons by name keywords.
      */
     public FindCommand(NameContainsKeywordsPredicate predicate) {
         this.namePredicate = predicate;

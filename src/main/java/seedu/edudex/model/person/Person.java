@@ -32,15 +32,29 @@ public class Person {
     private List<Lesson> lessons;
 
     /**
-     * Constructor for initialising a new Person with no lessons.
+     * Constructs a new {@code Person} with no lessons.
      * Every field must be present and not null.
+     *
+     * @param name The name of the person.
+     * @param phone The phone number of the person.
+     * @param school The school the person is associated with.
+     * @param address The address of the person.
+     * @param tags The set of tags associated with the person.
      */
     public Person(Name name, Phone phone, School school, Address address, Set<Tag> tags) {
         this(name, phone, school, address, tags, new ArrayList<>());
     }
 
     /**
-     * A more general Constructor, used explicitly if lessons is not an empty list.
+     * Constructs a new {@code Person} with the specified lessons.
+     * Every field must be present and not null.
+     *
+     * @param name The name of the person.
+     * @param phone The phone number of the person.
+     * @param school The school the person is associated with.
+     * @param address The address of the person.
+     * @param tags The set of tags associated with the person.
+     * @param lessons The list of lessons associated with the person.
      */
     public Person(Name name, Phone phone, School school, Address address,
                   Set<Tag> tags, List<Lesson> lessons) {

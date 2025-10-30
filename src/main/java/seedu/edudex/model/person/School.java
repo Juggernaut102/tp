@@ -11,7 +11,7 @@ public class School {
     public static final String MESSAGE_CONSTRAINTS =
             "Schools should only contain alphanumeric characters and spaces, and it should not be blank";
 
-    /*
+    /**
      * The first character of the school name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
@@ -32,6 +32,8 @@ public class School {
 
     /**
      * Returns true if a given string is a valid school.
+     *
+     * @param test String School to test validity
      */
     public static boolean isValidSchool(String test) {
         return test.matches(VALIDATION_REGEX);

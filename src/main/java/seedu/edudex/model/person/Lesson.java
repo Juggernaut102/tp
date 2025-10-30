@@ -55,6 +55,9 @@ public class Lesson {
 
     /**
      * Returns true if startTime is before endTime.
+     *
+     * @param startTime provided
+     * @param endTime provided
      */
     public static boolean isValidStartEndTime(Time startTime, Time endTime) {
         return startTime.getTime().isBefore(endTime.getTime());
