@@ -20,6 +20,8 @@ Class JsonEduDexStorage
 Class JsonSerializableEduDex
 Class JsonAdaptedPerson
 Class JsonAdaptedTag
+Class JsonAdaptedSubject
+Class JsonAdaptedLesson
 }
 
 }
@@ -37,7 +39,9 @@ Storage -right-|> EduDexStorage
 JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonEduDexStorage .up.|> EduDexStorage
 JsonEduDexStorage ..> JsonSerializableEduDex
+JsonSerializableEduDex --> "*" JsonAdaptedSubject
 JsonSerializableEduDex --> "*" JsonAdaptedPerson
 JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonAdaptedPerson --> "*" JsonAdaptedLesson
 
 @enduml

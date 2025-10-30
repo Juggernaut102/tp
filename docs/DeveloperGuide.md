@@ -158,99 +158,6 @@ Classes used by multiple components are in the `seedu.edudex.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedEduDex`. It extends `EduDex` with an undo/redo history, stored internally as an `eduDexStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedEduDex#commit()` — Saves the current EduDex state in its history.
-* `VersionedEduDex#undo()` — Restores the previous EduDex state from its history.
-* `VersionedEduDex#redo()` — Restores a previously undone EduDex state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitEduDex()`, `Model#undoEduDex()` and `Model#redoEduDex()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedEduDex` will be initialized with the initial EduDex state, and the `currentStatePointer` pointing to that single EduDex state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th person in EduDex. The `delete` command calls `Model#commitEduDex()`, causing the modified state of EduDex after the `delete 5` command executes to be saved in the `eduDexStateList`, and the `currentStatePointer` is shifted to the newly inserted EduDex state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitEduDex()`, causing another modified EduDex state to be saved into the `eduDexStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitEduDex()`, so EduDex state will not be saved into the `eduDexStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoEduDex()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous EduDex state, and restores EduDex to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial EduDex state, then there are no previous EduDex states to restore. The `undo` command uses `Model#canUndoEduDex()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoEduDex()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores EduDex to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `eduDexStateList.size() - 1`, pointing to the latest EduDex state, then there are no undone EduDex states to restore. The `redo` command uses `Model#canRedoEduDex()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify EduDex, such as `list`, will usually not call `Model#commitEduDex()`, `Model#undoEduDex()` or `Model#redoEduDex()`. Thus, the `eduDexStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitEduDex()`. Since the `currentStatePointer` is not pointing at the end of the `eduDexStateList`, all EduDex states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire EduDex.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
 ### Find feature (Enhanced)
 
 #### Implementation
@@ -366,23 +273,6 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 2. Extracts the target `Person` using the given student index.
 3. Creates a modified copy of the `Person` with the target lesson removed.
 4. Replaces the old person with the new one using `model.setPerson()`.
-
----
-
-### Summary
-
-| Command         | Function | Example         | Output |
-|-----------------|-----------|-----------------|---------|
-| `find d/Friday` | Find students by lesson day | `find d/Friday` | Lists all students with Friday lessons |
-| `find sub/Math`  | Find students by subject | `find sub/Math` | Lists students taking Math |
-| `dellesson 1 1` | Delete specific lesson | `dellesson 1 1` | Deletes the 1st lesson of the 1st student |
-
----
-
-### Example activity flow
-
-<puml src="diagrams/FindAndDeleteLessonActivityDiagram.puml" width="400" />
-
 ---
 
 ### Example test cases
@@ -394,14 +284,6 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 | Delete valid lesson | `dellesson 1 2`    | Deletes 2nd lesson of 1st student |
 | Invalid student index | `dellesson 0 1`    | Error: Invalid student index |
 | Invalid lesson index | `dellesson 1 5`    | Error: Invalid lesson index |
-
----
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -420,7 +302,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* freelance tutor
+* freelance tutor teaching primary school students
 * has a need to manage a significant number of students
 * teaches multiple subjects at different times
 * prefer desktop apps over other types
@@ -428,28 +310,28 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: Provides fast access to student details such as subjects taken, managing tuition fees, 
-viewing grades and optimised to those who prefer a CLI
+**Value proposition**: Provides fast access to student details such as subjects taught, lessons taken, school name
+and optimised to those who prefer a CLI
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                 | I want to …​                                 | So that I can…​                                           |
-|----------|-----------------------------------------|----------------------------------------------|-----------------------------------------------------------|
-| `* * *`  | tutor                                   | add a student entry into the dataset         | start keeping track of that student's contact information |
-| `* * *`  | tutor                                   | view my students' contacts                   | see my students' contact information all at once          |
-| `* * *`  | tutor                                   | exit the program                             | close the program when I’m done                           |
-| `* * *`  | tutor who has a student who is quitting | delete the student's contact                 | ensure PDPA compliance and clean up my EduDex       |
-| `* *`    | new user                                | view a help page for the usage of the app    | understand how to navigate EduDex                         |
-| `* *`    | new user                                | set my profile with subjects and hourly rate | customise the app to my preference                        |
-| `* *`    | tutor                                   | get help for specific commands I enter       | see what fields I have entered incorrectly                |
-| `* *`    | tutor                                   | search for my students' names                | find their contact information                            |
-| `*`      | tutor who wants to charge students      | assign rates for subjects I’m teaching       | better keep track of my earnings                          |
-| `*`      | tutor who has changed tuition fees      | check how much I earn per week               | track money earned from tuition lessons                   |
-
-*{More to be added}*
+| Priority | As a …​                                 | I want to …​                              | So that I can…​                                           |
+|----------|-----------------------------------------|-------------------------------------------|-----------------------------------------------------------|
+| `* * *`  | tutor                                   | add a student entry into the dataset      | start keeping track of that student's contact information |
+| `* * *`  | tutor                                   | view my students' contacts                | see my students' contact information all at once          |
+| `* * *`  | tutor                                   | exit the program                          | close the program when I’m done                           |
+| `* * *`  | tutor who has a student who is quitting | delete the student's contact              | ensure PDPA compliance and clean up my EduDex             |
+| `* *`    | new user                                | view a help page for the usage of the app | understand how to navigate EduDex                         |
+| `* *`    | new user                                | set my profile with subjects I teach      | customise the app to subjects I teach                     |
+| `* *`    | tutor                                   | get help for specific commands I enter    | see what fields I have entered incorrectly                |
+| `* *`    | tutor                                   | search for my students' names             | find their contact information                            |
+| `* *`    | tutor                                   | search for my lessons for the day         | better plan my personal time and schedule                 |
+| `* *`    | tutor                                   | search for my lessons for each subject    | better allocate my time for each subject                  |
+| `* *`    | tutor who wants to view her workload    | filter by subject	                        | see which subjects are most popular                       |
+| `*`      | tutor who has changed tuition fees      | check how much I earn per week            | track money earned from tuition lessons                   |
 
 ### Use cases
 
