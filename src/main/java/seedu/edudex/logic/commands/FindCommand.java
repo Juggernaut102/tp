@@ -92,10 +92,9 @@ public class FindCommand extends Command {
             model.sortLessonsForEachPerson();
             break;
         case SUBJECT:
-            String subjectName = subjectPredicate.getSubjectKeyword();
-            if (!model.hasSubject(new Subject(subjectName))) {
-                throw new CommandException(Messages.MESSAGE_INVALID_SUBJECT);
-            }
+            Subject subject = new Subject(subjectPredicate.getSubjectKeyword());
+            subject.existsIn(model);
+
             model.updateFilteredPersonList(subjectPredicate);
             model.sortFilteredPersonList(new SubjectComparator());
             model.sortLessonsForEachPersonBySubject(subjectPredicate.getSubjectKeyword());
