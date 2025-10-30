@@ -91,7 +91,7 @@ public class FindCommand extends Command {
             break;
         case SUBJECT:
             Subject subject = new Subject(subjectPredicate.getSubjectKeyword());
-            subject.ExistsIn(model);
+            subject.existsIn(model);
 
             model.updateFilteredPersonList(subjectPredicate);
             model.sortFilteredPersonList(new SubjectComparator());

@@ -120,7 +120,7 @@ public class Subject {
      * @param model The model to check against.
      * @throws CommandException if the subject is not registered in the model.
      */
-    public void ExistsIn(Model model) throws CommandException {
+    public void existsIn(Model model) throws CommandException {
         requireNonNull(model);
         if (!model.hasSubject(this)) {
             throw new CommandException(Messages.MESSAGE_INVALID_SUBJECT);
