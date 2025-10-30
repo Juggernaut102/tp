@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.edudex.commons.core.GuiSettings;
 import seedu.edudex.model.person.Day;
 import seedu.edudex.model.person.Lesson;
@@ -25,6 +26,7 @@ import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.Time;
 import seedu.edudex.model.subject.Subject;
 import seedu.edudex.testutil.EduDexBuilder;
+import seedu.edudex.testutil.LessonBuilder;
 import seedu.edudex.testutil.PersonBuilder;
 
 public class ModelManagerTest {
@@ -222,5 +224,31 @@ public class ModelManagerTest {
         assertEquals(student1, model.findPersonWithLessonConflict(newLesson, student2));
         assertEquals(student2, model.findPersonWithLessonConflict(newLesson, student1));
 
+    }
+
+    @Test
+    public void getFilteredPersonList_returnsDisplayPersonsWhenFiltered() {
+        EduDex edudex = new EduDex();
+        Person mathStudent = new PersonBuilder()
+                .withLessons(List.of(new LessonBuilder().withSubject("math").build()))
+                .build();
+        edudex.addPerson(mathStudent);
+
+        ModelManager model = new ModelManager(edudex, new UserPrefs());
+        model.sortLessonsForEachPersonBySubject("math");
+
+        ObservableList<Person> result = model.getFilteredPersonList();
+        assertTrue(result.stream().allMatch(person ->
+                person.getLessons().stream().allMatch(lesson ->
+                        lesson.getSubject().getSubjectAsString().equalsIgnoreCase("math"))));
+    }
+
+
+    @Test
+    public void getFilteredPersonList_returnsSortedPersonsWhenNotFiltered() {
+        ModelManager model = new ModelManager();
+        model.updateFilteredPersonList(p -> true);
+        ObservableList<Person> result = model.getFilteredPersonList();
+        assertEquals(model.getSortedPersonList(), result);
     }
 }

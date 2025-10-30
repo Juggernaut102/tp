@@ -42,7 +42,7 @@ public class AddLessonCommand extends Command {
 
     public static final String MESSAGE_ADD_LESSON_SUCCESS = "New lesson: %1$s, added to student: %2$s";
     public static final String MESSAGE_SUBJECT_NOT_TAUGHT = "You tried to add a lesson with "
-            + "a subject that is not in the list of subjects you teach\n. "
+            + "a subject that is not in the list of subjects you teach.\n "
             + "Use \"addsub SUBJECT\" to add a subject first.";
     // public static final String MESSAGE_CONFLICTING_LESSON_TIMING = ;
 

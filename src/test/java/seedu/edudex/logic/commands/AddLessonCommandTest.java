@@ -311,7 +311,7 @@ public class AddLessonCommandTest {
         }
 
         @Override
-        public List<Person> sortLessonsForEachPersonBySubject(String subjectKeyword) {
+        public void sortLessonsForEachPersonBySubject(String subjectKeyword) {
             throw new AssertionError("This method should not be called.");
         }
     }

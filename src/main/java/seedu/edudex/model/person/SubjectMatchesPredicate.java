@@ -2,6 +2,8 @@ package seedu.edudex.model.person;
 
 import java.util.function.Predicate;
 
+import seedu.edudex.model.subject.Subject;
+
 /**
  * Tests that a {@code Person} has at least one {@code Lesson} with the given {@code Subject} name (case-insensitive).
  */
@@ -19,9 +21,11 @@ public class SubjectMatchesPredicate implements Predicate<Person> {
             return false;
         }
 
+        Subject targetSubject = new Subject(subjectName);
+
+        // Strictly match only lessons whose Subject is the same (not substring)
         return person.getLessons().stream()
-                .anyMatch(lesson ->
-                        lesson.getSubject().toString().equalsIgnoreCase(subjectName));
+                .anyMatch(lesson -> lesson.getSubject().isSameSubject(targetSubject));
     }
 
     @Override

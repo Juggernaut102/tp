@@ -86,6 +86,8 @@ public class FindCommand extends Command {
         switch (searchType) {
         case DAY:
             model.updateFilteredPersonList(dayPredicate);
+            model.sortFilteredPersonList(new SubjectComparator());
+            model.sortLessonsForEachPerson();
             break;
         case SUBJECT:
             String subjectName = subjectPredicate.getSubjectKeyword();
