@@ -117,10 +117,6 @@ Edits an existing person fields **or** lesson fields in EduDex.
 
 Format: 
 `edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
-or
-`edit INDEX lessson/LESSON_INDEX [sub/SUBJECT] [d/DAY] [start/START_TIME] [end/END_TIME]`'
-
-where `LESSON_INDEX` refers to a positive index of the lesson in the student's lesson list which is shown when `list` command is used.
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -129,24 +125,19 @@ where `LESSON_INDEX` refers to a positive index of the lesson in the student's l
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
 
+* <box type="info" seamless>
+**Note:** To edit a student's **lesson details** (subject, day, time), use the [`editlesson`](#editing-a-lesson-editlesson) command instead.
+</box>
+
 Examples:
 *  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-*  `edit 3 lesson/1 sub/Mathematics d/Monday start/10:00 end/12:00` Edits the first lesson of the 3rd person to have subject `Mathematics`, day `Monday`, start time `10:00` and end time `12:00`.
-
-**Caution:**
-* When editing lesson fields, ensure that the `SUBJECT` matches (case-insensitive) one of the existing subjects in EduDex.
-* When editing a lesson, you **cannot** edit person fields at the same time and vice versa (e.g., `edit 1 lesson/1 sub/Math n/Alice` is invalid). 
-* The edited lesson time must not conflict with other students' existing lessons (overlapping time).
-* `DAY` must be a valid day of the week (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday).
-* All time values must be in 24-hour format (HH:MM) and the end time must be after the start time.
 
 |                       Before                       |                      After                       |
 |:--------------------------------------------------:|:------------------------------------------------:|
 | ![Before Edit School](images/BeforeEditLesson.png) |   ![After Edit School](images/EditSchool.png)    |
 |              _Before editing school_               |              _After editing school_              |
-| ![Before Edit Lesson](images/BeforeEditLesson.png) | ![After Edit Lesson](images/AfterEditLesson.png) |
-|              _Before editing lesson_               |              _After editing lesson_              |
+
 
 ### Locating persons by Name, Day, or Subject: `find`
 
@@ -234,6 +225,12 @@ Format: `delsub INDEX`
 Examples:
 * `delsub 1` deletes the 1st subject in EduDex.
 
+<box type="warning" seamless>
+
+**Caution:**
+* Deleting a subject does **not** automatically remove lessons associated with that subject. 
+  </box>
+
 ### Adding a lesson: `addlesson`
 
 Adds a lesson to the student in EduDex, specified by index.
@@ -290,6 +287,56 @@ If an invalid index is entered:
 | ![before 'dellesson 1 2'](images/beforeDeleteLesson.png) | ![result for 'dellesson 1 2'](images/deleteLessonResult.png) |
 |     _Student Ran Doe has 2 lessons before deletion._     |        _Student Ran Doe has 1 lesson after deletion._        |
 
+### Editing a lesson : `editlesson`
+
+Edits an existing lesson for a specific student in EduDex.
+
+Format: `editlesson STUDENT_INDEX LESSON_INDEX [sub/SUBJECT] [d/DAY] [start/START_TIME] [end/END_TIME]`
+
+* Edits the lesson at the specified `LESSON_INDEX` for the student at `STUDENT_INDEX`.
+* The indices refer to:
+    * `STUDENT_INDEX` — position of the student in the currently displayed student list.
+    * `LESSON_INDEX` — position of the lesson within that student's list of lessons (shown when using the `list` command).
+* Both indices **must be positive integers** (1, 2, 3, …).
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* Only the specified fields will be changed; unspecified fields remain unchanged.
+
+**Field Requirements:**
+
+* `SUBJECT` must match (case-insensitive) an existing subject in EduDex. Use `addsub` to add a subject first if needed.
+* `DAY` must be a valid day of the week: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday (case-insensitive).
+* `START_TIME` and `END_TIME` must be in 24-hour format (HH:MM) and must be valid times.
+* `START_TIME` must be earlier than `END_TIME`.
+
+<box type="warning" seamless>
+
+**Caution:**
+* The edited lesson time must not conflict with:
+    * Other lessons of the **same student**.
+    * Lessons of **other students** (no overlapping times on the same day).
+* If the subject is changed, ensure the new subject exists in EduDex. Otherwise, use `delsub` to delete the old subject and `addlesson` to create a new one with the desired subject.
+* If a subject has been deleted, and you need to update a lesson that still uses that subject, you must first **change the subject field** to a valid subject before editing any other fields (day, start time, or end time).
+  </box>
+
+<box type="tip" seamless>
+
+**Tip:** You can edit just one field at a time or multiple fields together.
+- `editlesson 1 1 d/Tuesday` — Changes only the day of the first lesson.
+- `editlesson 2 3 start/14:00 end/16:00` — Changes only the timing.
+- `editlesson 1 2 sub/Physics d/Wednesday start/10:00 end/12:00` — Changes all fields at once.
+  </box>
+
+Examples:
+* `editlesson 1 1 d/Wednesday` — Changes the day of the first lesson of the first student to Wednesday.
+* `editlesson 2 1 start/14:00 end/16:00` — Changes the timing of the first lesson of the second student to 2:00 PM - 4:00 PM.
+* `editlesson 3 2 sub/Chemistry d/Friday start/09:00 end/11:00` — Changes the subject, day, and timing of the second lesson of the third student.
+
+
+|                      Before                       |                        After                         |
+|:-------------------------------------------------:|:----------------------------------------------------:|
+| ![before editlesson](images/BeforeEditLesson.png) | ![result for editlesson](images/AfterEditLesson.png) |
+|       _Before editing lesson of Alex Yeoh._       |      _After editing lesson day for Alex Yeoh._       |
 
 ### Clearing all persons : `clear`
 
@@ -491,6 +538,7 @@ Each entry in `subjects` defines a distinct academic subject.
 | **Delete Subject** | `delsub INDEX`<br>e.g., `delsub 2`                                                                                                                                       |
 | **Add Lesson**     | `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`<br>e.g., `addlesson 1 sub/Mathematics d/Monday start/12:00 end/13:00`                          |
 | **Delete Lesson**  | `dellesson STUDENT_INDEX LESSON_INDEX`<br>e.g., `dellesson 1 2`                                                                                                          |
+| **Edit Lesson**    | `editlesson STUDENT_INDEX LESSON_INDEX [sub/SUBJECT] [d/DAY] [start/START_TIME] [end/END_TIME]`<br>e.g., `editlesson 1 1 d/Tuesday`                                      |
 | **Clear**          | `clear`                                                                                                                                                                  |
 | **Help**           | `help`                                                                                                                                                                   |
 | **Exit**           | `exit`                                                                                                                                                                   |
