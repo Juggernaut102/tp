@@ -44,8 +44,8 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 EduDex *--> "1" UniquePersonList
 EduDex *--> "1" UniqueSubjectList
 
-UniquePersonList --> "~* all" Person
-UniqueSubjectList --> "~* all" Subject
+UniquePersonList --> "~*" Person
+UniqueSubjectList --> "~*" Subject
 
 Person *--> Name
 Person *--> Phone
@@ -62,9 +62,9 @@ UniquePersonList -[hidden]right-> I
 UniqueSubjectList -[hidden]right-> I
 Subject -[hidden]right-> Person
 
-Name -[hidden]right-> Phone
+Name -[hidden]right-> Phonex
 Phone -[hidden]right-> Address
 
-ModelManager --> "~* filtered" Person
-ModelManager --> "~* filtered" Subject
+ModelManager --> "~* filtered list" Person
+ModelManager --> "~* filtered list" Subject
 @enduml

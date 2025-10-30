@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/edudex/tree/master/src/main/java/seedu/edudex/Main.java) and [`MainApp`](https://github.com/se-edu/edudex/tree/master/src/main/java/seedu/edudex/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +67,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/edudex/tree/master/src/main/java/seedu/edudex/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/edudex/tree/master/src/main/java/seedu/edudex/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/edudex/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,7 +84,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/edudex/tree/master/src/main/java/seedu/edudex/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -116,7 +116,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/edudex/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -139,7 +139,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/edudex/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -157,99 +157,6 @@ Classes used by multiple components are in the `seedu.edudex.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
-
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedEduDex`. It extends `EduDex` with an undo/redo history, stored internally as an `eduDexStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedEduDex#commit()` — Saves the current EduDex state in its history.
-* `VersionedEduDex#undo()` — Restores the previous EduDex state from its history.
-* `VersionedEduDex#redo()` — Restores a previously undone EduDex state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitEduDex()`, `Model#undoEduDex()` and `Model#redoEduDex()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedEduDex` will be initialized with the initial EduDex state, and the `currentStatePointer` pointing to that single EduDex state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th person in EduDex. The `delete` command calls `Model#commitEduDex()`, causing the modified state of EduDex after the `delete 5` command executes to be saved in the `eduDexStateList`, and the `currentStatePointer` is shifted to the newly inserted EduDex state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitEduDex()`, causing another modified EduDex state to be saved into the `eduDexStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitEduDex()`, so EduDex state will not be saved into the `eduDexStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoEduDex()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous EduDex state, and restores EduDex to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial EduDex state, then there are no previous EduDex states to restore. The `undo` command uses `Model#canUndoEduDex()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoEduDex()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores EduDex to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `eduDexStateList.size() - 1`, pointing to the latest EduDex state, then there are no undone EduDex states to restore. The `redo` command uses `Model#canRedoEduDex()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify EduDex, such as `list`, will usually not call `Model#commitEduDex()`, `Model#undoEduDex()` or `Model#redoEduDex()`. Thus, the `eduDexStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitEduDex()`. Since the `currentStatePointer` is not pointing at the end of the `eduDexStateList`, all EduDex states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire EduDex.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
 
 ### Find feature (Enhanced)
 
@@ -366,23 +273,6 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 2. Extracts the target `Person` using the given student index.
 3. Creates a modified copy of the `Person` with the target lesson removed.
 4. Replaces the old person with the new one using `model.setPerson()`.
-
----
-
-### Summary
-
-| Command         | Function | Example         | Output |
-|-----------------|-----------|-----------------|---------|
-| `find d/Friday` | Find students by lesson day | `find d/Friday` | Lists all students with Friday lessons |
-| `find sub/Math`  | Find students by subject | `find sub/Math` | Lists students taking Math |
-| `dellesson 1 1` | Delete specific lesson | `dellesson 1 1` | Deletes the 1st lesson of the 1st student |
-
----
-
-### Example activity flow
-
-<puml src="diagrams/FindAndDeleteLessonActivityDiagram.puml" width="400" />
-
 ---
 
 ### Example test cases
@@ -394,14 +284,6 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 | Delete valid lesson | `dellesson 1 2`    | Deletes 2nd lesson of 1st student |
 | Invalid student index | `dellesson 0 1`    | Error: Invalid student index |
 | Invalid lesson index | `dellesson 1 5`    | Error: Invalid lesson index |
-
----
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -420,7 +302,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* freelance tutor
+* freelance tutor teaching primary school students
 * has a need to manage a significant number of students
 * teaches multiple subjects at different times
 * prefer desktop apps over other types
@@ -428,28 +310,28 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: Provides fast access to student details such as subjects taken, managing tuition fees, 
-viewing grades and optimised to those who prefer a CLI
+**Value proposition**: Provides fast access to student details such as subjects taught, lessons taken, school name
+and optimised to those who prefer a CLI
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                 | I want to …​                                 | So that I can…​                                           |
-|----------|-----------------------------------------|----------------------------------------------|-----------------------------------------------------------|
-| `* * *`  | tutor                                   | add a student entry into the dataset         | start keeping track of that student's contact information |
-| `* * *`  | tutor                                   | view my students' contacts                   | see my students' contact information all at once          |
-| `* * *`  | tutor                                   | exit the program                             | close the program when I’m done                           |
-| `* * *`  | tutor who has a student who is quitting | delete the student's contact                 | ensure PDPA compliance and clean up my EduDex       |
-| `* *`    | new user                                | view a help page for the usage of the app    | understand how to navigate EduDex                         |
-| `* *`    | new user                                | set my profile with subjects and hourly rate | customise the app to my preference                        |
-| `* *`    | tutor                                   | get help for specific commands I enter       | see what fields I have entered incorrectly                |
-| `* *`    | tutor                                   | search for my students' names                | find their contact information                            |
-| `*`      | tutor who wants to charge students      | assign rates for subjects I’m teaching       | better keep track of my earnings                          |
-| `*`      | tutor who has changed tuition fees      | check how much I earn per week               | track money earned from tuition lessons                   |
-
-*{More to be added}*
+| Priority | As a …​                                 | I want to …​                              | So that I can…​                                           |
+|----------|-----------------------------------------|-------------------------------------------|-----------------------------------------------------------|
+| `* * *`  | tutor                                   | add a student entry into the dataset      | start keeping track of that student's contact information |
+| `* * *`  | tutor                                   | view my students' contacts                | see my students' contact information all at once          |
+| `* * *`  | tutor                                   | exit the program                          | close the program when I’m done                           |
+| `* * *`  | tutor who has a student who is quitting | delete the student's contact              | ensure PDPA compliance and clean up my EduDex             |
+| `* *`    | new user                                | view a help page for the usage of the app | understand how to navigate EduDex                         |
+| `* *`    | new user                                | set my profile with subjects I teach      | customise the app to subjects I teach                     |
+| `* *`    | tutor                                   | get help for specific commands I enter    | see what fields I have entered incorrectly                |
+| `* *`    | tutor                                   | search for my students' names             | find their contact information                            |
+| `* *`    | tutor                                   | search for my lessons for the day         | better plan my personal time and schedule                 |
+| `* *`    | tutor                                   | search for my lessons for each subject    | better allocate my time for each subject                  |
+| `* *`    | tutor who wants to view her workload    | filter by subject	                        | see which subjects are most popular                       |
+| `*`      | tutor who has changed tuition fees      | check how much I earn per week            | track money earned from tuition lessons                   |
 
 ### Use cases
 
@@ -486,7 +368,6 @@ Use case ends.
     - 2d1. EduDex shows error with correct command format  
       Use case ends.
 
----
 
 ## Use Case 2: List All Students
 
@@ -500,19 +381,13 @@ Use case ends.
 3. EduDex displays all students in a formatted list  
 Use case ends.
 
-**Extensions:**
-- **3a. No students in the system**
-    - 3a1. EduDex shows message: *"No students found. Use 'add' to add your first student."*  
-     Use case ends
-
----
 
 ## Use Case 3: Delete a Student
 
 **Preconditions:**
 - User has launched the EduDex application
 - User is at the command prompt
-- There is at least one student in the system
+- At least one student exists in the list
 
 **Main Success Scenario:**
 1. User enters `list` to view current students and their indices
@@ -530,13 +405,45 @@ Use case ends.
     - 2b1. EduDex shows error: *"The student index provided is invalid"*  
       Use case ends.
 
-- **2c. User enters delete without viewing list first**
-    - 2c1. EduDex shows error: *"Please use 'list' to view students first"*  
+
+## Use Case 4: Find by Name
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+
+**Main Success Scenario:**
+1. User enters `find alice`.
+2. EduDex performs a case-insensitive search over names.
+3. EduDex filters the list to students whose names contain “alice”.
+4. EduDex displays the filtered list and a result summary (e.g., “3 students listed”).  
+   Use case ends.
+
+**Postconditions:**
+- Current list view shows only matched students.
+
+## Use Case 5: Find by Day
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+- At least one student has at least one lesson scheduled.
+
+**Main Success Scenario:**
+1. User enters `find d/Monday`.
+2. EduDex validates the day value.
+3. EduDex filters to students who have ≥1 lesson on Monday.
+4. EduDex displays the filtered list and a result summary.  
+   Use case ends.
+
+**Extensions:**
+- **2a. Invalid day value**
+    - 2a1. EduDex shows error: *"Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday."*  
       Use case ends.
 
----
-
-## Use Case 4: Exit the Application
+## Use Case 6: Exit the Application
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -555,9 +462,7 @@ Use case ends.
     - 2a3. User confirms
     - Use case resumes from step 3.
 
----
-
-## Use Case 5: Handle Invalid Command
+## Use Case 7: Handle Invalid Command
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -578,6 +483,8 @@ Use case ends.
     - 2b1. EduDex suggests possible correct commands  
       Use case ends.
 
+---
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -590,7 +497,6 @@ Use case ends.
 8. Application should be able to operate without an internet connection. 
 9. All similar operations should follow the same command patterns and provide similar output formats
 10. Product developed in a breadth-first incremental manner, with each increment being a usable product that satisfies all the requirements identified up to that point.
-
 
 ### Glossary
 
@@ -632,8 +538,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
@@ -649,12 +553,52 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Finding Persons by Name
+
+1. Finding a person by a single keyword
+
+    1. Prerequisites: Ensure the EduDex application is launched with at least one student in the list.
+
+    1. Test case: `find alice`  
+       Expected: All students whose names contain "alice" (case-insensitive) are listed. Example: "Alice Tan", "Alicia Wong". Status message shows the number of students listed.
+
+    1. Test case: `find ALICE`  
+       Expected: Same results as above (case-insensitive behavior).
+
+    1. Test case: `find bob` (when no “bob” exists)  
+       Expected: list panel becomes empty.
+
+### Finding Persons by Day
+
+1. Finding students with lessons on a specific day
+
+    1. Prerequisites: At least one student has a lesson on Monday.
+
+    1. Test case: `find d/Monday`  
+       Expected: Only students with lessons scheduled on Monday are listed.
+
+    1. Test case: `find d/monDAY`  
+       Expected: Same results as above (case-insensitive).
+
+    1. Test case: `find d/Funday`  
+       Expected: Error message displayed — “Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday” No change to list.
+
+    1. Test case: `find d/Sunday` (no students with Sunday lessons)  
+       Expected: list panel becomes empty.
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Close EduDex (if running). 
+   2. Navigate to [JAR file location]/data/. 
+   3. Move edudex.json outside the data folder, or delete it. 
+   4. Launch EduDex by double-clicking the JAR. 
+     Expected: EduDex detects that the data file is missing and starts with an empty data file.
+   5. A new edudex.json is created under [JAR file location]/data/.
 
-1. _{ more test cases …​ }_
+<box type="info" seamless>
+
+**Note:** This aligns with the guide’s warning that if the data file is not valid for use, EduDex will start with an empty data file on the next run.
+
+</box>

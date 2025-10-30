@@ -19,7 +19,7 @@ Person *--> Name
 Person *--> Phone
 Person *--> School
 Person *--> Address
-Person --> "    0...*" Lesson
+Person *--> "    0...*" Lesson
 
 Lesson *--> "1" Subject
 Lesson *--> "1  " Day
