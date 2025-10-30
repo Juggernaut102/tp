@@ -90,7 +90,8 @@ public class DeleteLessonCommand extends Command {
      *
      * @param other the object to compare against.
      * @return true if both commands have the same indices, false otherwise.
-     */    @Override
+     */
+    @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteLessonCommand
