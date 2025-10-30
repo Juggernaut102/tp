@@ -92,7 +92,7 @@ public class FindCommand extends Command {
         case SUBJECT:
             String subjectName = subjectPredicate.getSubjectKeyword();
             if (!model.hasSubject(new Subject(subjectName))) {
-                throw new CommandException("This subject is not in the subject list.");
+                throw new CommandException(Messages.MESSAGE_INVALID_SUBJECT);
             }
             model.updateFilteredPersonList(subjectPredicate);
             model.sortFilteredPersonList(new SubjectComparator());

@@ -27,6 +27,8 @@ public class Messages {
             + "Add lessons using the addlesson command.";
     public static final String MESSAGE_EMPTY_SUBJECT =
             "Subject cannot be empty. Please enter one of the subjects listed (e.g., find sub/Math).";
+    public static final String MESSAGE_INVALID_SUBJECT =
+            "This subject is not in the subject list. Please enter one of the subjects listed (e.g., find sub/Math).";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
