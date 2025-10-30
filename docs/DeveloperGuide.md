@@ -440,7 +440,7 @@ Use case ends.
 
 **Extensions:**
 - **2a. Invalid day value**
-    - 2a1. EduDex shows error: *"Please enter a valid day of the week (Monday…Sunday)."*  
+    - 2a1. EduDex shows error: *"Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday."*  
       Use case ends.
 
 ## Use Case 6: Exit the Application
@@ -581,7 +581,7 @@ testers are expected to do more *exploratory* testing.
        Expected: Same results as above (case-insensitive).
 
     1. Test case: `find d/Funday`  
-       Expected: Error message displayed — “Please enter a valid day of the week (Monday…Sunday).” No change to list.
+       Expected: Error message displayed — “Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday” No change to list.
 
     1. Test case: `find d/Sunday` (no students with Sunday lessons)  
        Expected: list panel becomes empty.
