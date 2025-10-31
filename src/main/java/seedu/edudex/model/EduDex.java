@@ -9,6 +9,7 @@ import seedu.edudex.commons.util.ToStringBuilder;
 import seedu.edudex.model.person.Lesson;
 import seedu.edudex.model.person.Person;
 import seedu.edudex.model.person.UniquePersonList;
+import seedu.edudex.model.subject.Subject;
 import seedu.edudex.model.subject.UniqueSubjectList;
 
 /**
@@ -56,7 +57,7 @@ public class EduDex implements ReadOnlyEduDex {
      * Replaces the contents of the subject list with {@code subjects}.
      * {@code subjects} must not contain duplicate subjects.
      */
-    public void setSubjects(List<seedu.edudex.model.subject.Subject> subjects) {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects.setSubjects(subjects);
     }
 
@@ -75,7 +76,7 @@ public class EduDex implements ReadOnlyEduDex {
     /**
      * Returns true if a subject with the same name as {@code subject} exists in EduDex.
      */
-    public boolean hasSubject(seedu.edudex.model.subject.Subject subject) {
+    public boolean hasSubject(Subject subject) {
         requireNonNull(subject);
         return subjects.contains(subject);
     }
@@ -84,7 +85,7 @@ public class EduDex implements ReadOnlyEduDex {
      * Adds a subject to EduDex.
      * The subject must not already exist in EduDex.
      */
-    public void addSubject(seedu.edudex.model.subject.Subject s) {
+    public void addSubject(Subject s) {
         subjects.add(s);
     }
 
@@ -93,8 +94,7 @@ public class EduDex implements ReadOnlyEduDex {
      * {@code target} must exist in EduDex.
      * The subject name of {@code editedSubject} must not be the same as another existing subject in EduDex.
      */
-    public void setSubject(seedu.edudex.model.subject.Subject target,
-                           seedu.edudex.model.subject.Subject editedSubject) {
+    public void setSubject(Subject target, Subject editedSubject) {
         requireNonNull(editedSubject);
 
         subjects.setSubject(target, editedSubject);
@@ -104,7 +104,7 @@ public class EduDex implements ReadOnlyEduDex {
      * Removes {@code key} from this {@code EduDex}.
      * {@code key} must exist in EduDex.
      */
-    public void removeSubject(seedu.edudex.model.subject.Subject key) {
+    public void removeSubject(Subject key) {
         subjects.remove(key);
     }
 
@@ -161,7 +161,7 @@ public class EduDex implements ReadOnlyEduDex {
     }
 
     @Override
-    public ObservableList<seedu.edudex.model.subject.Subject> getSubjectList() {
+    public ObservableList<Subject> getSubjectList() {
         return subjects.asUnmodifiableObservableList();
     }
 
