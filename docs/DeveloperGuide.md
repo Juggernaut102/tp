@@ -593,8 +593,8 @@ testers are expected to do more *exploratory* testing.
    1. Close EduDex (if running). 
    2. Navigate to [JAR file location]/data/. 
    3. Move edudex.json outside the data folder, or delete it. 
-   4. Launch EduDex by double-clicking the JAR. 
-     Expected: EduDex detects that the data file is missing and starts with an empty data file.
+   4. Launch EduDex by double-clicking the JAR.  
+Expected: EduDex detects that the data file is missing and starts with an empty data file.
    5. A new edudex.json is created under [JAR file location]/data/.
 
 <box type="info" seamless>
