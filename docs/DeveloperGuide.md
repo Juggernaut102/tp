@@ -345,7 +345,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 - User has the student's information ready
 
 **Main Success Scenario:**
-1. User enters the `add` command with all required parameters
+1. User requests to add a student contact with all required parameters
 2. EduDex validates the parameters
 3. EduDex adds the student to the contact list
 4. EduDex shows a success message with the added student's details  
@@ -353,19 +353,16 @@ Use case ends.
 
 **Extensions:**
 - **2a. Invalid phone number format**
-    - 2a1. EduDex shows error: *"Phone number must contain only numbers!"*  
-      Use case ends.
+    - 2a1. EduDex shows error an error message
 
 - **2b. Invalid time format**
-    - 2b1. EduDex shows error: *"Enter the time as HHMM (24-hour format)"*  
-      Use case ends.
+    - 2b1. EduDex shows an error message
 
 - **2c. Invalid day of week**
-    - 2c1. EduDex shows error: *"Please enter a valid day of the week"*  
-      Use case ends.
+    - 2c1. EduDex shows an error message
 
 - **2d. Missing required parameters**
-    - 2d1. EduDex shows error with correct command format  
+    - 2d1. EduDex shows an error message
       Use case ends.
 
 
@@ -376,7 +373,7 @@ Use case ends.
 - User is at the command prompt
 
 **Main Success Scenario:**
-1. User enters the `list` command
+1. User requests to list students 
 2. EduDex retrieves all student contacts
 3. EduDex displays all students in a formatted list  
 Use case ends.
@@ -390,19 +387,23 @@ Use case ends.
 - At least one student exists in the list
 
 **Main Success Scenario:**
-1. User enters `list` to view current students and their indices
-2. User enters `delete INDEX` (where `INDEX` is a valid number)
+1. User requests to <u>list students</u>
+2. User requests to delete a specific student in the list using index in the list
 3. EduDex removes the student at the specified index
 4. EduDex shows a confirmation message  
 Use case ends.
 
 **Extensions:**
 - **2a. Invalid index format (non-number)**
-    - 2a1. EduDex shows error: *"INDEX must be a positive integer"*  
+    - 2a1. EduDex shows an error message 
       Use case ends.
 
 - **2b. Index out of bounds**
-    - 2b1. EduDex shows error: *"The student index provided is invalid"*  
+    - 2b1. EduDex shows an error message
+      Use case ends.
+
+- **2c. Missing required parameters**
+    - 2d1. EduDex shows an error message
       Use case ends.
 
 
@@ -414,13 +415,22 @@ Use case ends.
 - At least one student exists in the list
 
 **Main Success Scenario:**
-1. User enters `find alice`.
+1. User request to find a student by name.
 2. EduDex performs a case-insensitive search over names.
-3. EduDex filters the list to students whose names contain “alice”.
-4. EduDex displays the filtered list and a result summary (e.g., “3 students listed”).  
+3. EduDex filters the list to students to match with the provided name
+4. EduDex displays the filtered list and a result summary
    Use case ends.
 
-**Postconditions:**
+**Extensions**
+- **1a. Missing required parameters**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **4a. No student found**
+    - 4a1. EduDex return an empty list
+      Use case ends.
+
+**Post conditions:**
 - Current list view shows only matched students.
 
 ## Use Case 5: Find by Day
@@ -432,25 +442,304 @@ Use case ends.
 - At least one student has at least one lesson scheduled.
 
 **Main Success Scenario:**
-1. User enters `find d/Monday`.
+1. User requests to find students by their lesson day 
 2. EduDex validates the day value.
-3. EduDex filters to students who have ≥1 lesson on Monday.
+3. EduDex filters the list to match with provided day.
 4. EduDex displays the filtered list and a result summary.  
    Use case ends.
 
 **Extensions:**
+- **1a. Missing day parameter**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+  
 - **2a. Invalid day value**
-    - 2a1. EduDex shows error: *"Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday."*  
+    - 2a1. EduDex shows an error message
       Use case ends.
 
-## Use Case 6: Exit the Application
+- **4a. No student found with the specified day**
+    - 4a1. EduDex return an empty list
+      Use case ends.
+
+## Use Case 6: Find Students by Subject
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+- At least one student has at least one lesson scheduled
+
+**Main Success Scenario:**
+1. User requests to find students by their lesson subject
+2. EduDex performs a search over lesson subjects
+3. EduDex filters the list to students with lessons matching the provided subject
+4. EduDex displays the filtered list and a result summary  
+   Use case ends.
+
+**Extensions:**
+- **1b. Missing subject parameter**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **5a. No students found with the specified subject**
+    - 5a1. EduDex returns an empty list
+      Use case ends.
+
+## Use Case 7: Edit a Student's Information
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+
+**Main Success Scenario:**
+1. User requests to <u>list students</u>
+2. User requests to edit a specific student's information using the index
+3. EduDex validates the provided parameters
+4. EduDex updates the student's information
+5. EduDex shows a success message with the updated details  
+   Use case ends.
+
+**Extensions:**
+- **1a. Missing student index**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **2a. Invalid index format (non-number)**
+    - 2a1. EduDex shows an error message
+      Use case ends.
+
+- **2b. Index out of bounds**
+    - 2b1. EduDex shows an error message
+      Use case ends.
+
+- **3a. No fields provided to edit**
+    - 3a1. EduDex shows an error message
+      Use case ends.
+
+- **3b. Invalid phone number format**
+    - 3b1. EduDex shows an error message
+      Use case ends.
+
+
+**Post conditions:**
+- Student's information is updated in the system
+
+## Use Case 8: Add a Subject
 
 **Preconditions:**
 - User has launched the EduDex application
 - User is at the command prompt
 
 **Main Success Scenario:**
-1. User enters the `exit` command
+1. User requests to add a subject with the subject name
+2. EduDex validates the subject name
+3. EduDex checks for duplicate subjects 
+4. EduDex adds the subject to the subject list
+5. EduDex shows a success message with the added subject  
+   Use case ends.
+
+**Extensions:**
+- **1a. Missing subject name**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **2a. Invalid subject name (non-alphanumeric)**
+    - 2a1. EduDex shows an error message
+      Use case ends.
+
+- **3a. Subject already exists**
+    - 3a1. EduDex shows an error message
+      Use case ends.
+
+
+## Use Case 9: Delete a Subject
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one subject exists in the subject list
+
+**Main Success Scenario:**
+1. User views the subject list
+2. User requests to delete a specific subject using its index
+3. EduDex validates the index
+4. EduDex removes the subject from the subject list
+5. EduDex shows a confirmation message  
+   Use case ends.
+
+**Extensions:**
+- **1a. Missing subject index**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **2a. Invalid index format (non-number)**
+    - 2a1. EduDex shows an error message
+      Use case ends.
+
+- **2b. Index out of bounds**
+    - 2b1. EduDex shows an error message
+      Use case ends.
+
+**Post conditions:**
+- Subject is removed from the system
+- Any lessons using this subject remain unchanged (students may have lessons with deleted subjects)
+
+
+## Use Case 10: Add a Lesson to a Student
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+- At least one subject exists in the subject list
+
+**Main Success Scenario:**
+1. User requests to <u>list students</u>
+2. User requests to add a lesson to a specific student with required parameters
+3. EduDex validates all parameters
+4. EduDex checks for lesson conflicts with other students
+5. EduDex adds the lesson to the student
+6. EduDex shows a success message with the lesson details  
+   Use case ends.
+
+**Extensions:**
+- **1a. Missing required field**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **2a. Invalid student index**
+    - 2a1. EduDex shows an error message
+      Use case ends.
+
+- **3a. Subject does not exist in subject list**
+    - 3a1. EduDex shows an error message
+      Use case ends.
+
+- **3b. Invalid day of week**
+    - 3b1. EduDex shows an error message
+      Use case ends.
+
+- **3c. Invalid time format**
+    - 3c1. EduDex shows an error message
+      Use case ends.
+
+- **3d. End time is before or equal to start time**
+    - 3d1. EduDex shows an error message
+      Use case ends.
+
+- **4a. Lesson conflicts with another student's lesson**
+    - 4a1. EduDex shows an error message with conflicting student details
+      Use case ends.
+
+
+## Use Case 11: Delete a Lesson from a Student
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+- The student has at least one lesson
+
+**Main Success Scenario:**
+1. User requests to <u>list students</u>
+2. User views the student's lessons in the list
+3. User requests to delete a specific lesson using student index and lesson index
+4. EduDex validates both indices
+5. EduDex removes the lesson from the student
+6. EduDex shows a confirmation message  
+   Use case ends.
+
+**Extensions:**
+- **1a. Missing student index or lesson index**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **3a. Invalid student index format (non-number)**
+    - 3a1. EduDex shows an error message
+      Use case ends.
+
+- **3b. Student index out of bounds**
+    - 3b1. EduDex shows an error message
+      Use case ends.
+
+- **3c. Invalid lesson index format (non-number)**
+    - 3c1. EduDex shows an error message
+      Use case ends.
+
+- **3d. Lesson index out of bounds**
+    - 3d1. EduDex shows an error message
+      Use case ends.
+
+
+## Use Case 12: Edit a Student's Lesson
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+- At least one student exists in the list
+- The student has at least one lesson
+- At least one subject exists in the subject list
+
+**Main Success Scenario:**
+1. User requests to <u>list students</u>
+2. User views the student's lessons in the list
+3. User requests to edit a specific lesson using student index and lesson index
+4. EduDex validates both indices and the provided lesson fields
+5. EduDex checks for lesson conflicts with other students
+6. EduDex updates the lesson with the new information
+7. EduDex shows a success message with the updated lesson details  
+   Use case ends.
+
+**Extensions:**
+- **1a. Missing student index or lesson index**
+    - 1a1. EduDex shows an error message
+      Use case ends.
+
+- **3a. Invalid student index**
+    - 3a1. EduDex shows an error message
+      Use case ends.
+
+- **3b. Invalid lesson index**
+    - 3b1. EduDex shows an error message
+      Use case ends.
+
+- **4a. No fields provided to edit**
+    - 4a1. EduDex shows an error message
+      Use case ends.
+
+- **4b. User attempts to edit both person and lesson fields**
+    - 4b1. EduDex shows an error message
+      Use case ends.
+
+- **4c. Subject does not exist in subject list**
+    - 4c1. EduDex shows an error message 
+      Use case ends.
+
+- **4d. Invalid day of week**
+    - 4d1. EduDex shows an error message
+      Use case ends.
+
+- **4e. Invalid time format**
+    - 4e1. EduDex shows an error message
+      Use case ends.
+
+- **4f. End time is before or equal to start time**
+    - 4f1. EduDex shows an error message
+      Use case ends.
+
+- **5a. Edited lesson conflicts with another student's lesson**
+    - 5a1. EduDex shows an error message 
+      Use case ends.
+
+## Use Case 13 : Exit the Application
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+
+**Main Success Scenario:**
+1. User requests to exit the application
 2. EduDex displays a goodbye message
 3. EduDex closes the application  
 Use case ends.
@@ -461,27 +750,6 @@ Use case ends.
     - 2a2. EduDex asks for confirmation
     - 2a3. User confirms
     - Use case resumes from step 3.
-
-## Use Case 7: Handle Invalid Command
-
-**Preconditions:**
-- User has launched the EduDex application
-- User is at the command prompt
-
-**Main Success Scenario:**
-1. User enters an unrecognized command
-2. EduDex shows error: *"Invalid command. Try again"*
-3. EduDex shows available command formats as hints  
-Use case ends.
-
-**Extensions:**
-- **2a. Command is partially correct**
-    - 2a1. EduDex provides specific error about the incorrect parameter  
-      Use case ends.
-
-- **2b. Command has typo**
-    - 2b1. EduDex suggests possible correct commands  
-      Use case ends.
 
 ---
 
