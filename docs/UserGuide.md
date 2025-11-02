@@ -108,6 +108,11 @@ Format: `addsub SUBJECT`
 Examples:
 * `addsub English`
 * `addsub MATH`
+  
+  <box type="tip" seamless>
+
+**Tip:** You can adjust the size of the subject panel and the student panel as necessary by dragging the divider between them.
+  </box>
 
 ![addSubSuccess](images/addSub.png)
 
