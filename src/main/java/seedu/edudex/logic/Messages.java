@@ -30,7 +30,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_SUBJECT =
             "This subject is not in the subject list.\n"
             + "Please enter one of the subjects listed (e.g., find sub/Math), "
-            + "or add a new subject using \"addsub SUBJECT\"";
+            + "or add a new subject (e.g. addsub SUBJECT)";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

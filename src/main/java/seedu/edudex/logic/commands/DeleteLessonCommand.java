@@ -32,7 +32,7 @@ public class DeleteLessonCommand extends Command {
     private final Index lessonIndex;
 
     /**
-     * Creates a DeleteLessonCommand to remove a lesson from a student.
+     * Constructs a {@code DeleteLessonCommand} to remove a lesson from a student.
      *
      * @param studentIndex index of the student in the displayed list
      * @param lessonIndex index of the lesson to delete from the student
@@ -43,11 +43,12 @@ public class DeleteLessonCommand extends Command {
     }
 
     /**
-     * Executes the deleteLesson command to remove a specific lesson
-     * from the specified student in EduDex.
+     * Executes the command to delete a lesson from a student.
+     * Retrieves the student and lesson from the model, removes the lesson,
+     * and updates the student in the model.
      *
      * @param model {@code Model} which the command should operate on
-     * @return CommandResult with the success message
+     * @return {@code CommandResult} indicating success.
      * @throws CommandException if the student index or lesson index is invalid
      */
     @Override
@@ -83,6 +84,13 @@ public class DeleteLessonCommand extends Command {
                 studentToEdit.getName()));
     }
 
+    /**
+     * Checks whether this command is equal to another object.
+     * Two {@code DeleteLessonCommand} objects are equal if they have the same student and lesson indices.
+     *
+     * @param other the object to compare against.
+     * @return true if both commands have the same indices, false otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this
@@ -91,6 +99,11 @@ public class DeleteLessonCommand extends Command {
                 && lessonIndex.equals(((DeleteLessonCommand) other).lessonIndex));
     }
 
+    /**
+     * Returns a string representation of this command for debugging.
+     *
+     * @return a string containing the student and lesson indices.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)

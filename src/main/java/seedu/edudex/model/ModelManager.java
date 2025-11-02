@@ -197,6 +197,12 @@ public class ModelManager implements Model {
         isSubjectFilteredView = false;
     }
 
+    /**
+     * Sorts the filtered list of persons using the specified comparator.
+     * This affects the order in which persons are displayed in the UI.
+     *
+     * @param comparator Comparator used to sort the filtered person list.
+     */
     @Override
     public void sortFilteredPersonList(Comparator<Person> comparator) {
         requireNonNull(comparator);
@@ -204,6 +210,12 @@ public class ModelManager implements Model {
         isSubjectFilteredView = false;
     }
 
+    /**
+     * Returns the sorted list of persons currently displayed.
+     * This list reflects the latest sorting applied via {@link #sortFilteredPersonList}.
+     *
+     * @return An observable list of sorted persons.
+     */
     @Override
     public ObservableList<Person> getSortedPersonList() {
         return sortedPersons;
@@ -233,12 +245,18 @@ public class ModelManager implements Model {
 
 
     /**
-     * Filters and sorts lessons for each person in the filtered list,
+     * Filters and sorts lessons for each {@code Person} in the filtered list,
      * keeping only lessons that match the specified subject (case-insensitive).
+     * <p>
+     * Matching lessons are sorted by day (Monday → Sunday) and then by start time.
+     * Persons without any matching lessons are excluded from the result.
+     * </p>
      *
-     * @return
+     * <p>This operation creates deep copies of matching persons and stores them in
+     * {@code displayPersons}, which becomes the active view returned by {@link #getFilteredPersonList()}.</p>
+     *
+     * @param subjectKeyword The subject name to filter lessons by.
      */
-
     @Override
     public void sortLessonsForEachPersonBySubject(String subjectKeyword) {
         requireNonNull(subjectKeyword);

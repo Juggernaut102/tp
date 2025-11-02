@@ -17,8 +17,8 @@ import seedu.edudex.model.person.SubjectMatchesPredicate;
 import seedu.edudex.model.subject.Subject;
 
 /**
- * Finds and lists all persons in EduDex whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all persons in EduDex whose name, lesson day, or subject matches the given keyword(s).
+ * Matching is case-insensitive and depends on the type of search specified.
  */
 public class FindCommand extends Command {
 
@@ -43,6 +43,9 @@ public class FindCommand extends Command {
 
     private final SearchType searchType;
 
+    /**
+     * Represents the type of search to perform: by name, day, or subject.
+     */
     private enum SearchType {
         NAME,
         DAY,
@@ -50,9 +53,9 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Constructor for finding by name.
+     * Constructs a {@code FindCommand} to search by name.
      *
-     * @param predicate The predicate to filter persons by name keywords.
+     * @param predicate predicate to match person names against keywords.
      */
     public FindCommand(NameContainsKeywordsPredicate predicate) {
         this.namePredicate = predicate;
@@ -62,7 +65,9 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Constructor for finding by day.
+     * Constructs a {@code FindCommand} to search by lesson day.
+     *
+     * @param predicate Predicate to match lesson days.
      */
     public FindCommand(DayMatchesPredicate predicate) {
         this.dayPredicate = predicate;
@@ -72,7 +77,9 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Constructor for find by subject
+     * Constructs a {@code FindCommand} to search by lesson subject.
+     *
+     * @param predicate Predicate to match lesson subjects.
      */
     public FindCommand(SubjectMatchesPredicate predicate) {
         this.subjectPredicate = predicate;
@@ -81,6 +88,14 @@ public class FindCommand extends Command {
         this.searchType = SearchType.SUBJECT;
     }
 
+    /**
+     * Executes the find command based on the specified search type.
+     * Updates the filtered person list and sorts lessons accordingly.
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @return A {@code CommandResult} containing the number of persons listed.
+     * @throws CommandException If the subject does not exist in the model.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -110,13 +125,19 @@ public class FindCommand extends Command {
                 model.getFilteredPersonList().size()));
     }
 
+    /**
+     * Checks whether this {@code FindCommand} is equal to another object.
+     * Two {@code FindCommand} instances are equal if they have the same search type and predicate.
+     *
+     * @param other The object to compare against.
+     * @return True if both commands are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof FindCommand otherFindCommand)) {
             return false;
         }
@@ -127,6 +148,11 @@ public class FindCommand extends Command {
                 && Optional.ofNullable(subjectPredicate).equals(Optional.ofNullable(otherFindCommand.subjectPredicate));
     }
 
+    /**
+     * Returns a string representation of this command for debugging.
+     *
+     * @return A string showing the search type and predicate used.
+     */
     @Override
     public String toString() {
         Object predicateToShow;
