@@ -9,8 +9,8 @@ import static seedu.edudex.commons.util.AppUtil.checkArgument;
  */
 public class School {
     public static final String MESSAGE_CONSTRAINTS =
-            "Schools should only contain alphanumeric characters, special characters (except '/') and " +
-                    "spaces, and it should not be blank";
+            "Schools should only contain alphanumeric characters, special characters (except '/') and "
+                    + "spaces, and it should not be blank";
 
     /**
      * The first character of the school name must not be a whitespace,
