@@ -501,8 +501,10 @@ Use case ends.
 ### Glossary
 
 * **CLI**: Command Line Interface. A text-based interface where users interact with a program by typing commands.
+* **GUI**: Graphical User Interface. A visual-based interface where users interact with a program by interacting with windows, icons and menus.
 * **Java**: The programming language used to implement this application.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **OOP**: Object Oriented Programming. A programming paradigm where the real world is represented as objects, with state and behaviour.
 * **Parameters**: Inputs provided to a command. A command may have zero or more parameters depending on its functionality.
 * **PDPA**: Personal Data Protection Act. A Singapore law that governs the collection, use, and disclosure of individuals’ personal data.
 * **Private contact detail**: A contact detail that is not meant to be shared with others
