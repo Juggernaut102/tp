@@ -321,8 +321,8 @@ Examples:
 <box type="warning" seamless>
 
 If an invalid index is entered:
-* EduDex will display **“Invalid student index.”** if `STUDENT_INDEX` exceeds the size of student list.
-* EduDex will display **“Invalid lesson index.”** if `LESSON_INDEX` exceeds the number of lessons for that student. 
+* EduDex will display **“The student index provided is invalid.”** if `STUDENT_INDEX` exceeds the size of student list.
+* EduDex will display **“The lesson index provided is invalid.”** if `LESSON_INDEX` exceeds the number of lessons for that student. 
 </box>
 
 |                          Before                          |                            After                             |
