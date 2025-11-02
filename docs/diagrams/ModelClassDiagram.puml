@@ -62,7 +62,7 @@ UniquePersonList -[hidden]right-> I
 UniqueSubjectList -[hidden]right-> I
 Subject -[hidden]right-> Person
 
-Name -[hidden]right-> Phonex
+Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
 
 ModelManager --> "~* filtered list" Person
