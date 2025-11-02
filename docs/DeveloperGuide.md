@@ -512,6 +512,11 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Future Improvements**
+
+1. **Allow deleting of subjects by name**: EduDex currently only supports deleting subjects by their <u>index</u> in the displayed list. Adding the ability to delete a subject directly by its <u>name</u> (e.g. deletesubject s/Math) would make the command more intuitive and user-friendly, especially when tutors manage many subjects. This enhancement will be considered for future versions.
+
+--------------------------------------------------------------------------------------------------------------------
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
