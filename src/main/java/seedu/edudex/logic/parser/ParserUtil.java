@@ -165,11 +165,11 @@ public class ParserUtil {
      */
     public static Subject parseSubjectName(String name) throws ParseException {
         requireNonNull(name);
-        String trimmedName = name.trim();
-        if (trimmedName.isEmpty() || !Subject.isValidSubjectName(trimmedName)) {
+        String trimConsecutiveWhiteSpaces = name.replaceAll("\\s+", " ").trim();
+        if (trimConsecutiveWhiteSpaces.isEmpty() || !Subject.isValidSubjectName(trimConsecutiveWhiteSpaces)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
         }
-        return new Subject(trimmedName);
+        return new Subject(trimConsecutiveWhiteSpaces);
     }
 
     /**
