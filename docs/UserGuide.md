@@ -191,6 +191,13 @@ Format:
 * To edit a student's **lesson details**, use the [`editlesson`](#editing-a-lesson-editlesson) command instead
 </box>
 
+<box type="tip" seamless>
+
+**Note:**
+* `INDEX` cannot exceed the maximum integer representable in Java, otherwise `INDEX` will not be 
+  treated as an integer
+</box>
+
 Examples:
 *  `edit 1 p/91234567 sch/Jurong Primary School` Edits the phone number and school of the 1st student to be `91234567` and `Jurong Primary School` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
@@ -249,6 +256,13 @@ Format: `delete INDEX`
 * `INDEX` must be a **positive integer** (1, 2, 3, …)
 * `INDEX` refers to the index number shown in the displayed student list
 
+<box type="tip" seamless>
+
+**Note:**
+* `INDEX` cannot exceed the maximum integer representable in Java, otherwise `INDEX` will not be
+  treated as an integer
+</box>
+
 <box type="warning" seamless>
 
 **Caution:**
@@ -271,6 +285,13 @@ Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME
 * `DAY` must be one of: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday (case-insensitive)
 * `START_TIME` and `END_TIME` must be in 24-hour format **HH:MM**
 * `START_TIME` must be earlier than `END_TIME`
+
+<box type="tip" seamless>
+
+**Note:**
+* `STUDENT_INDEX` cannot exceed the maximum integer representable in Java, otherwise `STUDENT_INDEX` will not be
+  treated as an integer
+</box>
 
 <box type="warning" seamless>
 
@@ -301,6 +322,12 @@ Format: `dellesson STUDENT_INDEX LESSON_INDEX`
 * `STUDENT_INDEX` refers to the student's position in the displayed list
 * `LESSON_INDEX` refers to the lesson's position within that student's lesson list
 
+<box type="tip" seamless>
+
+**Note:**
+* `STUDENT_INDEX` and `LESSON_INDEX` cannot exceed the maximum integer representable in Java,
+  otherwise they will not be treated as integers
+</box>
 
 <box type="info" seamless>
 
@@ -337,6 +364,13 @@ Format: `editlesson STUDENT_INDEX LESSON_INDEX [sub/SUBJECT] [d/DAY] [start/STAR
 * `LESSON_INDEX` refers to the lesson's position in that student's lesson list (shown in `list` command)
 * At least one optional field must be provided 
 * Lesson field constraints are the same as in the [`addlesson`](#adding-a-lesson-addlesson) command
+
+<box type="tip" seamless>
+
+**Note:**
+* `STUDENT_INDEX` and `LESSON_INDEX` cannot exceed the maximum integer representable in Java,
+  otherwise they will not be treated as integers
+</box>
 
 <box type="warning" seamless>
 
