@@ -153,6 +153,15 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 * A student can have any number of tags (including 0)
 </box>
 
+<box type="tip" seamless>
+
+**Tip for student names with special characters:**
+* Special characters such as `/` are not supported for names of students, as they may potentially
+  interfere with the command line syntax
+* For example, if you have a student whose name is "Raj S/O Muthu", consider abbreviating
+  "S/O" to "SO" instead
+</box>
+
 Examples:
 * `add n/John Doe p/98765432 sch/NUS a/John street, block 123`
 * `add n/Betsy Crowe sch/Queenstown Primary School a/Clementi p/1234567 t/weakInAlgebra`
@@ -196,6 +205,15 @@ Format:
 **Note:**
 * `INDEX` cannot exceed the maximum integer representable in Java, otherwise `INDEX` will not be 
   treated as an integer
+</box>
+
+<box type="tip" seamless>
+
+**Tip for student names with special characters:**
+* Special characters such as `/` are not supported for names of students, as they may potentially
+  interfere with the command line syntax
+* For example, if you have a student whose name is "Raj S/O Muthu", consider abbreviating
+  "S/O" to "SO" instead
 </box>
 
 Examples:
