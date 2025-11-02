@@ -337,7 +337,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `EduDex` and the **Actor** is the `user`, unless specified otherwise)
 
-## Use Case 1: Add a New Student
+#### Use Case 1: Add a New Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -369,7 +369,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 2: List All Students
+#### Use Case 2: List All Students
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -382,7 +382,7 @@ Use case ends.
 Use case ends.
 
 
-## Use Case 3: Delete a Student
+#### Use Case 3: Delete a Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -406,7 +406,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 4: Find by Name
+#### Use Case 4: Find by Name
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -423,7 +423,7 @@ Use case ends.
 **Postconditions:**
 - Current list view shows only matched students.
 
-## Use Case 5: Find by Day
+#### Use Case 5: Find by Day
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -443,7 +443,7 @@ Use case ends.
     - 2a1. EduDex shows error: *"Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday."*  
       Use case ends.
 
-## Use Case 6: Exit the Application
+#### Use Case 6: Exit the Application
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -462,7 +462,7 @@ Use case ends.
     - 2a3. User confirms
     - Use case resumes from step 3.
 
-## Use Case 7: Handle Invalid Command
+#### Use Case 7: Handle Invalid Command
 
 **Preconditions:**
 - User has launched the EduDex application
