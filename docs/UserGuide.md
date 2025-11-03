@@ -43,7 +43,7 @@ A GUI similar to the below should appear in a few seconds, with a pop-up asking 
 _Initial start-up of Edudex_
 
 <box type="info" seamless>
-Any reference of "Contact" is interchangeable with "Student" and "Person".
+Any reference of "Contact" is interchangeable with "Student" and "Person" in the rest of this User Guide.
 </box>
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
