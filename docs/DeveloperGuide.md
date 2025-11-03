@@ -762,7 +762,6 @@ Use case ends.
 **Main Success Scenario:**
 1. User enters an unrecognized command
 2. EduDex shows error: *"Invalid command. Try again"*
-3. EduDex shows available command formats as hints  
    Use case ends.
 
 **Extensions:**
