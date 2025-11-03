@@ -336,6 +336,7 @@ Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME
   * Example: A lesson from Monday 22:00 to Tuesday 02:00 should be:
     * Monday 22:00 to 23:59
     * Tuesday 00:00 to 02:00
+* Any 2 or more students can have the [**same**](#faq) lessons, with exactly the same subject, day, start time and end time.
 </box>
 
 Examples:
@@ -607,6 +608,10 @@ Each entry in `subjects` defines a distinct academic subject.
 **A**: EduDex is a contact management app just like your phone contact aimed to improve user convenience. In practice, tutors find it difficult to quickly distinguish between two "John Doe" entries when scheduling lessons or viewing contact lists. 
 To add students with similar names, simply append unique identifiers like "John Tan 1" and "John Tan 2", or use more descriptive labels like "John Doe Pri 3" and "John Doe Sec 1". 
 This approach ensures you can always identify the correct student at a glance.
+
+**Q**: Why can I add the same lessons in EduDex for multiple students?<br>
+**A**: EduDex allows flexibility for tutors to conduct group lessons with more than 1 student.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
