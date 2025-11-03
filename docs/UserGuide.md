@@ -217,7 +217,7 @@ Format:
 `edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
 
 **Field Requirements:**
-* `INDEX` must be a **positive integer** not exceeding 2,147,483,647
+* `INDEX` must be a **positive integer** not exceeding MAX-INT(2,147,483,647)
 * `INDEX` refers to the index number shown in the displayed student list
 * At least one optional field must be provided
 * Field constraints are the same as in the [`add`](#adding-a-student-add) command
@@ -360,7 +360,7 @@ Deletes a specific lesson (by index) from a given student.
 Format: `dellesson STUDENT_INDEX LESSON_INDEX`
 
 **Field Requirements:**
-* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** not exceeding 2,147,483,647
+* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** not exceeding MAX-INT (2,147,483,647)
 * `STUDENT_INDEX` refers to the student's position in the displayed list
 * `LESSON_INDEX` refers to the lesson's position within that student's lesson list
 
@@ -393,7 +393,7 @@ Edits an existing lesson for a specific student in EduDex.
 Format: `editlesson STUDENT_INDEX LESSON_INDEX [sub/SUBJECT] [d/DAY] [start/START_TIME] [end/END_TIME]`
 
 **Field Requirements:**
-* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** not exceeding 2,147,483,647
+* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** not exceeding MAX-INT (2,147,483,647)
 * `STUDENT_INDEX` refers to the student's position in the displayed list
 * `LESSON_INDEX` refers to the lesson's position in that student's lesson list (shown in `list` command)
 * At least one optional field must be provided 
