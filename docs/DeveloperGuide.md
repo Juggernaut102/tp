@@ -257,12 +257,12 @@ The command structure is as follows:
 
 #### Example error cases
 
-| Input | Result |
-|--------|--------|
-| `dellesson 0 1` | Error: Invalid student index |
-| `dellesson 1 0` | Error: Invalid lesson index |
+| Input | Result                            |
+|--------|-----------------------------------|
+| `dellesson 0 1` | Error: Invalid command format     |
+| `dellesson 1 0` | Error: Invalid command format     |
 | `dellesson 1 99` | Error: Lesson index out of bounds |
-| `dellesson 1 a` | Error: Invalid format — indices must be integers |
+| `dellesson 1 a` | Error: Invalid command format     |
 
 ---
 
@@ -282,7 +282,7 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 | Find by day | `find d/Monday`    | Lists all students with Monday lessons |
 | Find by subject | `find sub/Science` | Lists all students taking Science |
 | Delete valid lesson | `dellesson 1 2`    | Deletes 2nd lesson of 1st student |
-| Invalid student index | `dellesson 0 1`    | Error: Invalid student index |
+| Invalid student index | `dellesson 0 1`    | Invalid command format |
 | Invalid lesson index | `dellesson 1 5`    | Error: Invalid lesson index |
 --------------------------------------------------------------------------------------------------------------------
 
@@ -328,9 +328,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | new user                                | set my profile with subjects I teach      | customise the app to subjects I teach                     |
 | `* *`    | tutor                                   | get help for specific commands I enter    | see what fields I have entered incorrectly                |
 | `* *`    | tutor                                   | search for my students' names             | find their contact information                            |
+| `* *`    | tutor                                   | add a subject I teach                     | subsequently schedule a lesson with the subject i teach   |
+| `* *`    | tutor                                   | add a lesson to my student                | plan my tuition schedules conveniently                    |
 | `* *`    | tutor                                   | search for my lessons for the day         | better plan my personal time and schedule                 |
 | `* *`    | tutor                                   | search for my lessons for each subject    | better allocate my time for each subject                  |
-| `* *`    | tutor who wants to view her workload    | filter by subject	                        | see which subjects are most popular                       |
+| `* *`    | tutor who wants to view her workload    | search by subject	                        | see which subjects are most popular                       |
 | `*`      | tutor who has changed tuition fees      | check how much I earn per week            | track money earned from tuition lessons                   |
 
 ### Use cases
@@ -807,6 +809,7 @@ Use case ends.
 
 1. **Allow deleting of subjects by name**: EduDex currently only supports deleting subjects by their <u>index</u> in the displayed list. Adding the ability to delete a subject directly by its <u>name</u> (e.g. `delsub sub/Math`) would make the command more intuitive and user-friendly, especially when tutors manage many subjects. This enhancement will be considered for future versions.
 2. **Lessons are sorted in chronological order after adding lesson**: EduDex currently does not sort the lesson timings after adding a lesson. Adding the ability to sort it automatically after adding a lesson would add more user convenience
+3. **Allow finding on an already filtered list**: After the first `find` command, EduDex currently uses the original unfiltered list to perform the subsequent find leading to inconvenience. Adding the ability to find within the filtered list would make it more useful 
 
 --------------------------------------------------------------------------------------------------------------------
 ## **Appendix: Instructions for manual testing**
