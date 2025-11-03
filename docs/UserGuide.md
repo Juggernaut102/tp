@@ -156,7 +156,7 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 <box type="tip" seamless>
 
 **Tip for student names with special characters:**
-* Special characters such as `/` are not supported for names of students, as they may potentially
+* Special characters such as `-` and `/` are not supported for names of students, as they may potentially
   interfere with the command line syntax
 * For example, if you have a student whose name is "Raj S/O Muthu", consider abbreviating
   "S/O" to "SO" instead
@@ -203,7 +203,7 @@ Format:
 <box type="tip" seamless>
 
 **Tip for student names with special characters:**
-* Special characters such as `/` are not supported for names of students, as they may potentially
+* Special characters such as `-` and `/` are not supported for names of students, as they may potentially
   interfere with the command line syntax
 * For example, if you have a student whose name is "Raj S/O Muthu", consider abbreviating
   "S/O" to "SO" instead
