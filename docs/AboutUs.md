@@ -39,7 +39,6 @@ In charge of defining, assigning, and tracking project tasks
 [[github](http://github.com/Juggernaut102)] [[portfolio](team/shaun.md)]
 
 * Role: Testing
-* Responsibilities:
 
 ### Bryan Leng
 
@@ -49,7 +48,6 @@ In charge of defining, assigning, and tracking project tasks
 [[portfolio](team/bryanleng.md)]
 
 * Role: Documentation + Git expert
-* Responsibilities:
 
 ### Ryan Toh
 
