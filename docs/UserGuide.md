@@ -188,7 +188,7 @@ Format: `list`
 
 Edits an existing student fields
 
-* Student fields that can be edited**: Name, Phone Number, School, Address, Tags
+**Student fields that can be edited**: Name, Phone Number, School, Address, Tags
 
 Format: 
 `edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
