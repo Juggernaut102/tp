@@ -805,7 +805,7 @@ Use case ends.
 
 ## **Appendix: Future Improvements**
 
-1. **Allow deleting of subjects by name**: EduDex currently only supports deleting subjects by their <u>index</u> in the displayed list. Adding the ability to delete a subject directly by its <u>name</u> (e.g. delsub sub/Math) would make the command more intuitive and user-friendly, especially when tutors manage many subjects. This enhancement will be considered for future versions.
+1. **Allow deleting of subjects by name**: EduDex currently only supports deleting subjects by their <u>index</u> in the displayed list. Adding the ability to delete a subject directly by its <u>name</u> (e.g. `delsub sub/Math`) would make the command more intuitive and user-friendly, especially when tutors manage many subjects. This enhancement will be considered for future versions.
 2. **Lessons are sorted in chronological order after adding lesson**: EduDex currently does not sort the lesson timings after adding a lesson. Adding the ability to sort it automatically after adding a lesson would add more user convenience
 
 --------------------------------------------------------------------------------------------------------------------
