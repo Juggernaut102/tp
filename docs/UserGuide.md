@@ -237,7 +237,7 @@ Format:
 `find sub/SUBJECT`
 
 **Field Requirements:**
-* For name search: any alphanumeric keywords
+* For name search: any keyword
 * For day search: valid days of the week (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
 * For subject search: existing subject names in EduDex 
 
