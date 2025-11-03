@@ -35,7 +35,7 @@ _Initial start-up of Edudex_
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 sch/Raffles Primary School a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 sch/Raffles Primary School a/John street, block 123, #01-01` : Adds a contact named `John Doe` to EduDex.
 
    * `addsub english` : Adds a subject named `English` to the subject list.
    
