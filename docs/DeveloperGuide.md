@@ -740,8 +740,7 @@ Use case ends.
 
 **Main Success Scenario:**
 1. User requests to exit the application
-2. EduDex displays a goodbye message
-3. EduDex closes the application  
+2. EduDex closes the application  
 Use case ends.
 
 **Extensions:**
