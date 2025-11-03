@@ -247,8 +247,7 @@ Format:
 * All searches are **case-insensitive** (e.g., `find hans` matches `Hans`)
 * For name search: matches students with at least one keyword (OR search)
 * Order of keywords does not matter (e.g., `find Hans Bo` matches `Bo Hans`)
-* If you want to further narrow your search results, you may execute `find` again.
-* Otherwise, reset to the base student list by executing `list`.
+* Reset to the base student list by executing `list`.
 * For `find sub/SUBJECT`: lessons are automatically sorted by day and start time
   </box>
 
