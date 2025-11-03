@@ -103,6 +103,7 @@ Format: `addsub SUBJECT`
 
 **Caution:**
 * Duplicate subjects (case-insensitive) are not allowed.
+* Consecutive spaces in subject names do not matter and are treated as a single space (e.g., `A   math` is the same as `A math`)
   </box>
 
 Examples:
@@ -146,11 +147,18 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 * `ADDRESS` can be any value, must not be blank
 * `TAG` (optional) should be alphanumeric
 
-<box type="tip" seamless>
+<box type="warning" seamless>
 
-**Note:**
+**Caution**
 * Names are **case-insensitive** (e.g., `john doe` is the same student as `JOHN DOE`)
+* Names with consecutive spaces do not matter and are treated as a single space. (e.g., `john   doe` is the same as `john doe`)
 * A student can have any number of tags (including 0)
+</box>
+
+<box type= "warning" seamless> 
+
+**Warning**
+* For students who have the same name, users are welcome to provide their [`own ways`](#FAQ) to distinguish the name, using additional numbers or words
 </box>
 
 Examples:
@@ -544,6 +552,11 @@ Each entry in `subjects` defines a distinct academic subject.
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous EduDex home folder.
+
+**Q**: Why does EduDex not allow adding a student with the same name but different fields?<br>
+**A**: EduDex is a contact management app just like your phone contact aimed to improve user convenience. In practice, tutors find it difficult to quickly distinguish between two "John Doe" entries when scheduling lessons or viewing contact lists. 
+To add students with similar names, simply append unique identifiers like "John Tan 1" and "John Tan 2", or use more descriptive labels like "John Doe Pri 3" and "John Doe Sec 1". 
+This approach ensures you can always identify the correct student at a glance.
 
 --------------------------------------------------------------------------------------------------------------------
 
