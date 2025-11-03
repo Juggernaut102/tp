@@ -406,7 +406,7 @@ Use case ends.
       Use case ends.
 
 - **2c. Missing required parameters**
-    - 2d1. EduDex shows an error message
+    - 2c1. EduDex shows an error message
       Use case ends.
 
 
@@ -761,7 +761,7 @@ Use case ends.
 
 **Main Success Scenario:**
 1. User enters an unrecognized command
-2. EduDex shows error: *"Invalid command. Try again"*
+2. EduDex shows an error message
    Use case ends.
 
 **Extensions:**
@@ -803,6 +803,11 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Future Improvements**
+
+1. **Allow deleting of subjects by name**: EduDex currently only supports deleting subjects by their <u>index</u> in the displayed list. Adding the ability to delete a subject directly by its <u>name</u> (e.g. delsub sub/Math) would make the command more intuitive and user-friendly, especially when tutors manage many subjects. This enhancement will be considered for future versions.
+
+--------------------------------------------------------------------------------------------------------------------
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.

@@ -20,7 +20,7 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to EduDex. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to EduDex. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -35,8 +35,8 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "weakInXXTopic "
             + PREFIX_TAG + "strongInXXTopic ";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in EduDex";
+    public static final String MESSAGE_SUCCESS = "New student added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in EduDex";
 
     private final Person toAdd;
 
