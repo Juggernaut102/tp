@@ -6,27 +6,40 @@
 
 # EduDex User Guide
 
-EduDex is a **desktop app for managing student's contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). 
-EduDex is targeted towards technically-able freelance tutors who find it difficult to manage a large number of student contacts. Using EduDex, tutors can easily add the subjects they teach, organize student information, and schedule lessons efficiently.
-If you can type fast, EduDex can get your contact management tasks done faster than traditional methods.
+Juggling dozens of students with overlapping lesson schedules? EduDex comes to the rescue! 
+
+EduDex is a **desktop app for managing student contacts, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a **Graphical User Interface (GUI)**. If you can type fast, EduDex can get your contact management tasks done faster than traditional GUI apps.
+
+## Target Audience
+This user guide is targeted towards **freelance tutors** who: 
+- Struggle to keep track of multiple students and their lesson schedules
+- Face challenges in quickly identifying lesson conflicts across many students
+- Are comfortable with technology and have basic CLI experience
+- Prefer fast, keyword-driven workflows over mouse-driven interactions
 
 <!-- * Table of Contents -->
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+   **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
+   **Linux users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T12-1/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T12-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your EduDex.
+3. Copy the file to the folder you want to use as the _home folder_ for your EduDex.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar edudex.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds, with a pop-up asking you to start by adding subjects. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+4. Open a command terminal, `cd` into the folder you put the jar file in, run the following command to run the application.<br>
+`java -jar EduDex.jar` 
+
+A GUI similar to the below should appear in a few seconds, with a pop-up asking you to start by adding subjects. Note how the app contains some sample data.<br>
+
+![Ui](images/Ui.png)
 
 _Initial start-up of Edudex_
 
@@ -55,9 +68,10 @@ Any reference of "Contact" is interchangeable with "Student" and "Person".
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+2. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -113,11 +127,12 @@ Format: `addsub SUBJECT`
 Examples:
 * `addsub English`
 * `addsub MATH`
-  
-  <box type="tip" seamless>
 
-**Tip:** You can adjust the size of the subject panel and the student panel as necessary by dragging the divider between them.
-  </box>
+<box type="tip" seamless>
+
+**Tip:** 
+You can adjust the size of the subject panel and the student panel as necessary by dragging the divider between them.
+</box>
 
 ![addSubSuccess](images/addSub.png)
 
@@ -139,9 +154,10 @@ Examples:
 <box type="warning" seamless>
 
 **Caution:**
-* Deleting a subject does **not** automatically remove lessons associated with that subject.
-  </box>
+Deleting a subject does **not** automatically remove lessons associated with that subject.
+</box>
 
+<div style="page-break-after: always;"></div>
 
 ### Adding a student: `add`
 
@@ -171,7 +187,7 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
   interfere with the command line syntax
 * For example, if you have a student whose name is "Raj S/O Muthu", consider abbreviating
   "S/O" to "SO" instead
-* For students who have the same name, users are welcome to provide their [`own ways`](#FAQ) to distinguish the name, using additional numbers or words
+* For students who have the same name, users are welcome to provide their [**own ways**](#faq) to distinguish the name, using additional numbers or words
 
 </box>
 
@@ -190,6 +206,7 @@ Shows a list of all students in EduDex.
 
 Format: `list`
 
+<div style="page-break-after: always;"></div>
 ### Editing a student : `edit`
 
 Edits an existing student fields
@@ -231,19 +248,20 @@ Examples:
 | ![Before Edit School](images/BeforeEditLesson.png) |   ![After Edit School](images/EditSchool.png)    |
 |              _Before editing school_               |              _After editing school_              |
 
+<div style="page-break-after: always;"></div>
 
 ### Locating students by Name, Day, or Subject: `find`
 
 Finds students whose **names**, **lesson days**, or **lesson subjects** match the given keywords.
 
 Format:  
-`find KEYWORD [MORE_KEYWORDS]`
+`find KEYWORD [MORE_KEYWORDS]`<br>
 `find NAME`
 `find d/DAY`  
 `find sub/SUBJECT`
 
 **Field Requirements:**
-* For name search: any alphanumeric keywords
+* For name search: any keyword (partial matches allowed)
 * For day search: valid days of the week (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
 * For subject search: existing subject names in EduDex 
 
@@ -253,7 +271,7 @@ Format:
 * All searches are **case-insensitive** (e.g., `find hans` matches `Hans`)
 * For name search: matches students with at least one keyword (OR search)
 * Order of keywords does not matter (e.g., `find Hans Bo` matches `Bo Hans`)
-* Reset to the base student list by executing `list`.
+* Reset to the base student list after each search by executing `list`.
 * For `find sub/SUBJECT`: lessons are automatically sorted by day and start time
   </box>
 
@@ -278,7 +296,7 @@ Deletes the specified student from EduDex.
 Format: `delete INDEX`
 
 **Field Requirements:**
-* `INDEX` must be a **positive integer** not exceeding 2,147,483,647
+* `INDEX` must be a **positive integer** not exceeding MAX_INT (2,147,483,647)
 * `INDEX` refers to the index number shown in the displayed student list
 
 <box type="warning" seamless>
@@ -299,6 +317,7 @@ Examples:
 
   </box>
 
+<div style="page-break-after: always;"></div>
 
 ### Adding a lesson: `addlesson`
 
@@ -307,7 +326,7 @@ Adds a lesson to the student in EduDex, specified by index.
 Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`
 
 **Field Requirements:**
-* `STUDENT_INDEX` must be a **positive integer** not exceeding 2,147,483,647
+* `STUDENT_INDEX` must be a **positive integer** not exceeding MAX_INT (2,147,483,647)
 * `STUDENT_INDEX` refers to the student's position in the displayed list
 * `SUBJECT` must match (case-insensitive) an existing subject in EduDex
 * `DAY` must be one of: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday (case-insensitive)
@@ -332,6 +351,8 @@ Examples:
 
 _Lesson "math" added successfully to student John Doe._
 
+<div style="page-break-after: always;"></div>
+
 ### Deleting a lesson from a student: `dellesson`
 
 Deletes a specific lesson (by index) from a given student.
@@ -346,8 +367,7 @@ Format: `dellesson STUDENT_INDEX LESSON_INDEX`
 <box type="info" seamless>
 
 **Example:**  
-If student 1 has 3 lessons (Math, Science, English),  
-`dellesson 1 2` will delete **Science**.
+If student 1 has 3 lessons (Math, Science, English), `dellesson 1 2` will delete **Science**.
 </box>
 
 Examples:
@@ -407,6 +427,8 @@ Examples:
 |:-------------------------------------------------:|:----------------------------------------------------:|
 | ![before editlesson](images/BeforeEditLesson.png) | ![result for editlesson](images/AfterEditLesson.png) |
 |       _Before editing lesson of Alex Yeoh._       |      _After editing lesson day for Alex Yeoh._       |
+
+<div style="page-break-after: always;"></div>
 
 ### Clearing all students : `clear`
 
@@ -580,6 +602,7 @@ Each entry in `subjects` defines a distinct academic subject.
   </box>
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
