@@ -21,7 +21,6 @@ This user guide is targeted towards **freelance tutors** who:
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 ## Quick start
 
@@ -71,7 +70,6 @@ Any reference of "Contact" is interchangeable with "Student" and "Person".
 2. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -128,7 +126,7 @@ Examples:
 * `addsub English`
 * `addsub MATH`
 
-<box type="tip" seamless>
+<box type="info" seamless>
 
 **Tip:** 
 You can adjust the size of the subject panel and the student panel as necessary by dragging the divider between them.
@@ -156,8 +154,6 @@ Examples:
 **Caution:**
 Deleting a subject does **not** automatically remove lessons associated with that subject.
 </box>
-
-<div style="page-break-after: always;"></div>
 
 ### Adding a student: `add`
 
@@ -206,7 +202,6 @@ Shows a list of all students in EduDex.
 
 Format: `list`
 
-<div style="page-break-after: always;"></div>
 ### Editing a student : `edit`
 
 Edits an existing student fields
@@ -248,7 +243,8 @@ Examples:
 | ![Before Edit School](images/BeforeEditLesson.png) |   ![After Edit School](images/EditSchool.png)    |
 |              _Before editing school_               |              _After editing school_              |
 
-<div style="page-break-after: always;"></div>
+
+
 
 ### Locating students by Name, Day, or Subject: `find`
 
@@ -317,7 +313,6 @@ Examples:
 
   </box>
 
-<div style="page-break-after: always;"></div>
 
 ### Adding a lesson: `addlesson`
 
@@ -351,7 +346,7 @@ Examples:
 
 _Lesson "math" added successfully to student John Doe._
 
-<div style="page-break-after: always;"></div>
+
 
 ### Deleting a lesson from a student: `dellesson`
 
@@ -428,7 +423,7 @@ Examples:
 | ![before editlesson](images/BeforeEditLesson.png) | ![result for editlesson](images/AfterEditLesson.png) |
 |       _Before editing lesson of Alex Yeoh._       |      _After editing lesson day for Alex Yeoh._       |
 
-<div style="page-break-after: always;"></div>
+
 
 ### Clearing all students : `clear`
 
@@ -602,7 +597,6 @@ Each entry in `subjects` defines a distinct academic subject.
   </box>
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 ## FAQ
 
