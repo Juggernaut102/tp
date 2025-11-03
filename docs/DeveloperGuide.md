@@ -302,7 +302,7 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 
 **Target user profile**:
 
-* freelance tutor
+* technically able freelance tutor
 * has a need to manage a significant number of students
 * teaches multiple subjects at different times
 * prefer desktop apps over other types
