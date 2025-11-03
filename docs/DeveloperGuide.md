@@ -21,6 +21,8 @@ Our project EduDex is based on [AddressBook-Level3 (AB3)](https://github.com/se-
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
+Any reference to "Person" is interchangeable with "Student" for the rest of this Developer Guide.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
@@ -177,29 +179,29 @@ The command is structured as follows:
 
 #### Design considerations
 
-| Aspect | Alternatives | Current choice | Reason |
-|--------|---------------|----------------|--------|
+| Aspect             | Alternatives                                          | Current choice                                   | Reason                                             |
+|--------------------|-------------------------------------------------------|--------------------------------------------------|----------------------------------------------------|
 | Predicate handling | Create separate commands for day and subject searches | Unified `FindCommand` with multiple constructors | Reduces command duplication and simplifies parsing |
-| Case sensitivity | Exact match | Case-insensitive match | Provides better user experience |
-| Error handling | Reject invalid days/subjects silently | Validate against allowed days and empty subjects | Ensures robust input validation |
+| Case sensitivity   | Exact match                                           | Case-insensitive match                           | Provides better user experience                    |
+| Error handling     | Reject invalid days/subjects silently                 | Validate against allowed days and empty subjects | Ensures robust input validation                    |
 
 ---
 
 #### Example usages
 
-| Command            | Description |
-|--------------------|-------------|
+| Command            | Description                                         |
+|--------------------|-----------------------------------------------------|
 | `find alice bob`   | Finds students whose names contain “alice” or “bob” |
-| `find d/Tuesday`   | Finds students with lessons on Tuesday |
-| `find sub/Science` | Finds students taking Science lessons |
+| `find d/Tuesday`   | Finds students with lessons on Tuesday              |
+| `find sub/Science` | Finds students taking Science lessons               |
 
 ---
 
 #### Example UI output
 
-| Input           | Output |
-|-----------------|--------|
-| `find d/Friday` | Displays list of students with Friday lessons |
+| Input           | Output                                             |
+|-----------------|----------------------------------------------------|
+| `find d/Friday` | Displays list of students with Friday lessons      |
 | `find sub/Math` | Displays students taking Math, with lesson details |
 
 ---
@@ -257,12 +259,12 @@ The command structure is as follows:
 
 #### Example error cases
 
-| Input            | Result                            |
-|------------------|-----------------------------------|
-| `dellesson 0 1`  | Error: Invalid command format     |
-| `dellesson 1 0`  | Error: Invalid command format     |
-| `dellesson 1 99` | Error: Lesson index out of bounds |
-| `dellesson 1 a`  | Error: Invalid command format     |
+| Input            | Result                       |
+|------------------|------------------------------|
+| `dellesson 0 1`  | Invalid command format error |
+| `dellesson 1 0`  | Invalid command format error |
+| `dellesson 1 99` | Invalid lesson index error   |
+| `dellesson 1 a`  | Invalid command format error |
 
 ---
 
@@ -277,13 +279,13 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 
 ### Example test cases
 
-| Scenario | Command            | Expected Result |
-|-----------|--------------------|-----------------|
-| Find by day | `find d/Monday`    | Lists all students with Monday lessons |
-| Find by subject | `find sub/Science` | Lists all students taking Science |
-| Delete valid lesson | `dellesson 1 2`    | Deletes 2nd lesson of 1st student |
-| Invalid student index | `dellesson 0 1`    | Invalid command format |
-| Invalid lesson index | `dellesson 1 5`    | Error: Invalid lesson index |
+| Scenario              | Command            | Expected Result                        |
+|-----------------------|--------------------|----------------------------------------|
+| Find by day           | `find d/Monday`    | Lists all students with Monday lessons |
+| Find by subject       | `find sub/Science` | Lists all students taking Science      |
+| Delete valid lesson   | `dellesson 1 2`    | Deletes 2nd lesson of 1st student      |
+| Invalid student index | `dellesson 0 1`    | Invalid command format error           |
+| Invalid lesson index  | `dellesson 1 5`    | Invalid lesson index error             |
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -790,7 +792,7 @@ Use case ends.
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **RAM**: Random Access Memory. Main memory of the computer, used for temporary storage of data and instructions.
 * **SSD**: Solid State Drive. A high speed storage device that stores data permanently.
-* **Student**: Refers to a learner or individual being taught by the user of this application.
+* **Student**: Refers to a learner or individual being taught by the user of this application. Interchangeable with "Person".
 
 --------------------------------------------------------------------------------------------------------------------
 
