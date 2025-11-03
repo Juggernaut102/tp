@@ -77,6 +77,8 @@ _Initial start-up of Edudex_
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+* Any reference of "Person" is interchangeable with "Student"
 </box>
 
 ### Viewing help : `help`
@@ -147,7 +149,7 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 **Field Requirements:**
 * `NAME` should only contain alphanumeric characters and spaces, must not be blank
 * `PHONE_NUMBER` should only contain numbers, at least 3 digits long
-* `SCHOOL` should only contain alphanumeric characters and spaces, must not be blank
+* `SCHOOL` should only contain alphanumeric characters, special characters (except `/`) and spaces, must not be blank
 * `ADDRESS` can be any value, must not be blank
 * `TAG` (optional) should be alphanumeric
 
@@ -452,18 +454,18 @@ Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.
 
 **Rules**
 
-| Field              | Type              | Constraint                                                                           |
-|--------------------|-------------------|--------------------------------------------------------------------------------------|
-| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                |
-| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                               |
-| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                |
-| `address`          | string            | Any value, must not be blank                                                         |
-| `tags`             | string[]          | Alphanumeric, optional                                                               |
-| `lessons`          | Lesson[]          | See fields below                                                                     |
-| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                |
+| Field              | Type              | Constraint                                                                                |
+|--------------------|-------------------|-------------------------------------------------------------------------------------------|
+| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                                    |
+| `school`           | string            | Alphanumeric Characters, Special Characters (except `/`) and Spaces, must not be blank    |
+| `address`          | string            | Any value, must not be blank                                                              |
+| `tags`             | string[]          | Alphanumeric, optional                                                                    |
+| `lessons`          | Lesson[]          | See fields below                                                                          |
+| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
 | `lesson:day`       | string            | Only one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday |
-| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime                          |
-| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime                         |
+| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime                               |
+| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime                              |
 
 
 
