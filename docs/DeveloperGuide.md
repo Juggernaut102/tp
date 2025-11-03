@@ -13,7 +13,7 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+Our project EduDex is based on [AddressBook-Level3 (AB3)](https://github.com/se-edu/addressbook-level3). 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -139,7 +139,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -302,7 +302,7 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 
 **Target user profile**:
 
-* freelance tutor teaching primary school students
+* technically able freelance tutor
 * has a need to manage a significant number of students
 * teaches multiple subjects at different times
 * prefer desktop apps over other types
@@ -337,7 +337,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `EduDex` and the **Actor** is the `user`, unless specified otherwise)
 
-## Use Case 1: Add a New Student
+#### Use Case 1: Add a New Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -354,19 +354,22 @@ Use case ends.
 **Extensions:**
 - **2a. Invalid phone number format**
     - 2a1. EduDex shows an error message
+      Use case ends. 
 
 - **2b. Invalid time format**
     - 2b1. EduDex shows an error message
+      Use case ends. 
 
 - **2c. Invalid day of week**
     - 2c1. EduDex shows an error message
+      Use case ends. 
 
 - **2d. Missing required parameters**
     - 2d1. EduDex shows an error message
       Use case ends.
 
 
-## Use Case 2: List All Students
+#### Use Case 2: List All Students
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -379,7 +382,7 @@ Use case ends.
 Use case ends.
 
 
-## Use Case 3: Delete a Student
+#### Use Case 3: Delete a Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -407,7 +410,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 4: Find by Name
+#### Use Case 4: Find by Name
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -433,7 +436,7 @@ Use case ends.
 **Post conditions:**
 - Current list view shows only matched students.
 
-## Use Case 5: Find by Day
+#### Use Case 5: Find by Day
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -461,7 +464,7 @@ Use case ends.
     - 4a1. EduDex return an empty list
       Use case ends.
 
-## Use Case 6: Find Students by Subject
+#### Use Case 6: Find Students by Subject
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -485,7 +488,7 @@ Use case ends.
     - 5a1. EduDex returns an empty list
       Use case ends.
 
-## Use Case 7: Edit a Student's Information
+#### Use Case 7: Edit a Student's Information
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -525,7 +528,7 @@ Use case ends.
 **Post conditions:**
 - Student's information is updated in the system
 
-## Use Case 8: Add a Subject
+#### Use Case 8: Add a Subject
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -544,8 +547,8 @@ Use case ends.
     - 1a1. EduDex shows an error message
       Use case ends.
 
-- **2a. Invalid subject name (non-alphanumeric)**
-    - 2a1. EduDex shows an error message
+- **1b. Invalid subject name (non-alphanumeric)**
+    - 1b1. EduDex shows an error message
       Use case ends.
 
 - **3a. Subject already exists**
@@ -553,7 +556,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 9: Delete a Subject
+#### Use Case 9: Delete a Subject
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -586,7 +589,7 @@ Use case ends.
 - Any lessons using this subject remain unchanged (students may have lessons with deleted subjects)
 
 
-## Use Case 10: Add a Lesson to a Student
+#### Use Case 10: Add a Lesson to a Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -633,7 +636,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 11: Delete a Lesson from a Student
+#### Use Case 11: Delete a Lesson from a Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -672,7 +675,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 12: Edit a Student's Lesson
+#### Use Case 12: Edit a Student's Lesson
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -750,6 +753,26 @@ Use case ends.
     - 2a3. User confirms
     - Use case resumes from step 3.
 
+#### Use Case 14: Handle Invalid Command
+
+**Preconditions:**
+- User has launched the EduDex application
+- User is at the command prompt
+
+**Main Success Scenario:**
+1. User enters an unrecognized command
+2. EduDex shows error: *"Invalid command. Try again"*
+3. EduDex shows available command formats as hints  
+   Use case ends.
+
+**Extensions:**
+- **2a. Command is partially correct**
+    - 2a1. EduDex provides specific error about the incorrect parameter  
+      Use case ends.
+
+- **2b. Command has typo**
+    - 2b1. EduDex suggests possible correct commands  
+      Use case ends.
 ---
 
 ### Non-Functional Requirements
