@@ -353,7 +353,7 @@ Use case ends.
 
 **Extensions:**
 - **2a. Invalid phone number format**
-    - 2a1. EduDex shows error an error message
+    - 2a1. EduDex shows an error message
 
 - **2b. Invalid time format**
     - 2b1. EduDex shows an error message
