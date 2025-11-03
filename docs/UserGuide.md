@@ -30,12 +30,16 @@ If you can type fast, EduDex can get your contact management tasks done faster t
 
 _Initial start-up of Edudex_
 
+<box type="info" seamless>
+Any reference of "Contact" is interchangeable with "Student" and "Person".
+</box>
+
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 sch/Raffles Primary School a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 sch/Raffles Primary School a/John street, block 123, #01-01` : Adds a contact named `John Doe` to EduDex.
 
    * `addsub english` : Adds a subject named `English` to the subject list.
    
@@ -77,8 +81,6 @@ _Initial start-up of Edudex_
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-
-* Any reference of "Person" is interchangeable with "Student"
 </box>
 
 ### Viewing help : `help`
@@ -251,8 +253,7 @@ Format:
 * All searches are **case-insensitive** (e.g., `find hans` matches `Hans`)
 * For name search: matches students with at least one keyword (OR search)
 * Order of keywords does not matter (e.g., `find Hans Bo` matches `Bo Hans`)
-* If you want to further narrow your search results, you may execute `find` again.
-* Otherwise, reset to the base student list by executing `list`.
+* Reset to the base student list by executing `list`.
 * For `find sub/SUBJECT`: lessons are automatically sorted by day and start time
   </box>
 
