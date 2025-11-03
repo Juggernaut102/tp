@@ -13,7 +13,7 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+Our project EduDex is based on [AddressBook-Level3 (AB3)](https://github.com/se-edu/addressbook-level3). 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -139,7 +139,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T12-1/tp/tree/master/src/main/java/seedu/edudex/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -302,7 +302,7 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 
 **Target user profile**:
 
-* freelance tutor teaching primary school students
+* technically able freelance tutor
 * has a need to manage a significant number of students
 * teaches multiple subjects at different times
 * prefer desktop apps over other types
@@ -337,7 +337,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `EduDex` and the **Actor** is the `user`, unless specified otherwise)
 
-## Use Case 1: Add a New Student
+#### Use Case 1: Add a New Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -369,7 +369,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 2: List All Students
+#### Use Case 2: List All Students
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -382,7 +382,7 @@ Use case ends.
 Use case ends.
 
 
-## Use Case 3: Delete a Student
+#### Use Case 3: Delete a Student
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -406,7 +406,7 @@ Use case ends.
       Use case ends.
 
 
-## Use Case 4: Find by Name
+#### Use Case 4: Find by Name
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -423,7 +423,7 @@ Use case ends.
 **Postconditions:**
 - Current list view shows only matched students.
 
-## Use Case 5: Find by Day
+#### Use Case 5: Find by Day
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -443,7 +443,7 @@ Use case ends.
     - 2a1. EduDex shows error: *"Days should only be one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday."*  
       Use case ends.
 
-## Use Case 6: Exit the Application
+#### Use Case 6: Exit the Application
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -462,7 +462,7 @@ Use case ends.
     - 2a3. User confirms
     - Use case resumes from step 3.
 
-## Use Case 7: Handle Invalid Command
+#### Use Case 7: Handle Invalid Command
 
 **Preconditions:**
 - User has launched the EduDex application
@@ -470,7 +470,7 @@ Use case ends.
 
 **Main Success Scenario:**
 1. User enters an unrecognized command
-2. EduDex shows error: *"Invalid command. Try again"*
+2. EduDex shows error: *"Unknown Command"*
 3. EduDex shows available command formats as hints  
 Use case ends.
 
@@ -514,6 +514,11 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Future Improvements**
+
+1. **Allow deleting of subjects by name**: EduDex currently only supports deleting subjects by their <u>index</u> in the displayed list. Adding the ability to delete a subject directly by its <u>name</u> (e.g. delsub sub/Math) would make the command more intuitive and user-friendly, especially when tutors manage many subjects. This enhancement will be considered for future versions.
+
+--------------------------------------------------------------------------------------------------------------------
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.

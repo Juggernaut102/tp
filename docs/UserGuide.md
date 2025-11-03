@@ -77,6 +77,8 @@ _Initial start-up of Edudex_
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+* Any reference of "Person" is interchangeable with "Student"
 </box>
 
 ### Viewing help : `help`
@@ -109,6 +111,11 @@ Format: `addsub SUBJECT`
 Examples:
 * `addsub English`
 * `addsub MATH`
+  
+  <box type="tip" seamless>
+
+**Tip:** You can adjust the size of the subject panel and the student panel as necessary by dragging the divider between them.
+  </box>
 
 ![addSubSuccess](images/addSub.png)
 
@@ -143,7 +150,7 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 **Field Requirements:**
 * `NAME` should only contain alphanumeric characters and spaces, must not be blank
 * `PHONE_NUMBER` should only contain numbers, at least 3 digits long
-* `SCHOOL` should only contain alphanumeric characters and spaces, must not be blank
+* `SCHOOL` should only contain alphanumeric characters, special characters (except `/`) and spaces, must not be blank
 * `ADDRESS` can be any value, must not be blank
 * `TAG` (optional) should be alphanumeric
 
@@ -155,10 +162,15 @@ Format: `add n/NAME p/PHONE_NUMBER sch/SCHOOL a/ADDRESS [t/TAG]`
 * A student can have any number of tags (including 0)
 </box>
 
-<box type= "warning" seamless> 
+<box type="tip" seamless>
 
-**Warning**
+**Tip for student names with special characters:**
+* Special characters such as `-` and `/` are not supported for names of students, as they may potentially
+  interfere with the command line syntax
+* For example, if you have a student whose name is "Raj S/O Muthu", consider abbreviating
+  "S/O" to "SO" instead
 * For students who have the same name, users are welcome to provide their [`own ways`](#FAQ) to distinguish the name, using additional numbers or words
+
 </box>
 
 Examples:
@@ -180,13 +192,13 @@ Format: `list`
 
 Edits an existing student fields
 
-* Student fields that can be edited**: Name, Phone Number, School, Address, Tags
+**Student fields that can be edited**: Name, Phone Number, School, Address, Tags
 
 Format: 
 `edit INDEX [n/NAME] [p/PHONE] [sch/SCHOOL] [a/ADDRESS] [t/TAG]…​`
 
 **Field Requirements:**
-* `INDEX` must be a **positive integer** (1, 2, 3, …)
+* `INDEX` must be a **positive integer** not exceeding 2,147,483,647
 * `INDEX` refers to the index number shown in the displayed student list
 * At least one optional field must be provided
 * Field constraints are the same as in the [`add`](#adding-a-student-add) command
@@ -197,6 +209,15 @@ Format:
 * When editing tags, the existing tags will be **replaced** (not added to)
 * To remove all tags, type `t/` without specifying any tags after it
 * To edit a student's **lesson details**, use the [`editlesson`](#editing-a-lesson-editlesson) command instead
+</box>
+
+<box type="tip" seamless>
+
+**Tip for student names with special characters:**
+* Special characters such as `-` and `/` are not supported for names of students, as they may potentially
+  interfere with the command line syntax
+* For example, if you have a student whose name is "Raj S/O Muthu", consider abbreviating
+  "S/O" to "SO" instead
 </box>
 
 Examples:
@@ -254,7 +275,7 @@ Deletes the specified student from EduDex.
 Format: `delete INDEX`
 
 **Field Requirements:**
-* `INDEX` must be a **positive integer** (1, 2, 3, …)
+* `INDEX` must be a **positive integer** not exceeding 2,147,483,647
 * `INDEX` refers to the index number shown in the displayed student list
 
 <box type="warning" seamless>
@@ -267,6 +288,15 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd student in EduDex.
 * `find Betsy` followed by `delete 1` deletes the 1st student in the results of the `find` command.
 
+<box type="tip" seamless>
+
+**Tip:** You can delete multiple students with the same criterion.
+1. Execute `find KEYWORD [MORE_KEYWORDS]`, followed by `delete INDEX`.
+2. The list remains filtered, so you may continue deleting more students that meet the same criteria.
+
+  </box>
+
+
 ### Adding a lesson: `addlesson`
 
 Adds a lesson to the student in EduDex, specified by index.
@@ -274,7 +304,8 @@ Adds a lesson to the student in EduDex, specified by index.
 Format: `addlesson STUDENT_INDEX sub/SUBJECT d/DAY start/START_TIME end/END_TIME`
 
 **Field Requirements:**
-* `STUDENT_INDEX` must be a **positive integer** not exceeding the size of the displayed student list
+* `STUDENT_INDEX` must be a **positive integer** not exceeding 2,147,483,647
+* `STUDENT_INDEX` refers to the student's position in the displayed list
 * `SUBJECT` must match (case-insensitive) an existing subject in EduDex
 * `DAY` must be one of: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday (case-insensitive)
 * `START_TIME` and `END_TIME` must be in 24-hour format **HH:MM**
@@ -305,10 +336,9 @@ Deletes a specific lesson (by index) from a given student.
 Format: `dellesson STUDENT_INDEX LESSON_INDEX`
 
 **Field Requirements:**
-* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** (1, 2, 3, …)
+* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** not exceeding 2,147,483,647
 * `STUDENT_INDEX` refers to the student's position in the displayed list
 * `LESSON_INDEX` refers to the lesson's position within that student's lesson list
-
 
 <box type="info" seamless>
 
@@ -324,8 +354,8 @@ Examples:
 <box type="warning" seamless>
 
 If an invalid index is entered:
-* EduDex will display **“Invalid student index.”** if `STUDENT_INDEX` exceeds the size of student list.
-* EduDex will display **“Invalid lesson index.”** if `LESSON_INDEX` exceeds the number of lessons for that student. 
+* EduDex will display **“The student index provided is invalid.”** if `STUDENT_INDEX` exceeds the size of student list.
+* EduDex will display **“The lesson index provided is invalid.”** if `LESSON_INDEX` exceeds the number of lessons for that student. 
 </box>
 
 |                          Before                          |                            After                             |
@@ -340,7 +370,7 @@ Edits an existing lesson for a specific student in EduDex.
 Format: `editlesson STUDENT_INDEX LESSON_INDEX [sub/SUBJECT] [d/DAY] [start/START_TIME] [end/END_TIME]`
 
 **Field Requirements:**
-* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** (1, 2, 3, …)
+* `STUDENT_INDEX` and `LESSON_INDEX` must be **positive integers** not exceeding 2,147,483,647
 * `STUDENT_INDEX` refers to the student's position in the displayed list
 * `LESSON_INDEX` refers to the lesson's position in that student's lesson list (shown in `list` command)
 * At least one optional field must be provided 
@@ -437,18 +467,18 @@ Furthermore, certain edits can cause the EduDex to behave in unexpected ways (e.
 
 **Rules**
 
-| Field              | Type              | Constraint                                                                           |
-|--------------------|-------------------|--------------------------------------------------------------------------------------|
-| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                |
-| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                               |
-| `school`           | string            | Alphanumeric Characters and Spaces, must not be blank                                |
-| `address`          | string            | Any value, must not be blank                                                         |
-| `tags`             | string[]          | Alphanumeric, optional                                                               |
-| `lessons`          | Lesson[]          | See fields below                                                                     |
-| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                |
+| Field              | Type              | Constraint                                                                                |
+|--------------------|-------------------|-------------------------------------------------------------------------------------------|
+| `name`             | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
+| `phone`            | string (ISO 8601) | Number, must be at least 3 digits long                                                    |
+| `school`           | string            | Alphanumeric Characters, Special Characters (except `/`) and Spaces, must not be blank    |
+| `address`          | string            | Any value, must not be blank                                                              |
+| `tags`             | string[]          | Alphanumeric, optional                                                                    |
+| `lessons`          | Lesson[]          | See fields below                                                                          |
+| `lesson:name`      | string            | Alphanumeric Characters and Spaces, must not be blank                                     |
 | `lesson:day`       | string            | Only one of the following: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday |
-| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime                          |
-| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime                         |
+| `lesson:startTime` | string            | HH:MM (24-hour format), must be a valid time before endTime                               |
+| `lesson:endTime`   | string            | HH:MM (24-hour format), must be a valid time after startTime                              |
 
 
 
@@ -584,5 +614,3 @@ This approach ensures you can always identify the correct student at a glance.
 | **Clear**          | `clear`                                                                                                                                                                  |
 | **Help**           | `help`                                                                                                                                                                   |
 | **Exit**           | `exit`                                                                                                                                                                   |
-| **List**           | `list`                                                                                                                                                                   |`                                                                                                                                                                   
-| **Help**           | `help`                                                                                                                                                                   |`                                                                                                                                                                   
