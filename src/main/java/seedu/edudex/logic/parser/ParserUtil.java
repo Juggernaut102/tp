@@ -47,11 +47,11 @@ public class ParserUtil {
      */
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!Name.isValidName(trimmedName)) {
+        String trimConsecutiveWhiteSpaces = name.replaceAll("\\s+", " ").trim();
+        if (!Name.isValidName(trimConsecutiveWhiteSpaces)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
-        return new Name(trimmedName);
+        return new Name(trimConsecutiveWhiteSpaces);
     }
 
     /**
@@ -165,11 +165,11 @@ public class ParserUtil {
      */
     public static Subject parseSubjectName(String name) throws ParseException {
         requireNonNull(name);
-        String trimmedName = name.trim();
-        if (trimmedName.isEmpty() || !Subject.isValidSubjectName(trimmedName)) {
+        String trimConsecutiveWhiteSpaces = name.replaceAll("\\s+", " ").trim();
+        if (trimConsecutiveWhiteSpaces.isEmpty() || !Subject.isValidSubjectName(trimConsecutiveWhiteSpaces)) {
             throw new ParseException(Subject.MESSAGE_CONSTRAINTS);
         }
-        return new Subject(trimmedName);
+        return new Subject(trimConsecutiveWhiteSpaces);
     }
 
     /**
