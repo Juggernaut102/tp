@@ -78,7 +78,7 @@ _Initial start-up of Edudex_
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
-* Any references of `Person` are interchangeable with `Students`
+* Any reference of "Person" is interchangeable with "Student"
 </box>
 
 ### Viewing help : `help`
