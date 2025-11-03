@@ -282,7 +282,7 @@ The `DeleteLessonCommand` interacts with the `ModelManager` as follows:
 | Find by day | `find d/Monday`    | Lists all students with Monday lessons |
 | Find by subject | `find sub/Science` | Lists all students taking Science |
 | Delete valid lesson | `dellesson 1 2`    | Deletes 2nd lesson of 1st student |
-| Invalid student index | `dellesson 0 1`    | Error: Invalid student index |
+| Invalid student index | `dellesson 0 1`    | Invalid command format |
 | Invalid lesson index | `dellesson 1 5`    | Error: Invalid lesson index |
 --------------------------------------------------------------------------------------------------------------------
 
